@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head th:fragment="head(title)">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+  <title th:replace="${title}">This is the base title</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+     th:fragment="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">Overview</a>
+    <div class="navbar-nav">
+      <a class="nav-link"
+         th:classappend="${activePage =='overview'} ?'active' : ''"
+         href="/overview/">
+        <i class="bi bi-book"></i> Overzicht
+      </a>
+      <a class="nav-link"
+         th:classappend="${activePage =='introduction'} ?'active' : ''"
+         href="/introduction/">
+        <i class="bi bi-person"></i> Introductie
+      </a>
+    </div>
+  </div>
+</nav>
+
+<footer th:fragment="footer">
+  <p>Overview &mdash; De Exparts</p>
+</footer>
+
+<div th:fragment="scripts">
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
+  </script>
+</div>
+
+</body>
+</html>
