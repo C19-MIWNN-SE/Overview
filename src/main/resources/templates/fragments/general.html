@@ -27,6 +27,10 @@
          href="/introduction/">
         <i class="bi bi-person"></i> Introductie
       </a>
+      <form th:action="@{/logout}" method="post"
+            style="display: inline;">
+        <button type="submit">Uitloggen</button>
+      </form>
     </div>
   </div>
 </nav>

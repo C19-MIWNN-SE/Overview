@@ -2,6 +2,9 @@ package nl.miwnn.cohort19.DeExparts.Overview.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Author: Anouk de Vos
  * !! Doel voor de class !!
@@ -19,12 +22,56 @@ public class Instructor {
     @Column(nullable = false)
     public String lastName;
 
-    public Instructor(String firstName, String lastName){
-        this.firstName=firstName;
-        this.lastName=lastName;
+    @Column(nullable = false)
+    public String emailAdress;
+
+    @Column(nullable = false)
+    public String address;
+
+    @Column(nullable = false)
+    public String city;
+
+    @Column(nullable = false)
+    public String phoneNumber;
+
+    @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "instructor_id"),
+            inverseJoinColumns = @JoinColumn(name = "participant_id")
+    )
+    private List<Participant> participants = new ArrayList<>();
+
+    @Column(nullable = false)
+    public String cohort;
+
+    public String description;
+
+    public String course;
+
+    public Instructor(Long id,
+                      String firstName,
+                      String lastName,
+                      String emailAdress,
+                      String address,
+                      String city,
+                      String phoneNumber,
+                      String cohort,
+                      String description,
+                      String course) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAdress = emailAdress;
+        this.address = address;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+        this.cohort = cohort;
+        this.description = description;
+        this.course = course;
     }
 
-    public Instructor(){}
+    public Instructor() {
+    }
 
     public Long getId() {
         return id;
@@ -48,5 +95,61 @@ public class Instructor {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmailAdress() {
+        return emailAdress;
+    }
+
+    public void setEmailAdress(String emailAdress) {
+        this.emailAdress = emailAdress;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getCohort() {
+        return cohort;
+    }
+
+    public void setCohort(String cohort) {
+        this.cohort = cohort;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
     }
 }

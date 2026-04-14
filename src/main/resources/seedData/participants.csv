@@ -1,21 +1,11 @@
-firstName,lastName
-Emma,Jansen
-Liam,de Vries
-Sophie,Bakker
-Noah,Visser
-Julia,Smit
-Lucas,Meijer
-Mila,de Boer
-Daan,Mulder
-Sara,de Groot
-Finn,Bos
-Lotte,Peters
-Milan,Hendriks
-Zoë,van Dijk
-Levi,Jacobs
-Eva,van den Berg
-Sem,Willems
-Nina,Kuiper
-Max,Schouten
-Isabella,Vermeer
-Timo,Hoekstra
+firstName,lastName,emailAdress,address,city,phoneNumber,cohort,description
+Lisa,Jansen,lisa.jansen@example.com,Kerkstraat 5,Amsterdam,0612340001,Cohort19,Creatieve frontend developer
+Tom,Bakker,tom.bakker@example.com,Dorpsstraat 3,Utrecht,0612340002,Cohort19,Fullstack developer in opleiding
+Sanne,Visser,sanne.visser@example.com,Stationsweg 10,Rotterdam,0612340003,Cohort19,UX/UI designer met oog voor detail
+Daan,Meijer,daan.meijer@example.com,Schoolstraat 8,Eindhoven,0612340004,Cohort20,Backend developer gespecialiseerd in Java
+Emma,de Jong,emma.dejong@example.com,Lindelaan 15,Haarlem,0612340005,Cohort20,Frontend developer met focus op React
+Noah,Willems,noah.willems@example.com,Markt 2,Den Haag,0612340006,Cohort20,Software engineer met interesse in AI
+Mila,Smit,mila.smit@example.com,Parklaan 22,Groningen,0612340007,Cohort19,Data-analist in opleiding
+Lars,Kuipers,lars.kuipers@example.com,Havenstraat 11,Leeuwarden,0612340008,Cohort19,DevOps engineer met cloud interesse
+Julia,van Dijk,julia.vandijk@example.com,Bosweg 6,Nijmegen,0612340009,Cohort20,Webdeveloper met passie voor design
+Finn,Hendriks,finn.hendriks@example.com,Rivierstraat 9,Maastricht,0612340010,Cohort20,Junior developer met focus op backend
