@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Author: Anouk de Vos
@@ -34,16 +35,6 @@ public class Instructor {
     @Column(nullable = false)
     public String phoneNumber;
 
-    @ManyToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "instructor_id"),
-            inverseJoinColumns = @JoinColumn(name = "participant_id")
-    )
-    private List<Participant> participants = new ArrayList<>();
-
-    @Column(nullable = false)
-    public String cohort;
-
     public String description;
 
     public String course;
@@ -55,7 +46,6 @@ public class Instructor {
                       String address,
                       String city,
                       String phoneNumber,
-                      String cohort,
                       String description,
                       String course) {
         this.id = id;
@@ -65,14 +55,13 @@ public class Instructor {
         this.address = address;
         this.city = city;
         this.phoneNumber = phoneNumber;
-        this.cohort = cohort;
         this.description = description;
         this.course = course;
     }
 
     public Instructor() {
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -127,14 +116,6 @@ public class Instructor {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getCohort() {
-        return cohort;
-    }
-
-    public void setCohort(String cohort) {
-        this.cohort = cohort;
     }
 
     public String getDescription() {

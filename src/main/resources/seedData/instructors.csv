@@ -1,2 +1,2 @@
-firstName,lastName,emailAdress,address,city,phoneNumber,cohort,description,course
-Lisa,Jansen,lisa@example.com,Kerkstraat 5,Amsterdam,0698765432,Cohort20,Frontend specialist,React
+firstName,lastName,emailAdress,address,city,phoneNumber,description,course
+Lisa,Jansen,lisa@example.com,Kerkstraat 5,Amsterdam,0698765432,Frontend specialist,React

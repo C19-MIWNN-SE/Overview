@@ -2,6 +2,7 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
+import nl.miwnn.cohort19.DeExparts.Overview.repositories.ParticipantRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.service.IntroductionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,11 @@ public class IntroductionController {
     private static final Logger log =
             LoggerFactory.getLogger(OverviewController.class);
     private final IntroductionService introductionService;
+    private final ParticipantRepository participantRepository;
 
-    public IntroductionController(IntroductionService introductionService) {
+    public IntroductionController(IntroductionService introductionService, ParticipantRepository participantRepository) {
         this.introductionService = introductionService;
+        this.participantRepository = participantRepository;
     }
 
     @GetMapping(value = {"/participant/{id}"})
