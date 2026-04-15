@@ -17,11 +17,11 @@
 <p>Woonplaats: <span th:text="${participant.city}"></span></p>
 <p>Telefoonnummer: <span th:text="${participant.phoneNumber}"></span></p>
 <p>Over mij: <span th:text="${participant.description}"></span></p>
-<p>Klassen: <a th:href="@{/overview}" th:text="${participant.getCohorts().getName()}"></a></p>
+<p>Klassen: <a th:href="@{/overview}" th:text="${participant.cohorts.name}"></a></p>
 
 <p>Docenten: <span th:each="instructors, iterStat: ${participant.cohorts.instructors}">
              <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
-             th:text="${instructors.getFullName()}"></a>
+             th:text="${instructors.fullName}"></a>
 </span> </p>
 </body>
 </html>

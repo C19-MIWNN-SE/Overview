@@ -19,7 +19,7 @@
 <p>Vak: <span th:text="${instructor.course}"></span></p>
 
 <p>Klassen: <span th:each="cohorts, iterStat: ${instructor.cohorts}">
-            <a th:href="@{/overview}" th:text="${cohorts.getName()}"></a>
+            <a th:href="@{/overview}" th:text="${cohorts.name}"></a>
             <span th:if="!${iterStat.last}"></span>
             </span>
             </p>
