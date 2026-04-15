@@ -13,7 +13,7 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Lob
     @Column(columnDefinition = "LONGBLOB")
@@ -26,6 +26,8 @@ public class Image {
         this.data = data;
         this.contentType = contentType;
     }
+
+    public Image(){}
 
     public Long getId() {
         return id;

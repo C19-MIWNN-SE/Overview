@@ -15,27 +15,27 @@ public class Participant {
     private Long id;
 
     @Column(nullable = false)
-    public String firstName;
+    private String firstName;
 
     @Column(nullable = false)
-    public String lastName;
+    private String lastName;
 
     @Column(nullable = false)
-    public String emailAdress;
+    private String emailAdress;
 
     @Column(nullable = false)
-    public String address;
+    private String address;
 
     @Column(nullable = false)
-    public String city;
+    private String city;
 
     @Column(nullable = false)
-    public String phoneNumber;
+    private String phoneNumber;
 
-    @Column(nullable = false)
-    public String cohort;
+    private String description;
 
-    public String description;
+    @ManyToOne
+    private Cohort cohorts;
 
     public Participant(Long id,
                        String firstName,
@@ -44,7 +44,6 @@ public class Participant {
                        String address,
                        String city,
                        String phoneNumber,
-                       String cohort,
                        String description) {
         this.id = id;
         this.firstName = firstName;
@@ -53,7 +52,6 @@ public class Participant {
         this.address = address;
         this.city = city;
         this.phoneNumber = phoneNumber;
-        this.cohort = cohort;
         this.description = description;
     }
 
@@ -108,20 +106,20 @@ public class Participant {
         this.city = city;
     }
 
+    public Cohort getCohorts() {
+        return cohorts;
+    }
+
+    public void setCohorts(Cohort cohort) {
+        this.cohorts = cohort;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getCohort() {
-        return cohort;
-    }
-
-    public void setCohort(String cohort) {
-        this.cohort = cohort;
     }
 
     public String getDescription() {
@@ -132,3 +130,4 @@ public class Participant {
         this.description = description;
     }
 }
+

@@ -18,26 +18,29 @@ public class Instructor {
     private Long id;
 
     @Column(nullable = false)
-    public String firstName;
+    private String firstName;
 
     @Column(nullable = false)
-    public String lastName;
+    private String lastName;
 
     @Column(nullable = false)
-    public String emailAdress;
+    private String emailAdress;
 
     @Column(nullable = false)
-    public String address;
+    private String address;
 
     @Column(nullable = false)
-    public String city;
+    private String city;
 
     @Column(nullable = false)
-    public String phoneNumber;
+    private String phoneNumber;
 
-    public String description;
+    @ManyToMany
+    private List<Cohort> cohorts = new ArrayList<>();
 
-    public String course;
+    private String description;
+
+    private String course;
 
     public Instructor(Long id,
                       String firstName,
@@ -132,5 +135,13 @@ public class Instructor {
 
     public void setCourse(String course) {
         this.course = course;
+    }
+
+    public List<Cohort> getCohorts() {
+        return cohorts;
+    }
+
+    public void setCohorts(List<Cohort> cohorts) {
+        this.cohorts = cohorts;
     }
 }

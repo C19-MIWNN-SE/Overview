@@ -2,8 +2,10 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import nl.miwnn.cohort19.DeExparts.Overview.model.Cohort;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
+import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.InstructorRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.ParticipantRepository;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.List;
 
 /**
  * Author: Anouk de Vos
@@ -25,14 +28,19 @@ public class InitializeController {
 
     private final ParticipantRepository participantRepository;
     private final InstructorRepository instructorRepository;
+    private final CohortRepository cohortRepository;
 
-    public InitializeController(ParticipantRepository participantRepository, InstructorRepository instructorRepository) {
+    public InitializeController(ParticipantRepository participantRepository, InstructorRepository instructorRepository, CohortRepository cohortRepository) {
         this.participantRepository = participantRepository;
         this.instructorRepository = instructorRepository;
+        this.cohortRepository = cohortRepository;
     }
 
     @EventListener(ContextRefreshedEvent.class)
     public void seed() {
+        if(cohortRepository.count() == 0){
+            seedCohorts();
+        }
         if (participantRepository.count() == 0) {
             seedParticipants();
         }
@@ -52,7 +60,18 @@ public class InitializeController {
                             .withType(Participant.class)
                             .withIgnoreLeadingWhiteSpace(true)
                             .build();
-            participantRepository.saveAll(csvToBean.parse());
+
+
+            List<Participant> participants = csvToBean.parse();
+            List<Cohort> cohorts = cohortRepository.findAll();
+
+            for (int i = 0; i < participants.size(); i++) {
+                Participant participant = participants.get(i);
+                participant.setCohorts(cohorts.get(i % cohorts.size()));
+                participantRepository.save(participant);
+            }
+
+            //participantRepository.saveAll(csvToBean.parse());
         } catch (IOException e) {
             throw new RuntimeException(
                     "Kon participants.csv niet inlezen", e);
@@ -70,10 +89,39 @@ public class InitializeController {
                             .withType(Instructor.class)
                             .withIgnoreLeadingWhiteSpace(true)
                             .build();
-            instructorRepository.saveAll(csvToBean.parse());
+
+            List<Instructor> instructors = csvToBean.parse();
+            List<Cohort> cohorts = cohortRepository.findAll();
+
+            for (int i = 0; i < instructors.size(); i++) {
+                Instructor instructor = instructors.get(i);
+                instructor.getCohorts().add(cohorts.get(i % cohorts.size()));
+                instructorRepository.save(instructor);
+            }
+
+            //instructorRepository.saveAll(csvToBean.parse());
         } catch (IOException e) {
             throw new RuntimeException(
                     "Kon instructor.csv niet inlezen", e);
         }
     }
+
+    private void seedCohorts() {
+        try {
+            ClassPathResource resource =
+                    new ClassPathResource("seedData/cohorts.csv");
+            Reader reader = new InputStreamReader(
+                    resource.getInputStream());
+            CsvToBean<Cohort> csvToBean =
+                    new CsvToBeanBuilder<Cohort>(reader)
+                            .withType(Cohort.class)
+                            .withIgnoreLeadingWhiteSpace(true)
+                            .build();
+            cohortRepository.saveAll(csvToBean.parse());
+        } catch (IOException e) {
+            throw new RuntimeException(
+                    "Kon cohort.csv niet inlezen", e);
+        }
+    }
+
 }
