@@ -6,11 +6,22 @@
 </head>
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
-<h1 th:text="${participant.firstName} + ${participant.lastName}"></h1>
+<h1 th:text="${participant.fullName}"></h1>
 
 <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
      alt="Afbeelding"
      style="width: 175px; height: 175px;">
 
+<p>E-mailadres: <span th:text="${participant.emailAdress}"></span></p>
+<p>Adres: <span th:text="${participant.address}"></span></p>
+<p>Woonplaats: <span th:text="${participant.city}"></span></p>
+<p>Telefoonnummer: <span th:text="${participant.phoneNumber}"></span></p>
+<p>Over mij: <span th:text="${participant.description}"></span></p>
+<p>Klassen: <a th:href="@{/overview}" th:text="${participant.getCohorts().getName()}"></a></p>
+
+<p>Docenten: <span th:each="instructors, iterStat: ${participant.cohorts.instructors}">
+             <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
+             th:text="${instructors.getFullName()}"></a>
+</span> </p>
 </body>
 </html>

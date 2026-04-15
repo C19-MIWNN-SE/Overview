@@ -82,6 +82,9 @@ public class Participant {
         this.lastName = lastName;
     }
 
+    public String getFullName() {
+        return String.format("%s %s",firstName,lastName);
+    }
     public String getEmailAdress() {
         return emailAdress;
     }
