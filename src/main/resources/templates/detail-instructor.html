@@ -20,10 +20,17 @@
 <p>Vak: <span th:text="${instructor.course}"></span></p>
 
 <p>Klassen: <span th:each="cohorts, iterStat: ${instructor.cohorts}">
-            <a th:href="@{/overview}" th:text="${cohorts.name}"></a>
+            <a th:href="@{/overview/cohort/{id}(id=${cohorts.id})}" th:text="${cohorts.name}"></a>
             <span th:if="!${iterStat.last}"></span>
             </span>
             </p>
 
+<form th:action="@{/detail/instructor/delete/{id}(id=${instructor.id})}" method="post">
+    <button type="submit">Verwijder Docent</button>
+</form>
+
+<form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get">
+    <button type="submit">Bewerk Docent</button>
+</form>
 </body>
 </html>

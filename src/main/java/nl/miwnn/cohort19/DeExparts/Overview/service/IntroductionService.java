@@ -6,6 +6,7 @@ import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.InstructorRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.ParticipantRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -29,10 +30,26 @@ public class IntroductionService {
       return participant;
   }
 
-    public Optional<Instructor> showInstructorDetail(Long id) {
+  public Optional<Instructor> showInstructorDetail(Long id) {
         Optional<Instructor> instructor = instructorRepository.findById(id);
         return instructor;
     }
 
+    public void deleteParticipant(Long id){
+      participantRepository.deleteById(id);
+    }
 
+    public void deleteInstructor(Long id){
+      instructorRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void saveParticipant(Participant editedParticipant){
+      participantRepository.save(editedParticipant);
+    }
+
+    @Transactional
+    public void saveInstructor(Instructor editedInstructor){
+        instructorRepository.save(editedInstructor);
+    }
 }
