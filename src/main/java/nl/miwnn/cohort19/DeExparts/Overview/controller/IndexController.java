@@ -16,10 +16,9 @@ public class IndexController {
     private static final Logger log =
             LoggerFactory.getLogger(IndexController.class);
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String showIndex(Model model) {
         log.debug("Indexpagina opgevraagd");
-        model.addAttribute("paginaTitel", "Boekoverzicht");
         return "index";
     }
 }

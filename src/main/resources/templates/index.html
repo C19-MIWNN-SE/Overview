@@ -1,65 +1,44 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/general :: head(~{:: title})}">
-    <meta charset="UTF-8">
-    <title>Inlogpagina</title>
+    <title>Inloggen</title>
 </head>
 
-<h1> <p style="text-align: center;">Welkom!</p> </h1>
-<p style="text-align: center;">Log hier in</p>
+<body>
+<h5 class="text-center mb-2">Overview</h5>
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
 
-<form>
-    <!-- Email input -->
-    <div data-mdb-input-init class="form-outline mb-4">
-        <input type="email" id="form2Example1" class="form-control" />
-        <label class="form-label" for="form2Example1">Email address</label>
-    </div>
+    <div class="card p-4 shadow" style="width: 300px;">
 
-    <!-- Password input -->
-    <div data-mdb-input-init class="form-outline mb-4">
-        <input type="password" id="form2Example2" class="form-control" />
-        <label class="form-label" for="form2Example2">Password</label>
-    </div>
+        <h2 class="text-center mb-3">Inloggen</h2>
 
-    <!-- 2 column grid layout for inline styling -->
-    <div class="row mb-4">
-        <div class="col d-flex justify-content-center">
-            <!-- Checkbox -->
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-                <label class="form-check-label" for="form2Example31"> Remember me </label>
+        <div th:if="${param.error}" class="alert alert-danger">
+            Gebruikersnaam of wachtwoord klopt niet
+        </div>
+
+        <div th:if="${param.logout}" class="alert alert-success">
+            Je bent uitgelogd
+        </div>
+
+        <form th:action="@{/login}" method="post">
+
+            <div class="mb-2">
+                <input class="form-control" type="text" name="username" placeholder="Gebruikersnaam" required>
             </div>
-        </div>
 
-        <div class="col">
-            <!-- Simple link -->
-            <a href="#!">Forgot password?</a>
-        </div>
+            <div class="mb-3">
+                <input class="form-control" type="password" name="password" placeholder="Wachtwoord" required>
+            </div>
+
+            <button class="btn btn-primary w-100" type="submit">
+                Log in
+            </button>
+
+        </form>
+
     </div>
 
-    <!-- Submit button -->
-    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Sign in</button>
+</div>
 
-    <!-- Register buttons -->
-    <div class="text-center">
-        <p>Not a member? <a href="#!">Register</a></p>
-        <p>or sign up with:</p>
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-google"></i>
-        </button>
-
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-twitter"></i>
-        </button>
-
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-github"></i>
-        </button>
-    </div>
-</form>
-
+</body>
 </html>
