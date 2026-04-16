@@ -1,14 +1,13 @@
 package nl.miwnn.cohort19.DeExparts.Overview.model;
 
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author wat doe ik?
+ * @author wat doe ik? TODO change author name
+ * Information about a cohort (that includes participants, instructors and more)
  */
 @Entity
 public class Cohort {
@@ -23,10 +22,11 @@ public class Cohort {
     @Column(nullable = false)
     private String subject;
 
+    // TODO convert startDate to LocalDate
     @Column(nullable = false)
-    //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private String startDate;
 
+    // TODO convert startDate to LocalDate
     @Column(nullable = false)
     private String endDate;
 
@@ -92,5 +92,13 @@ public class Cohort {
 
     public void setParticipants(List<Participant> participants) {
         this.participants = participants;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
