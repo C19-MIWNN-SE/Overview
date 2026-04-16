@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 
-<head th:fragment="head(title)">
+<head th:fragment="baseheader(title)">
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, initial-scale=1">
@@ -12,31 +12,36 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
-     th:fragment="navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">Overview</a>
-    <div class="navbar-nav">
-      <a class="nav-link"
-         th:classappend="${activePage =='overview'} ?'active' : ''"
-         href="/overview/">
-        <i class="bi bi-book"></i> Overzicht
-      </a>
-      <a class="nav-link"
-         th:classappend="${activePage =='introduction'} ?'active' : ''"
-         href="/introduction/">
-        <i class="bi bi-person"></i> Introductie
-      </a>
-      <form th:action="@{/logout}" method="post"
-            style="display: inline;">
-        <button type="submit">Uitloggen</button>
-      </form>
+<th:block th:fragment="navbar">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">Overview</a>
+      <div class="navbar-nav">
+        <a class="nav-link"
+           th:classappend="${activePage =='overview'} ?'active' : ''"
+           href="/overview/">
+          <i class="bi bi-book"></i> Overzicht
+        </a>
+        <a class="nav-link"
+           th:classappend="${activePage =='introduction'} ?'active' : ''"
+           href="/introduction/">
+          <i class="bi bi-person"></i> Introductie
+        </a>
+        <form th:action="@{/logout}" method="post"
+              style="display: inline;">
+          <button type="submit">Uitloggen</button>
+        </form>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</th:block>
 
-<footer th:fragment="footer">
-  <p>Overview &mdash; De Exparts</p>
+
+<footer class="footer mt-auto py-3 bg-light"
+        th:fragment="footer">
+  <div class="container">
+    <span class="text-muted">Overview &mdash; De Exparts</span>
+  </div>
 </footer>
 
 <div th:fragment="scripts">

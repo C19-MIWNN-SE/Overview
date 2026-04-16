@@ -1,0 +1,5 @@
+## Vragen
+- Is het specifiek voor een school? > trigger was make it work, nadenken over laag erover heen (organisatie vastleggen die boven het geheel zit)(MIW is dan een organisatie). Platform waar meerdere organisatie gebruik van kunnen maken, meer administratief.
+- kan je vanaf het overzicht naar een deelnemer gaan voor specifieke informatie? hele klas kan de detailpagina zien
+- Wat voor informatie willen jullie zien op de overzicht- en detailpagina? van een persoon/algemeen. naam, (school)mailadres, niet alles meteen laten zien, waar iedereen naartoe gaat, ruimte voor optioneel veld (wat heb ik hiervoor gedaan), kan de deelnemer zelf invullen + foto
+- is de “leider” van de groep zichtbaar voor iedereen? leerling kan wel detail pagina van docent zien. (contact voorkeur, mailadres, (werk)telefoonnummer)

@@ -1,33 +1,40 @@
 <!DOCTYPE html>
-<html lang="nl" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/general :: head(~{:: title})}">
-  <meta charset="UTF-8">
-  <title>Overview</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
+<head><title>Overview</title></head>
 <body>
-<nav th:replace="~{fragments/general :: navbar}"></nav>
 
-<h1>Deelnemers</h1>
-  <table>
-    <thead>
+<div id="content">
+    <h1>Cohorts</h1>
+    <table>
+        <thead>
         <tr>
-          <th>Voornaam</th>
-          <th>Achternaam</th>
-            <th>Profielfoto</th>
+            <th>Cohort</th>
+            <th>Onderwerp</th>
+            <th>Startdatum</th>
+            <th>Einddatum</th>
         </tr>
-    </thead>
+        </thead>
 
-    <tbody>
-          <tr th:each="participant : ${allParticipants}">
-            <td th:text="${participant.firstName}"></td>
-            <td th:text="${participant.lastName}"></td>
-              <td>
-                  <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-                       alt="Afbeelding"
-                       style="width: 175px; height: 175px;">
-              </td>
-          </tr>
-    </tbody>
-  </table>
+        <tbody>
+        <tr th:each="cohort : ${allCohorts}">
+            <td>
+                <a th:href="@{/overview/cohort/{id}(id=${cohort.id})}" th:text="${cohort.getName()}">Cohort</a>
+            </td>
+
+            <td th:text="${cohort.getSubject()}">Onderwerp</td>
+            <td>
+                <span th:if="${cohort.getStartDate()}" th:text="${cohort.getStartDate()}">Startdatum</span>
+                <span th:unless="${cohort.getStartDate()}">onbekend</span>
+            </td>
+            <td>
+                <span th:if="${cohort.getEndDate()}" th:text="${cohort.getEndDate()}">Einddatum</span>
+                <span th:unless="${cohort.getEndDate()}">onbekend</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
