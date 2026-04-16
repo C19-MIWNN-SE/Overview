@@ -2,8 +2,8 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
-import nl.miwnn.cohort19.DeExparts.Overview.repositories.ParticipantRepository;
-import nl.miwnn.cohort19.DeExparts.Overview.service.IntroductionService;
+import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
+import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -23,30 +23,33 @@ import java.util.Optional;
 public class IntroductionController {
 
     private static final Logger log =
-            LoggerFactory.getLogger(OverviewController.class);
-    private final IntroductionService introductionService;
-    private final ParticipantRepository participantRepository;
+            LoggerFactory.getLogger(IntroductionController.class);
 
-    public IntroductionController(IntroductionService introductionService, ParticipantRepository participantRepository) {
-        this.introductionService = introductionService;
-        this.participantRepository = participantRepository;
+    private final ParticipantService participantService;
+    private final InstructorService instructorService;
+
+    public IntroductionController(InstructorService instructorService, ParticipantService participantService) {
+        this.instructorService = instructorService;
+        this.participantService = participantService;
     }
 
     @GetMapping(value = {"/participant/{id}"})
     public String showParticipantDetail(@PathVariable Long id, Model model) {
-        Optional<Participant> participant = introductionService.showParticipantDetail(id);
-        log.debug("Detail pagina opgevraagd");
+        Optional<Participant> participant = participantService.showParticipantDetail(id);
+        log.debug("Detail pagina deelnemer opgevraagd");
         model.addAttribute("title", "Detail overzicht");
         model.addAttribute("participant", participant.get());
+        model.addAttribute("activePage", "aboutMe");
         return "detail-participant";
     }
 
     @GetMapping(value = {"/instructor/{id}"})
     public String showInstructorDetail(@PathVariable Long id, Model model) {
-        Optional<Instructor> instructor = introductionService.showInstructorDetail(id);
-        log.debug("Detail pagina opgevraagd");
+        Optional<Instructor> instructor = instructorService.showInstructorDetail(id);
+        log.debug("Detail pagina docent opgevraagd");
         model.addAttribute("title", "Detail overzicht");
         model.addAttribute("instructor", instructor.get());
+        model.addAttribute("activePage", "aboutMe");
         return "detail-instructor";
     }
 }

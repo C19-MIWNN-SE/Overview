@@ -1,6 +1,5 @@
 package nl.miwnn.cohort19.DeExparts.Overview.configuration;
 
-import nl.miwnn.cohort19.DeExparts.Overview.controller.OverviewController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;

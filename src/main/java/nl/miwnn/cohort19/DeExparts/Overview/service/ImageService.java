@@ -22,7 +22,6 @@ public class ImageService {
 
     @Transactional
     public Optional<Image> showImage(Long id){
-        Optional<Image> image = imageRepository.findById(id);
-        return image;
+        return imageRepository.findById(id);
     }
 }

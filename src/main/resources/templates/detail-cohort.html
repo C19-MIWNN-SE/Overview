@@ -4,20 +4,20 @@
 <head><title>Overview cohort</title></head>
 <body>
 <div id="content">
-    <h1 th:text="|Overview van ${cohort.get().getName()}|"></h1>
+    <h1 th:text="|Overview van ${cohort.name}|"></h1>
     <h2>Details cohort</h2>
     <ul>
-        <li>Naam: <span th:text="${cohort.get().getName()}">Naam</span></li>
-        <li>Onderwerp: <span th:text="${cohort.get().getSubject()}">Onderwerp</span></li>
+        <li>Naam: <span th:text="${cohort.name}">Naam</span></li>
+        <li>Onderwerp: <span th:text="${cohort.subject}">Onderwerp</span></li>
         <li>
             Startdatum:
-            <span th:if="${cohort.get().getStartDate()}" th:text="${cohort.get().getStartDate()}">Startdatum</span>
-            <span th:unless="${cohort.get().getStartDate()}">onbekend</span>
+            <span th:if="${cohort.startDate}" th:text="${cohort.startDate}">Startdatum</span>
+            <span th:unless="${cohort.startDate}">onbekend</span>
         </li>
         <li>
             Einddatum:
-            <span th:if="${cohort.get().getEndDate()}" th:text="${cohort.get().getEndDate()}">Einddatum</span>
-            <span th:unless="${cohort.get().getEndDate()}">onbekend</span>
+            <span th:if="${cohort.endDate}" th:text="${cohort.endDate}">Einddatum</span>
+            <span th:unless="${cohort.endDate}">onbekend</span>
         </li>
     </ul>
 
@@ -32,7 +32,7 @@
         </thead>
 
         <tbody>
-        <tr th:each="instructor : ${cohort.get().getInstructors()}">
+        <tr th:each="instructor : ${cohort.instructors}">
             <td th:text="${instructor.firstName}"></td>
             <td th:text="${instructor.lastName}"></td>
             <td>
@@ -57,7 +57,7 @@
         </thead>
 
         <tbody>
-        <tr th:each="participant : ${cohort.get().getParticipants()}">
+        <tr th:each="participant : ${cohort.participants}">
             <td th:text="${participant.firstName}"></td>
             <td th:text="${participant.lastName}"></td>
             <td>

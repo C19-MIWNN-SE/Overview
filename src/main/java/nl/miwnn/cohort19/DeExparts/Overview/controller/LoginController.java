@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
  * !! Doel voor de class !!
  */
 @Controller
-public class IndexController {
+public class LoginController {
 
     private static final Logger log =
-            LoggerFactory.getLogger(IndexController.class);
+            LoggerFactory.getLogger(LoginController.class);
 
     @GetMapping("/")
     public String showIndex(Model model) {
         log.debug("Indexpagina opgevraagd");
-        model.addAttribute("paginaTitel", "Boekoverzicht");
-        return "index";
+        model.addAttribute("paginaTitel", "Index");
+        return "login";
     }
 }

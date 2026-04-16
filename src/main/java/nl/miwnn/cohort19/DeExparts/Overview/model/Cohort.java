@@ -23,11 +23,11 @@ public class Cohort {
     private String subject;
 
     // TODO convert startDate to LocalDate
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String startDate;
 
     // TODO convert startDate to LocalDate
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String endDate;
 
     @OneToMany(mappedBy = "cohorts")

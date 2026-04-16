@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="nl" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/general :: head(~{:: title})}">
-    <meta charset="UTF-8">
-    <title>Detailpagina</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
+<head><title>Home</title></head>
 <body>
-<nav th:replace="~{fragments/general :: navbar}"></nav>
-<h1 th:text="${participant.firstName} + ${participant.lastName}"></h1>
+<div id="content">
+    <h1 th:text="${participant.firstName} + ${participant.lastName}"></h1>
 
-<img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-     alt="Afbeelding"
-     style="width: 175px; height: 175px;">
+    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
+         alt="Afbeelding"
+         style="width: 175px; height: 175px;">
 
-<p th:text="${participant.getCohorts().getName()}"></p>
+    <p th:text="${participant.getCohorts().getName()}"></p>
+</div>
 </body>
 </html>
