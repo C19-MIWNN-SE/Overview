@@ -28,8 +28,7 @@ public class overviewSecurityConfiguration {
             LoggerFactory.getLogger(overviewSecurityConfiguration.class);
 
     @Bean
-        public SecurityFilterChain securityFilterChain(
-                HttpSecurity http) throws Exception {
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
             http
                     .authorizeHttpRequests(auth -> auth
                             .requestMatchers(
@@ -41,11 +40,12 @@ public class overviewSecurityConfiguration {
                             .anyRequest().authenticated()
                     )
                     .formLogin(form -> form
-                            .defaultSuccessUrl("/", true)
+                            .loginPage("/login")
+                            .defaultSuccessUrl("/home/", true)
                             .permitAll()
                     )
                     .logout(logout -> logout
-                            .logoutSuccessUrl("/")
+                            .logoutSuccessUrl("/login?logout")
                             .permitAll()
                     );
             return http.build();
@@ -57,23 +57,23 @@ public class overviewSecurityConfiguration {
 
         @Bean
         public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-            String password = UUID.randomUUID().toString();
-            log.info("==========================================================================");
-            log.info("Generated password: {}", password);
-            log.info("==========================================================================");
+//            String password = UUID.randomUUID().toString();
+//            log.info("==========================================================================");
+//            log.info("Generated password: {}", password);
+//            log.info("==========================================================================");
             var deelnemer = User.builder()
                     .username("deelnemer")
-                    .password(encoder.encode(password))
-                    .roles("USER")
+                    .password(encoder.encode("deelnemer"))
+                    .roles("DEELNEMER")
                     .build();
             var docent = User.builder()
                     .username("docent")
-                    .password(encoder.encode(password))
-                    .roles("USER")
+                    .password(encoder.encode("docent"))
+                    .roles("DOCENT")
                     .build();
             var beheerder = User.builder()
                     .username("beheerder")
-                    .password(encoder.encode(password))
+                    .password(encoder.encode("beheerder"))
                     .roles("ADMIN")
                     .build();
             return new InMemoryUserDetailsManager(deelnemer, docent, beheerder);
