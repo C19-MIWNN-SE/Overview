@@ -6,11 +6,12 @@
 </head>
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
-<h1 th:text="${instructor.fullName}"></h1>
+<h1>Docent: <span th:text="${instructor.fullName}"></span></h1>
 
 <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
      alt="Afbeelding"
      style="width: 175px; height: 175px;">
+
 <p>E-mailadres: <span th:text="${instructor.emailAdress}"></span></p>
 <p>Adres: <span th:text="${instructor.address}"></span></p>
 <p>Woonplaats: <span th:text="${instructor.city}"></span></p>
