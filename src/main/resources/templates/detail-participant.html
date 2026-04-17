@@ -16,7 +16,7 @@
     <p>Woonplaats: <span th:text="${participant.city}"></span></p>
     <p>Telefoonnummer: <span th:text="${participant.phoneNumber}"></span></p>
     <p>Over mij: <span th:text="${participant.description}"></span></p>
-    <p>Klassen: <a th:href="@{/overview/cohort/{id}(id=${participant.cohorts.id})}"
+    <p>Klassen: <a th:href="@{/cohort/{id}(id=${participant.cohorts.id})}"
                    th:text="${participant.cohorts.name}"></a></p>
 
     <p>Docenten: <span th:each="instructors, iterStat: ${participant.cohorts.instructors}">

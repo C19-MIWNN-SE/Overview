@@ -15,6 +15,7 @@ import java.util.Optional;
 /**
  * @author wat doe ik?
  */
+@RequestMapping("/home")
 @Controller
 public class HomeController {
     private static final Logger log =
@@ -28,7 +29,7 @@ public class HomeController {
         this.instructorService = instructorService;
     }
 
-    @GetMapping({"/home", "/home/","/"})
+    @GetMapping("/")
     public String showHomePage(Model model) {
         Optional<Participant> participant = participantService.showParticipantDetail(1L);
         log.debug("Home pagina opgevraagd");

@@ -3,6 +3,7 @@ package nl.miwnn.cohort19.DeExparts.Overview.service;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.InstructorRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,5 +21,14 @@ public class InstructorService {
 
     public Optional<Instructor> showInstructorDetail(Long id) {
         return instructorRepository.findById(id);
+    }
+
+    public void deleteInstructor(Long id){
+        instructorRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void saveInstructor(Instructor editedInstructor){
+        instructorRepository.save(editedInstructor);
     }
 }
