@@ -8,22 +8,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Author: Anouk de Vos
  * !! Doel voor de class !!
  */
-@RequestMapping("/overview")
+@RequestMapping("/cohort")
 @Controller
-public class OverviewController {
+public class CohortController {
 
     private final CohortService cohortService;
 
     private static final Logger log =
-            LoggerFactory.getLogger(OverviewController.class);
+            LoggerFactory.getLogger(CohortController.class);
 
-    public OverviewController(CohortService cohortService) {
+    public CohortController(CohortService cohortService) {
         this.cohortService = cohortService;
     }
 
@@ -32,14 +31,17 @@ public class OverviewController {
         log.debug("Overview pagina voor cohorts opgevraagd");
         model.addAttribute("title", "Overzicht cohorts");
         model.addAttribute("allCohorts", cohortService.showAllCohorts());
-        return "overview";
+        model.addAttribute("activePage", "cohort");
+        return "overview-cohorts";
     }
 
-    @GetMapping(value = {"/cohort/{cohortId}", ""})
+    @GetMapping(value ="/{cohortId}")
     public String showCohortDetails(@PathVariable Long cohortId, Model model) {
         log.debug("Overview pagina voor specifieke cohort opgevraagd");
+
         model.addAttribute("title", "Overzicht cohort");
-        model.addAttribute("cohort", cohortService.showCohort(cohortId));
-        return "overview-cohort";
+        model.addAttribute("cohort", cohortService.findById(cohortId));
+        model.addAttribute("activePage", "cohort");
+        return "detail-cohort";
     }
 }

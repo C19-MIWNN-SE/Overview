@@ -1,7 +1,10 @@
 package nl.miwnn.cohort19.DeExparts.Overview.model;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,19 +19,23 @@ public class Cohort {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CsvBindByName(column = "name")
     @Column(nullable = false)
     private String name;
 
+    @CsvBindByName(column = "subject")
     @Column(nullable = false)
     private String subject;
 
-    // TODO convert startDate to LocalDate
-    @Column(nullable = false)
-    private String startDate;
+    @CsvBindByName(column = "startDate")
+    @CsvDate(value = "yyyy-MM-dd")
+    @Column(nullable = true)
+    private LocalDate startDate;
 
-    // TODO convert startDate to LocalDate
-    @Column(nullable = false)
-    private String endDate;
+    @CsvBindByName(column = "endDate")
+    @CsvDate(value = "yyyy-MM-dd")
+    @Column(nullable = true)
+    private LocalDate endDate;
 
     @OneToMany(mappedBy = "cohorts")
     List<Participant> participants = new ArrayList<>();
@@ -36,7 +43,7 @@ public class Cohort {
     @ManyToMany(mappedBy = "cohorts")
     List<Instructor> instructors = new ArrayList<>();
 
-    public Cohort(String name, String subject, String startDate, String endDate) {
+    public Cohort(String name, String subject, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.subject = subject;
         this.startDate = startDate;
@@ -62,19 +69,19 @@ public class Cohort {
         this.subject = subject;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

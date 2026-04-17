@@ -1,29 +1,35 @@
 <!DOCTYPE html>
-<html lang="nl" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/general :: head(~{:: title})}">
-  <meta charset="UTF-8">
-  <title>Detailpagina</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
+<head><title>Detailpagina</title></head>
 <body>
-<nav th:replace="~{fragments/general :: navbar}"></nav>
-<h1>Docent: <span th:text="${instructor.fullName}"></span></h1>
+<div id="content">
+    <h1>Docent: <span th:text="${instructor.fullName}"></span></h1>
 
-<img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-     alt="Afbeelding"
-     style="width: 175px; height: 175px;">
+    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
+         alt="Afbeelding"
+         style="width: 175px; height: 175px;">
 
-<p>E-mailadres: <span th:text="${instructor.emailAdress}"></span></p>
-<p>Adres: <span th:text="${instructor.address}"></span></p>
-<p>Woonplaats: <span th:text="${instructor.city}"></span></p>
-<p>Telefoonnummer: <span th:text="${instructor.phoneNumber}"></span></p>
-<p>Over mij: <span th:text="${instructor.description}"></span></p>
-<p>Vak: <span th:text="${instructor.course}"></span></p>
+    <p>E-mailadres: <span th:text="${instructor.emailAdress}"></span></p>
+    <p>Adres: <span th:text="${instructor.address}"></span></p>
+    <p>Woonplaats: <span th:text="${instructor.city}"></span></p>
+    <p>Telefoonnummer: <span th:text="${instructor.phoneNumber}"></span></p>
+    <p>Over mij: <span th:text="${instructor.description}"></span></p>
+    <p>Vak: <span th:text="${instructor.course}"></span></p>
 
-<p>Klassen: <span th:each="cohorts, iterStat: ${instructor.cohorts}">
-            <a th:href="@{/overview}" th:text="${cohorts.name}"></a>
-            <span th:if="!${iterStat.last}"></span>
-            </span>
-            </p>
+    <p>Klassen: <span th:each="cohorts, iterStat: ${instructor.cohorts}">
+                <a th:href="@{/cohort/{id}(id=${cohorts.id})}" th:text="${cohorts.name}"></a>
+                <span th:if="!${iterStat.last}"></span>
+                </span>
+    </p>
 
+    <form th:action="@{/detail/instructor/delete/{id}(id=${instructor.id})}" method="post">
+        <button type="submit">Verwijder Docent</button>
+    </form>
+
+    <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get">
+        <button type="submit">Bewerk Docent</button>
+    </form>
+</div>
 </body>
 </html>

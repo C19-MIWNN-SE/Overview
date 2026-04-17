@@ -15,17 +15,18 @@
 <th:block th:fragment="navbar">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="/">Overview</a>
+      <a class="navbar-brand" href="/home/">Overview</a>
       <div class="navbar-nav">
         <a class="nav-link"
-           th:classappend="${activePage =='overview'} ?'active' : ''"
-           href="/overview/">
-          <i class="bi bi-book"></i> Overzicht
+           th:classappend="${activePage =='cohort'} ?'active' : ''"
+           href="/cohort/">
+          <i class="bi bi-book"></i> Cohort
         </a>
+        <!-- TODO aboutMe to About Me page of user -->
         <a class="nav-link"
-           th:classappend="${activePage =='introduction'} ?'active' : ''"
-           href="/introduction/">
-          <i class="bi bi-person"></i> Introductie
+           th:classappend="${activePage =='aboutMe'} ?'active' : ''"
+           href="/detail/">
+          <i class="bi bi-person"></i> Over mij
         </a>
         <form th:action="@{/logout}" method="post"
               style="display: inline;">

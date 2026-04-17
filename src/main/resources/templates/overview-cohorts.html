@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head><title>Overview</title></head>
+<head><title>Cohort overview</title></head>
 <body>
 
 <div id="content">
@@ -19,17 +19,17 @@
         <tbody>
         <tr th:each="cohort : ${allCohorts}">
             <td>
-                <a th:href="@{/overview/cohort/{id}(id=${cohort.id})}" th:text="${cohort.getName()}">Cohort</a>
+                <a th:href="@{/cohort/{id}(id=${cohort.id})}" th:text="${cohort.name}">Cohort</a>
             </td>
 
-            <td th:text="${cohort.getSubject()}">Onderwerp</td>
+            <td th:text="${cohort.subject}">Onderwerp</td>
             <td>
-                <span th:if="${cohort.getStartDate()}" th:text="${cohort.getStartDate()}">Startdatum</span>
-                <span th:unless="${cohort.getStartDate()}">onbekend</span>
+                <span th:if="${cohort.startDate}" th:text="${cohort.startDate}">Startdatum</span>
+                <span th:unless="${cohort.startDate}">onbekend</span>
             </td>
             <td>
-                <span th:if="${cohort.getEndDate()}" th:text="${cohort.getEndDate()}">Einddatum</span>
-                <span th:unless="${cohort.getEndDate()}">onbekend</span>
+                <span th:if="${cohort.endDate}" th:text="${cohort.endDate}">Einddatum</span>
+                <span th:unless="${cohort.endDate}">onbekend</span>
             </td>
         </tr>
         </tbody>
