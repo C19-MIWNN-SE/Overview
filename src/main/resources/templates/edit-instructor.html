@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: head(~{:: title})}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{fragments/general :: navbar}"></nav>
+<h1>Deelnemer: <span th:text="${instructor.fullName}"></span></h1>
+
+<img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
+     alt="Afbeelding"
+     style="width: 175px; height: 175px;">
+
+<form th:action="@{/detail/instructor/save}" method="post" th:object="${instructor}">
+    <div>
+        <input type="hidden" id="id" th:field="*{id}">
+    </div>
+    <div>
+        <label for="firstName">Voornaam:</label>
+        <input type="text" id="firstName" th:field="*{firstName}">
+    </div>
+    <div>
+        <label for="lastName">Achternaam:</label>
+        <input type="text" id="lastName" th:field="*{lastName}">
+    </div>
+    <div>
+        <label for="cohorts">Klassen:</label>
+        <select id="cohorts" th:field="*{cohorts}" multiple>
+            <option th:each="cohort : ${allCohorts}"
+                    th:value="${cohort.id}"
+                    th:text="${cohort.name}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <label for="emailAdress">E-mailadres:</label>
+        <input type="text" id="emailAdress" th:field="*{emailAdress}">
+    </div>
+    <div>
+        <label for="address">Adres:</label>
+        <input type="text" id="address" th:field="*{address}">
+    </div>
+    <div>
+        <label for="city">Woonplaats:</label>
+        <input type="text" id="city" th:field="*{city}">
+    </div>
+    <div>
+        <label for="phoneNumber">Telefoonnummer:</label>
+        <input type="text" id="phoneNumber" th:field="*{phoneNumber}">
+    </div>
+    <div>
+        <label for="course">Vak:</label>
+        <input type="text" id="course" th:field="*{course}">
+    </div>
+    <div>
+        <label for="description">Omschrijving:</label>
+        <input type="text" id="description" th:field="*{description}">
+    </div>
+    <button type="submit">Opslaan</button>
+</form>
+</body>
+</html>
