@@ -5,7 +5,7 @@
 </head>
 
 <body>
-<h5 class="text-center mb-2">Overview</h5>
+<img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=" alt="Overview logo" style="height: 40px;">
 <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
 
     <div class="card p-4 shadow" style="width: 300px;">
@@ -13,7 +13,7 @@
         <h2 class="text-center mb-3">Inloggen</h2>
 
         <div th:if="${param.error}" class="alert alert-danger">
-            Gebruikersnaam of wachtwoord klopt niet
+            Inloggen mislukt. Controleer je gegevens.
         </div>
 
         <div th:if="${param.logout}" class="alert alert-success">
@@ -23,16 +23,31 @@
         <form th:action="@{/login}" method="post">
 
             <div class="mb-2">
-                <input class="form-control" type="text" name="username" placeholder="Gebruikersnaam" required>
+                <label>
+                    <input class="form-control" type="text" name="username" placeholder="Gebruikersnaam" required>
+                </label>
             </div>
 
             <div class="mb-3">
-                <input class="form-control" type="password" name="password" placeholder="Wachtwoord" required>
+                <label>
+                    <input class="form-control" type="password" name="password" placeholder="Wachtwoord" required>
+                </label>
             </div>
 
             <button class="btn btn-primary w-100" type="submit">
-                Log in
+                Aanmelden
             </button>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label">Onthoud mij</label>
+            </div>
+
+            <p class="text-center mt-3">
+                <a href="/help" class="text-muted" style="font-size: 0.9em;">
+                    Problemen met inloggen?
+                </a>
+            </p>
 
         </form>
 

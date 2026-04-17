@@ -33,10 +33,12 @@ public class overviewSecurityConfiguration {
                     .authorizeHttpRequests(auth -> auth
                             .requestMatchers(
                                     "/",
+                                    "/home/**",
                                     "/images/**",
+                                    "/login/**",
+                                    "/overview/**",
                                     "/css/**",
-                                    "/webjars/**"
-                            ).permitAll()
+                                    "/webjars/**").permitAll()
                             .anyRequest().authenticated()
                     )
                     .formLogin(form -> form
