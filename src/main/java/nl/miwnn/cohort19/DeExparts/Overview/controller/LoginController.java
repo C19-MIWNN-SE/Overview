@@ -16,7 +16,7 @@ public class LoginController {
     private static final Logger log =
             LoggerFactory.getLogger(LoginController.class);
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String showIndex(Model model) {
         log.debug("Indexpagina opgevraagd");
         model.addAttribute("paginaTitel", "Index");
