@@ -20,7 +20,7 @@ public class ParticipantService {
         this.participantRepository = participantRepository;
     }
 
-    public List<Participant> showParticipant(){
+    public List<Participant> showAllParticipants(){
         return participantRepository.findAll();
     }
 

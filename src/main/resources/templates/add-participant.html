@@ -4,7 +4,7 @@
 <head><title>Vervang deze titel!</title></head>
 <body>
 <div id="content">
-    <h1>Bewerk Deelnemer: <span th:text="${participant.fullName}"></span></h1>
+    <h1>Voeg nieuwe deelnemer toe:</h1>
 
     <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
          alt="Afbeelding"
@@ -15,8 +15,8 @@
             <input type="hidden" id="id" th:field="*{id}">
         </div>
         <div>
-            <label for="cohorts">Klassen:</label>
-            <select id="cohorts" th:field="*{cohorts}" multiple>
+            <label for="cohorts">Klas:</label>
+            <select id="cohorts" th:field="*{cohorts}">
                 <option th:each="cohort : ${allCohorts}"
                         th:value="${cohort.id}"
                         th:text="${cohort.name}">
