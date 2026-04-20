@@ -31,6 +31,10 @@
     <form th:action="@{/detail/participant/edit/{id}(id=${participant.id})}" method="get">
         <button type="submit">Bewerk Deelnemer</button>
     </form>
+
+    <form th:action="@{/detail/participant/add}" method="get">
+        <button type="submit">Maak Nieuwe Deelnemer Aan</button>
+    </form>
 </div>
 </body>
 </html>

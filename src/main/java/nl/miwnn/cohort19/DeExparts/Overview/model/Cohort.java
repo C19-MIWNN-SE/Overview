@@ -3,6 +3,7 @@ package nl.miwnn.cohort19.DeExparts.Overview.model;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
+import org.hibernate.engine.internal.Cascade;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class Cohort {
     @OneToMany(mappedBy = "cohorts")
     List<Participant> participants = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "cohorts")
+    @ManyToMany(mappedBy = "cohorts", fetch = FetchType.EAGER)
     List<Instructor> instructors = new ArrayList<>();
 
     public Cohort(String name, String subject, LocalDate startDate, LocalDate endDate) {

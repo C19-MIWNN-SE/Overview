@@ -2,6 +2,7 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
+import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.service.CohortService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
@@ -32,7 +33,7 @@ public class IntroductionController {
     public IntroductionController(
             InstructorService instructorService,
             ParticipantService participantService,
-            CohortService cohortService) {
+            CohortService cohortService, CohortRepository cohortRepository) {
         this.instructorService = instructorService;
         this.participantService = participantService;
         this.cohortService = cohortService;
@@ -91,6 +92,7 @@ public class IntroductionController {
         Optional<Participant> participant = participantService.showParticipantDetail(id);
         log.debug("Bewerkingspagina voor participant met id {} opgevraagd", id);
         model.addAttribute("participant", participant.get());
+        model.addAttribute("allCohorts", cohortService.showAllCohorts());
         return "edit-participant";
     }
 
@@ -117,6 +119,21 @@ public class IntroductionController {
         instructorService.saveInstructor(editedInstructor);
         redirectAttributes.addAttribute("id", editedInstructor.getId());
         return "redirect:/detail/instructor/{id}";
+    }
+    @GetMapping(value = {"/participant/add"})
+    public String addParticipant(Model model) {
+        log.debug("Toevoegingspagina voor participant met opgevraagd");
+        model.addAttribute("participant", new Participant());
+        model.addAttribute("allCohorts", cohortService.showAllCohorts());
+        return "add-participant";
+    }
+
+    @GetMapping(value = {"/instructor/add"})
+    public String addInstructor(Model model){
+        log.debug("Toevoegingspagina voor instructor opgevraagd");
+        model.addAttribute("instructor", new Instructor());
+        model.addAttribute("allCohorts", cohortService.showAllCohorts());
+        return "add-instructor";
     }
 }
 
