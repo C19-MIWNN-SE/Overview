@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Author: Anouk de Vos
@@ -42,6 +41,12 @@ public class Instructor {
 
     private String course;
 
+    @OneToOne
+    private User user;
+
+    public Instructor() {
+    }
+
     public Instructor(Long id,
                       String firstName,
                       String lastName,
@@ -50,7 +55,8 @@ public class Instructor {
                       String city,
                       String phoneNumber,
                       String description,
-                      String course) {
+                      String course,
+                      User user) { // TODO checken of dit nodig is
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,11 +66,9 @@ public class Instructor {
         this.phoneNumber = phoneNumber;
         this.description = description;
         this.course = course;
+        this.user = user;
     }
 
-    public Instructor() {
-    }
-    
     public Long getId() {
         return id;
     }
@@ -152,5 +156,13 @@ public class Instructor {
     public void removeCohort(Cohort cohort){
         this.cohorts.remove(cohort);
         cohort.getInstructors().remove(this);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

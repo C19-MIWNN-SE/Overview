@@ -28,6 +28,10 @@ public class ParticipantService {
         return participantRepository.findById(id);
     }
 
+    public Optional<Participant> findParticipantByUserId(Long userId){
+        return participantRepository.findParticipantByUser_Id(userId);
+    }
+
     public void deleteParticipant(Long id){
         participantRepository.deleteById(id);
     }

@@ -1,13 +1,17 @@
 package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
+import nl.miwnn.cohort19.DeExparts.Overview.model.User;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
+import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
@@ -23,18 +27,41 @@ public class HomeController {
 
     private final ParticipantService participantService;
     private final InstructorService instructorService;
+    private final UserService userService;
 
-    public HomeController(ParticipantService participantService, InstructorService instructorService) {
+    public HomeController(ParticipantService participantService,
+                          InstructorService instructorService,
+                          UserService userService) {
         this.participantService = participantService;
         this.instructorService = instructorService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
-    public String showHomePage(Model model) {
-        Optional<Participant> participant = participantService.showParticipantDetail(1L);
+    public String showHomePage(@AuthenticationPrincipal User currentUser, Model model) {
+        log.debug("Homepagina opgevraagd voor: {}", currentUser.getUsername());
+
+        User user = (User) userService.loadUserByUsername(currentUser.getUsername());
+        Long userId = user.getId();
+
+        Optional<Participant> participant = participantService.findParticipantByUserId(userId);
+
         log.debug("Home pagina opgevraagd");
         model.addAttribute("title", "Homepagina");
         model.addAttribute("participant", participant.get());
+        return "home";
+    }
+
+    @GetMapping(value ="/{participantId}")
+    public String showHomePageParticipant(@PathVariable Long participantId, Model model) {
+        log.debug("Overview pagina voor specifieke participant opgevraagd");
+
+        Long participantID = 1L;
+
+        Optional<Participant> participant = participantService.showParticipantDetail(participantID);
+        model.addAttribute("title", "Homepagina");
+        model.addAttribute("participant", participant.get());
+
         return "home";
     }
 
