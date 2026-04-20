@@ -91,9 +91,7 @@ public class InitializeController {
                 participantRepository.save(participant);
             }
 
-            for (int i = 0; i < participants.size(); i++) {
-                Participant participant = participants.get(i);
-
+            for (Participant participant : participants) {
                 String username = participant.getFullName();
                 String password = "pwparticipant";
                 User user = new User(username, passwordEncoder.encode(password));
@@ -127,7 +125,10 @@ public class InitializeController {
             for (int i = 0; i < instructors.size(); i++) {
                 Instructor instructor = instructors.get(i);
                 instructor.getCohorts().add(cohorts.get(i % cohorts.size()));
+                instructorRepository.save(instructor);
+            }
 
+            for (Instructor instructor : instructors) {
                 String username = instructor.getFullName();
                 String password = "pwinstructor";
                 User user = new User(username, passwordEncoder.encode(password));
@@ -135,15 +136,11 @@ public class InitializeController {
                 instructor.setUser(user);
 
                 instructorRepository.save(instructor);
-
-                log.info("========================================================================================");
-                log.info("Generated password for '{}' : {}", username, password);
-                log.info("========================================================================================");
             }
 
         } catch (IOException e) {
             throw new RuntimeException(
-                    "Kon instructor.csv niet inlezen", e);
+                    "Kon instructors.csv niet inlezen", e);
         }
     }
 
