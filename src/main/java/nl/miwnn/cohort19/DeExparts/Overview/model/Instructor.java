@@ -34,7 +34,7 @@ public class Instructor {
     @Column(nullable = false)
     private String phoneNumber;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Cohort> cohorts = new ArrayList<>();
 
     private String description;
@@ -151,6 +151,11 @@ public class Instructor {
 
     public void setCohorts(List<Cohort> cohorts) {
         this.cohorts = cohorts;
+    }
+
+    public void removeCohort(Cohort cohort){
+        this.cohorts.remove(cohort);
+        cohort.getInstructors().remove(this);
     }
 
     public User getUser() {
