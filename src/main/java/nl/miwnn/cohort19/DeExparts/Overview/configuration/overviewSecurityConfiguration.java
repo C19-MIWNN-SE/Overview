@@ -6,14 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.UUID;
 
 /**
  * Author: Anouk de Vos
@@ -36,6 +31,9 @@ public class overviewSecurityConfiguration {
                                     "/css/**",
                                     "/webjars/**"
                             ).permitAll()
+                            .requestMatchers(
+                                    "/cohort/"
+                            ).hasAnyRole("ADMIN")
                             .anyRequest().authenticated()
                     )
                     .formLogin(form -> form
@@ -49,32 +47,9 @@ public class overviewSecurityConfiguration {
                     );
             return http.build();
         }
+
         @Bean
         public PasswordEncoder passwordEncoder() {
             return new BCryptPasswordEncoder();
-        }
-
-        @Bean
-        public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-//            String password = UUID.randomUUID().toString();
-//            log.info("==========================================================================");
-//            log.info("Generated password: {}", password);
-//            log.info("==========================================================================");
-            var deelnemer = User.builder()
-                    .username("deelnemer")
-                    .password(encoder.encode("deelnemer"))
-                    .roles("DEELNEMER")
-                    .build();
-            var docent = User.builder()
-                    .username("docent")
-                    .password(encoder.encode("docent"))
-                    .roles("DOCENT")
-                    .build();
-            var beheerder = User.builder()
-                    .username("beheerder")
-                    .password(encoder.encode("beheerder"))
-                    .roles("ADMIN")
-                    .build();
-            return new InMemoryUserDetailsManager(deelnemer, docent, beheerder);
         }
     }

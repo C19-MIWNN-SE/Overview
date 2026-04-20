@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="baseheader(title)">
   <meta charset="UTF-8">
@@ -28,9 +29,9 @@
            href="/detail/">
           <i class="bi bi-person"></i> Over mij
         </a>
-        <form th:action="@{/logout}" method="post"
+        <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()"
               style="display: inline;">
-          <button type="submit">Uitloggen</button>
+          <button class="btn btn-outline-light btn-sm" type="submit">Uitloggen</button>
         </form>
       </div>
     </div>

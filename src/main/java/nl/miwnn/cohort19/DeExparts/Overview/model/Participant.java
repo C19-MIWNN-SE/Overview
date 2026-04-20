@@ -37,6 +37,9 @@ public class Participant {
     @ManyToOne
     private Cohort cohorts;
 
+    @OneToOne
+    private User user;
+
     public Participant(Long id,
                        String firstName,
                        String lastName,
@@ -44,7 +47,8 @@ public class Participant {
                        String address,
                        String city,
                        String phoneNumber,
-                       String description) {
+                       String description,
+                       User user) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -53,6 +57,7 @@ public class Participant {
         this.city = city;
         this.phoneNumber = phoneNumber;
         this.description = description;
+        this.user = user;
     }
 
     public Participant() {
@@ -131,6 +136,14 @@ public class Participant {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 
