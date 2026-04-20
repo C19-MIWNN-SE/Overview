@@ -55,19 +55,6 @@ public class InitializeController {
 
     @EventListener(ContextRefreshedEvent.class)
     public void seed() {
-        if (userRepository.count() == 0) {
-            String password = "admin";
-
-            log.info("========================================================================================");
-            log.info("Generated password for 'beheerder' : {}", password);
-            log.info("========================================================================================");
-
-            User admin = new User(
-                    "admin",
-                    passwordEncoder.encode(password),
-                    true);
-            userRepository.save(admin);
-        }
 
         if(cohortRepository.count() == 0){
             seedCohorts();
@@ -108,16 +95,12 @@ public class InitializeController {
                 Participant participant = participants.get(i);
 
                 String username = participant.getFullName();
-                String password = "pw" + i;
-                User user = new User(username, passwordEncoder.encode(password), false);
+                String password = "pwparticipant";
+                User user = new User(username, passwordEncoder.encode(password));
                 userRepository.save(user);
                 participant.setUser(user);
 
                 participantRepository.save(participant);
-
-                log.info("========================================================================================");
-                log.info("Generated password for '{}' : {}", username, password);
-                log.info("========================================================================================");
             }
 
         } catch (IOException e) {
@@ -146,8 +129,8 @@ public class InitializeController {
                 instructor.getCohorts().add(cohorts.get(i % cohorts.size()));
 
                 String username = instructor.getFullName();
-                String password = "pw" + i;
-                User user = new User(username, passwordEncoder.encode(password), false);
+                String password = "pwinstructor";
+                User user = new User(username, passwordEncoder.encode(password));
                 userRepository.save(user);
                 instructor.setUser(user);
 

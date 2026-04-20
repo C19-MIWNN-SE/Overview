@@ -52,17 +52,4 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping(value ="/{participantId}")
-    public String showHomePageParticipant(@PathVariable Long participantId, Model model) {
-        log.debug("Overview pagina voor specifieke participant opgevraagd");
-
-        Long participantID = 1L;
-
-        Optional<Participant> participant = participantService.showParticipantDetail(participantID);
-        model.addAttribute("title", "Homepagina");
-        model.addAttribute("participant", participant.get());
-
-        return "home";
-    }
-
 }
