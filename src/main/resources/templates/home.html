@@ -10,6 +10,21 @@
          alt="Afbeelding"
          style="width: 175px; height: 175px;">
 
+    <div th:if="${userType == 'participant'}">
+        <p th:text="${user.cohorts.name}"></p>
+
+        <p>Ga naar:</p>
+        <a th:text="${user.cohorts.name}"
+           th:href="@{/cohort/{id}(id=${user.cohorts.id})}" >Jouw klas</a>
+
+        <a th:href="@{/detail/participant/{id}(id=${user.id})}">Jouw profiel</a>
+
+        <span th:each="instructors, iterStat: ${user.cohorts.instructors}">
+                 <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
+                    th:text="${instructors.fullName}"></a>
+        </span>
+    </div>
+
     <form th:action="@{/detail/participant/add}" method="get">
         <button type="submit">Maak Nieuwe Deelnemer Aan</button>
     </form>

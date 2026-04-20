@@ -47,11 +47,13 @@ public class HomeController {
         if (user.isParticipant()) {
             Optional<Participant> participant = participantService.findParticipantByUserId(userId);
             model.addAttribute("user", participant.get());
+            model.addAttribute("userType", "participant");
         }
 
         if (user.isInstructor()) {
             Optional<Instructor> instructor = instructorService.findInstructorByUserId(userId);
             model.addAttribute("user", instructor.get());
+            model.addAttribute("userType", "instructor");
         }
 
         model.addAttribute("title", "Homepagina");
