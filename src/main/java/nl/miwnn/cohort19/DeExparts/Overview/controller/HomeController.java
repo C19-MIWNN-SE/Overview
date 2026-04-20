@@ -1,5 +1,6 @@
 package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
+import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
 import nl.miwnn.cohort19.DeExparts.Overview.model.User;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
@@ -11,7 +12,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
@@ -44,11 +44,17 @@ public class HomeController {
         User user = (User) userService.loadUserByUsername(currentUser.getUsername());
         Long userId = user.getId();
 
-        Optional<Participant> participant = participantService.findParticipantByUserId(userId);
+        if (user.isParticipant()) {
+            Optional<Participant> participant = participantService.findParticipantByUserId(userId);
+            model.addAttribute("user", participant.get());
+        }
 
-        log.debug("Home pagina opgevraagd");
+        if (user.isInstructor()) {
+            Optional<Instructor> instructor = instructorService.findInstructorByUserId(userId);
+            model.addAttribute("user", instructor.get());
+        }
+
         model.addAttribute("title", "Homepagina");
-        model.addAttribute("participant", participant.get());
         return "home";
     }
 
