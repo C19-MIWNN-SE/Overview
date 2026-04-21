@@ -4,24 +4,26 @@
 <head><title>Home</title></head>
 <body>
 <div id="content">
-    <h1 th:text="${participant.firstName} + ${participant.lastName}"></h1>
+    <h1 th:text="${user.firstName} + ${user.lastName}"></h1>
 
     <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
          alt="Afbeelding"
          style="width: 175px; height: 175px;">
 
-    <p th:text="${participant.cohorts.name}"></p>
+    <div th:if="${userType == 'participant'}">
+        <p th:text="${user.cohorts.name}"></p>
 
-    <p>Ga naar:</p>
-    <a th:text="${participant.cohorts.name}"
-       th:href="@{/cohort/{id}(id=${participant.cohorts.id})}" >Jouw klas</a>
+        <p>Ga naar:</p>
+        <a th:text="${user.cohorts.name}"
+           th:href="@{/cohort/{id}(id=${user.cohorts.id})}" >Jouw klas</a>
 
-    <a th:href="@{/detail/participant/{id}(id=${participant.id})}">Jouw profiel</a>
+        <a th:href="@{/detail/participant/{id}(id=${user.id})}">Jouw profiel</a>
 
-    <span th:each="instructors, iterStat: ${participant.cohorts.instructors}">
+        <span th:each="instructors, iterStat: ${user.cohorts.instructors}">
                  <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
                     th:text="${instructors.fullName}"></a>
-    </span>
+        </span>
+    </div>
 
     <form th:action="@{/detail/participant/add}" method="get">
         <button type="submit">Maak Nieuwe Deelnemer Aan</button>
