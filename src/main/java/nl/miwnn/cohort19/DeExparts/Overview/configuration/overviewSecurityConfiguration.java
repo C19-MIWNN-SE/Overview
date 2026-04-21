@@ -27,12 +27,10 @@ public class overviewSecurityConfiguration {
                     .authorizeHttpRequests(auth -> auth
                             .requestMatchers(
                                     "/",
-                                    "/home/**",
                                     "/images/**",
-                                    "/login/**",
-                                    "/overview/**",
                                     "/css/**",
-                                    "/webjars/**").permitAll()
+                                    "/webjars/**"
+                            ).permitAll()
                             .requestMatchers(
                                     "/cohort/").hasAnyRole("INSTRUCTOR")
                             .anyRequest().authenticated()

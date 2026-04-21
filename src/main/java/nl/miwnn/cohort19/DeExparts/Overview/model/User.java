@@ -12,7 +12,8 @@ import java.util.List;
 
 /**
  * @author Coen Cuppes
- * !! TODO include description !!
+ * A user (account) for someone who can login to our system
+ * coupled to an Participant or Instructor
  */
 @Entity
 public class User implements UserDetails {
@@ -26,21 +27,18 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private Boolean administrator;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) // TODO check if orphanRemoval is necessary
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Instructor instructor;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Participant participant;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles;
 
-    public User(String username, String password, Boolean administrator) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.administrator = administrator;
     }
 
     public User() {}
@@ -60,10 +58,6 @@ public class User implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-        if (administrator) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
 
         return authorities;
     }
@@ -104,13 +98,14 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Boolean getAdministrator() {
-        return administrator;
+    public boolean isInstructor() {
+        return instructor != null;
     }
 
-    public void setAdministrator(Boolean administrator) {
-        this.administrator = administrator;
+    public boolean isParticipant() {
+        return participant != null;
     }
+
 
     public Instructor getInstructor() {
         return instructor;

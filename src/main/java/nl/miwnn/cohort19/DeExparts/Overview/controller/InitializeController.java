@@ -191,7 +191,7 @@ public class InitializeController {
 
             } catch (IOException e) {
             throw new RuntimeException(
-                    "Kon instructor.csv niet inlezen", e);
+                    "Kon instructors.csv niet inlezen", e);
         }
     }
 
