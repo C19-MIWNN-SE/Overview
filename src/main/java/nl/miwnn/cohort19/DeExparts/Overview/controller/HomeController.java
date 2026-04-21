@@ -3,6 +3,7 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
 import nl.miwnn.cohort19.DeExparts.Overview.model.User;
+import nl.miwnn.cohort19.DeExparts.Overview.repositories.UserRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
@@ -28,29 +29,35 @@ public class HomeController {
     private final ParticipantService participantService;
     private final InstructorService instructorService;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     public HomeController(ParticipantService participantService,
                           InstructorService instructorService,
-                          UserService userService) {
+                          UserService userService, UserRepository userRepository) {
         this.participantService = participantService;
         this.instructorService = instructorService;
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
+    // TODO cleanup code (and use userService instead of userRepository)
     @GetMapping("/")
-    public String showHomePage(@AuthenticationPrincipal User currentUser, Model model) {
+    public String showHomePage(@AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser, Model model) {
+
+        User currentUser = userRepository.findByUsername(springUser.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         log.debug("Homepagina opgevraagd voor: {}", currentUser.getUsername());
 
-        User user = (User) userService.loadUserByUsername(currentUser.getUsername());
-        Long userId = user.getId();
+        Long userId = currentUser.getId();
 
-        if (user.isParticipant()) {
+        if (currentUser.isParticipant()) {
             Optional<Participant> participant = participantService.findParticipantByUserId(userId);
             model.addAttribute("user", participant.get());
             model.addAttribute("userType", "participant");
         }
 
-        if (user.isInstructor()) {
+        if (currentUser.isInstructor()) {
             Optional<Instructor> instructor = instructorService.findInstructorByUserId(userId);
             model.addAttribute("user", instructor.get());
             model.addAttribute("userType", "instructor");

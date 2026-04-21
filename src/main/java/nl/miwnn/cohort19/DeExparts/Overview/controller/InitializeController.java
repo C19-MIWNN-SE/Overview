@@ -56,20 +56,6 @@ public class InitializeController {
             seedRoles();
         }
 
-        if (userRepository.count() == 0) {
-            String password = "admin";
-
-            log.info("========================================================================================");
-            log.info("Generated password for 'beheerder' : {}", password);
-            log.info("========================================================================================");
-
-            User admin = new User(
-                    "admin",
-                    passwordEncoder.encode(password),
-                    true);
-            userRepository.save(admin);
-        }
-
         if(cohortRepository.count() == 0){
             seedCohorts();
         }
@@ -104,34 +90,17 @@ public class InitializeController {
                 participantRepository.save(participant);
             }
 
-//            for (int i = 0; i < participants.size(); i++) {
-//                Participant participant = participants.get(i);
-//
-//                String username = participant.getFullName();
-//                String password = "pw" + i;
-//                User user = new User(username, passwordEncoder.encode(password), false);
-//                userRepository.save(user);
-//                participant.setUser(user);
-//
-//                participantRepository.save(participant);
-//
-//                log.info("========================================================================================");
-//                log.info("Generated password for '{}' : {}", username, password);
-//                log.info("========================================================================================");
-//            }
-
-            for (int i = 0; i < participants.size(); i++) {
-                Participant participant = participants.get(i);
-
+            for (Participant participant : participants) {
                 Role participantRole = roleRepository.findByAuthority("ROLE_PARTICIPANT")
                         .orElseThrow();
 
                 String username = participant.getFirstName();
                 String password = "pw";
 
-                User user = new User(username, passwordEncoder.encode(password), false);
+                User user = new User(username, passwordEncoder.encode(password));
                 user.setRoles(List.of(participantRole));
                 userRepository.save(user);
+
                 participant.setUser(user);
                 participantRepository.save(participant);
             }
@@ -157,34 +126,23 @@ public class InitializeController {
             List<Instructor> instructors = csvToBean.parse();
             List<Cohort> cohorts = cohortRepository.findAll();
 
-//            for (int i = 0; i < instructors.size(); i++) {
-//                Instructor instructor = instructors.get(i);
-//                instructor.getCohorts().add(cohorts.get(i % cohorts.size()));
-//
-//                String username = instructor.getFullName();
-//                String password = "pw" + i;
-//                User user = new User(username, passwordEncoder.encode(password), false);
-//                userRepository.save(user);
-//                instructor.setUser(user);
-//
-//                instructorRepository.save(instructor);
-//
-//                log.info("========================================================================================");
-//                log.info("Generated password for '{}' : {}", username, password);
-//                log.info("========================================================================================");
-//            }
             for (int i = 0; i < instructors.size(); i++) {
                 Instructor instructor = instructors.get(i);
+                instructor.getCohorts().add(cohorts.get(i % cohorts.size()));
+                instructorRepository.save(instructor);
+            }
 
+            for (Instructor instructor : instructors) {
                 Role instructorRole = roleRepository.findByAuthority("ROLE_INSTRUCTOR")
                         .orElseThrow();
 
                 String username = instructor.getFirstName();
                 String password = "pw";
 
-                User user = new User(username, passwordEncoder.encode(password), false);
+                User user = new User(username, passwordEncoder.encode(password));
                 user.setRoles(List.of(instructorRole));
                 userRepository.save(user);
+
                 instructor.setUser(user);
                 instructorRepository.save(instructor);
             }

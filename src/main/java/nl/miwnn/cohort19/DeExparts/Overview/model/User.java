@@ -105,8 +105,7 @@ public class User implements UserDetails {
     public boolean isParticipant() {
         return participant != null;
     }
-
-
+    
     public Instructor getInstructor() {
         return instructor;
     }
