@@ -10,12 +10,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import java.util.Optional;
 
 /**
  * @author Coen Cuppes
- * !! TODO include description !!
+ * Handle all businesslogic regarding users
  */
 @Service
 public class UserService implements UserDetailsService {
@@ -44,5 +43,8 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
 }
