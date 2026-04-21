@@ -33,11 +33,8 @@ public class overviewSecurityConfiguration {
                                     "/overview/**",
                                     "/css/**",
                                     "/webjars/**").permitAll()
-                                    "/webjars/**"
-                            ).permitAll()
                             .requestMatchers(
-                                    "/cohort/"
-                            ).hasAnyRole("ADMIN")
+                                    "/cohort/").hasAnyRole("INSTRUCTOR")
                             .anyRequest().authenticated()
                     )
                     .formLogin(form -> form

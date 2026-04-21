@@ -2,14 +2,8 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import nl.miwnn.cohort19.DeExparts.Overview.model.Cohort;
-import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
-import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
-import nl.miwnn.cohort19.DeExparts.Overview.model.User;
-import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
-import nl.miwnn.cohort19.DeExparts.Overview.repositories.InstructorRepository;
-import nl.miwnn.cohort19.DeExparts.Overview.repositories.ParticipantRepository;
-import nl.miwnn.cohort19.DeExparts.Overview.repositories.UserRepository;
+import nl.miwnn.cohort19.DeExparts.Overview.model.*;
+import nl.miwnn.cohort19.DeExparts.Overview.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -35,6 +29,7 @@ public class InitializeController {
     private final InstructorRepository instructorRepository;
     private final CohortRepository cohortRepository;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -45,16 +40,22 @@ public class InitializeController {
             InstructorRepository instructorRepository,
             CohortRepository cohortRepository,
             UserRepository userRepository,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.participantRepository = participantRepository;
         this.instructorRepository = instructorRepository;
         this.cohortRepository = cohortRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @EventListener(ContextRefreshedEvent.class)
     public void seed() {
+
+        if (roleRepository.count() == 0) {
+            seedRoles();
+        }
+
         if (userRepository.count() == 0) {
             String password = "admin";
 
@@ -80,7 +81,6 @@ public class InitializeController {
         if (instructorRepository.count() == 0) {
             seedInstructors();
         }
-
     }
 
     private void seedParticipants() {
@@ -104,20 +104,36 @@ public class InitializeController {
                 participantRepository.save(participant);
             }
 
+//            for (int i = 0; i < participants.size(); i++) {
+//                Participant participant = participants.get(i);
+//
+//                String username = participant.getFullName();
+//                String password = "pw" + i;
+//                User user = new User(username, passwordEncoder.encode(password), false);
+//                userRepository.save(user);
+//                participant.setUser(user);
+//
+//                participantRepository.save(participant);
+//
+//                log.info("========================================================================================");
+//                log.info("Generated password for '{}' : {}", username, password);
+//                log.info("========================================================================================");
+//            }
+
             for (int i = 0; i < participants.size(); i++) {
                 Participant participant = participants.get(i);
 
-                String username = participant.getFullName();
-                String password = "pw" + i;
+                Role participantRole = roleRepository.findByAuthority("ROLE_PARTICIPANT")
+                        .orElseThrow();
+
+                String username = participant.getFirstName();
+                String password = "pw";
+
                 User user = new User(username, passwordEncoder.encode(password), false);
+                user.setRoles(List.of(participantRole));
                 userRepository.save(user);
                 participant.setUser(user);
-
                 participantRepository.save(participant);
-
-                log.info("========================================================================================");
-                log.info("Generated password for '{}' : {}", username, password);
-                log.info("========================================================================================");
             }
 
         } catch (IOException e) {
@@ -141,24 +157,39 @@ public class InitializeController {
             List<Instructor> instructors = csvToBean.parse();
             List<Cohort> cohorts = cohortRepository.findAll();
 
+//            for (int i = 0; i < instructors.size(); i++) {
+//                Instructor instructor = instructors.get(i);
+//                instructor.getCohorts().add(cohorts.get(i % cohorts.size()));
+//
+//                String username = instructor.getFullName();
+//                String password = "pw" + i;
+//                User user = new User(username, passwordEncoder.encode(password), false);
+//                userRepository.save(user);
+//                instructor.setUser(user);
+//
+//                instructorRepository.save(instructor);
+//
+//                log.info("========================================================================================");
+//                log.info("Generated password for '{}' : {}", username, password);
+//                log.info("========================================================================================");
+//            }
             for (int i = 0; i < instructors.size(); i++) {
                 Instructor instructor = instructors.get(i);
-                instructor.getCohorts().add(cohorts.get(i % cohorts.size()));
 
-                String username = instructor.getFullName();
-                String password = "pw" + i;
+                Role instructorRole = roleRepository.findByAuthority("ROLE_INSTRUCTOR")
+                        .orElseThrow();
+
+                String username = instructor.getFirstName();
+                String password = "pw";
+
                 User user = new User(username, passwordEncoder.encode(password), false);
+                user.setRoles(List.of(instructorRole));
                 userRepository.save(user);
                 instructor.setUser(user);
-
                 instructorRepository.save(instructor);
-
-                log.info("========================================================================================");
-                log.info("Generated password for '{}' : {}", username, password);
-                log.info("========================================================================================");
             }
 
-        } catch (IOException e) {
+            } catch (IOException e) {
             throw new RuntimeException(
                     "Kon instructor.csv niet inlezen", e);
         }
@@ -176,10 +207,33 @@ public class InitializeController {
                             .withIgnoreLeadingWhiteSpace(true)
                             .build();
             cohortRepository.saveAll(csvToBean.parse());
+
         } catch (IOException e) {
             throw new RuntimeException(
                     "Kon cohort.csv niet inlezen", e);
         }
+    }
+
+    private void seedRoles() {
+        try {
+            ClassPathResource resource =
+                    new ClassPathResource("seedData/roles.csv");
+            Reader reader = new InputStreamReader(resource.getInputStream());
+
+            CsvToBean<Role> csvToBean =
+                    new CsvToBeanBuilder<Role>(reader)
+                            .withType(Role.class)
+                            .withIgnoreLeadingWhiteSpace(true)
+                            .build();
+
+            List<Role> roles = csvToBean.parse();
+            roleRepository.saveAll(roles);
+
+        } catch (IOException e) {
+            throw new RuntimeException(
+                    "Kon Roles.csv niet inlezen", e);
+        }
+
     }
 
 }

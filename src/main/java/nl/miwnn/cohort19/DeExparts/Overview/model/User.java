@@ -34,6 +34,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Participant participant;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles;
+
     public User(String username, String password, Boolean administrator) {
         this.username = username;
         this.password = password;
@@ -107,5 +110,29 @@ public class User implements UserDetails {
 
     public void setAdministrator(Boolean administrator) {
         this.administrator = administrator;
+    }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
+
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(Participant participant) {
+        this.participant = participant;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }
