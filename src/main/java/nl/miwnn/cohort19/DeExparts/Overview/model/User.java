@@ -12,7 +12,8 @@ import java.util.List;
 
 /**
  * @author Coen Cuppes
- * !! TODO include description !!
+ * A user (account) for someone who can login to our system
+ * coupled to an Participant or Instructor
  */
 @Entity
 public class User implements UserDetails {
@@ -26,10 +27,10 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) // TODO check if orphanRemoval is necessary
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Instructor instructor;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Participant participant;
 
     public User(String username, String password) {
