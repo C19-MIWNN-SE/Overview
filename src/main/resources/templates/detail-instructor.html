@@ -11,11 +11,11 @@
          style="width: 175px; height: 175px;">
 
     <p>E-mailadres: <span th:text="${instructor.emailAdress}"></span></p>
-    <p>Adres: <span th:text="${instructor.address}"></span></p>
     <p>Woonplaats: <span th:text="${instructor.city}"></span></p>
     <p>Telefoonnummer: <span th:text="${instructor.phoneNumber}"></span></p>
     <p>Over mij: <span th:text="${instructor.description}"></span></p>
     <p>Vak: <span th:text="${instructor.course}"></span></p>
+    <p>Leeftijd: <span th:text="${instructor.getAgeInYears(instructor.birthDate)}"></span></p>
 
     <p>Klassen: <span th:each="cohorts, iterStat: ${instructor.cohorts}">
                 <a th:href="@{/cohort/{id}(id=${cohorts.id})}" th:text="${cohorts.name}"></a>

@@ -36,10 +36,6 @@
             <input type="text" id="emailAdress" th:field="*{emailAdress}">
         </div>
         <div>
-            <label for="address">Adres:</label>
-            <input type="text" id="address" th:field="*{address}">
-        </div>
-        <div>
             <label for="city">Woonplaats:</label>
             <input type="text" id="city" th:field="*{city}">
         </div>
@@ -54,6 +50,10 @@
         <div>
             <label for="description">Omschrijving:</label>
             <input type="text" id="description" th:field="*{description}">
+        </div>
+        <div>
+            <label for="birthDate">Geboortedatum:</label>
+            <input type="date" id="birthDate" th:field="*{birthDate}">
         </div>
         <button type="submit">Opslaan</button>
     </form>

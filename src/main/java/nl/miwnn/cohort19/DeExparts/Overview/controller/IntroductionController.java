@@ -120,6 +120,7 @@ public class IntroductionController {
         redirectAttributes.addAttribute("id", editedInstructor.getId());
         return "redirect:/detail/instructor/{id}";
     }
+
     @GetMapping(value = {"/participant/add"})
     public String addParticipant(Model model) {
         log.debug("Toevoegingspagina voor participant met opgevraagd");

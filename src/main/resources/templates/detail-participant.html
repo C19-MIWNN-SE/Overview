@@ -12,9 +12,10 @@
 
     <p>Rol: Deelnemer</p>
     <p>E-mailadres: <span th:text="${participant.emailAdress}"></span></p>
-    <p>Adres: <span th:text="${participant.address}"></span></p>
     <p>Woonplaats: <span th:text="${participant.city}"></span></p>
     <p>Telefoonnummer: <span th:text="${participant.phoneNumber}"></span></p>
+    <p>Leeftijd: <span th:text="${participant.getAgeInYears(participant.birthDate)}"></span></p>
+    <p>Werkgever: <span th:text="${participant.employer}"></span></p>
     <p>Over mij: <span th:text="${participant.description}"></span></p>
     <p>Klassen: <a th:href="@{/cohort/{id}(id=${participant.cohorts.id})}"
                    th:text="${participant.cohorts.name}"></a></p>

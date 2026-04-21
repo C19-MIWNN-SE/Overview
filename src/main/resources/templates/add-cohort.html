@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
+<head><title>Voeg Nieuw Cohort Toe</title></head>
 <body>
+<div id="content">
+    <h1>Voeg Nieuw Cohort Toe</h1>
+
+    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
+         alt="Afbeelding"
+         style="width: 175px; height: 175px;">
+
+    <form th:action="@{/cohort/save}" method="post" th:object="${cohort}">
+        <div>
+            <input type="hidden" id="id" th:field="*{id}">
+        </div>
+        <div>
+            <label for="name">Naam Cohort:</label>
+            <input type="text" id="name" th:field="*{name}">
+        </div>
+        <div>
+            <label for="subject">Onderwerp:</label>
+            <input type="text" id="subject" th:field="*{subject}">
+        </div>
+        <div>
+            <label for="startDate">Startdatum:</label>
+            <input type="date" id="startDate" th:field="*{startDate}">
+        </div>
+        <div>
+            <label for="endDate">Einddatum:</label>
+            <input type="date" id="endDate" th:field="*{endDate}">
+        </div>
+        <div>
+            <label for="instructors">Docenten:</label>
+            <select id="instructors" th:field="*{instructors}" multiple>
+                <option th:each="instructor : ${allInstructors}"
+                        th:value="${instructor.id}"
+                        th:text="${instructor.fullName}">
+                </option>
+            </select>
+        </div>
+        <div>
+            <label for="participants">Deelnemers:</label>
+            <select id="participants" th:field="*{participants}" multiple>
+                <option th:each="participant : ${allParticipantsWithoutCohort}"
+                        th:value="${participant.id}"
+                        th:text="${participant.fullName}">
+                </option>
+            </select>
+        </div>
+        <button type="submit">Opslaan</button>
+    </form>
+</div>
 
 </body>
 </html>

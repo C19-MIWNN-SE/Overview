@@ -5,6 +5,7 @@ import nl.miwnn.cohort19.DeExparts.Overview.repositories.InstructorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,6 +19,8 @@ public class InstructorService {
     public InstructorService(InstructorRepository instructorRepository) {
         this.instructorRepository = instructorRepository;
     }
+
+    public List<Instructor> showAllInstructors() {return instructorRepository.findAll();}
 
     public Optional<Instructor> showInstructorDetail(Long id) {
         return instructorRepository.findById(id);

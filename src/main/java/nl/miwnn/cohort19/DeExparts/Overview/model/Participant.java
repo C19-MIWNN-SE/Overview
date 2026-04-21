@@ -1,6 +1,11 @@
 package nl.miwnn.cohort19.DeExparts.Overview.model;
 
+import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Author: Anouk de Vos
@@ -24,9 +29,6 @@ public class Participant {
     private String emailAdress;
 
     @Column(nullable = false)
-    private String address;
-
-    @Column(nullable = false)
     private String city;
 
     @Column(nullable = false)
@@ -40,23 +42,31 @@ public class Participant {
     @OneToOne
     private User user;
 
+    @CsvDate(value = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthDate;
+
+    private String employer;
+
     public Participant(Long id,
                        String firstName,
                        String lastName,
                        String emailAdress,
-                       String address,
                        String city,
                        String phoneNumber,
                        String description,
+                       LocalDate birthDate,
+                       String employer,
                        User user) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAdress = emailAdress;
-        this.address = address;
         this.city = city;
         this.phoneNumber = phoneNumber;
         this.description = description;
+        this.birthDate = birthDate;
+        this.employer = employer;
         this.user = user;
     }
 
@@ -98,14 +108,6 @@ public class Participant {
         this.emailAdress = emailAdress;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getCity() {
         return city;
     }
@@ -136,6 +138,26 @@ public class Participant {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(String employer) {
+        this.employer = employer;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Long getAgeInYears(LocalDate birthDate){
+        return Math.abs(ChronoUnit.YEARS.between(LocalDate.now(),birthDate));
     }
 
     public User getUser() {

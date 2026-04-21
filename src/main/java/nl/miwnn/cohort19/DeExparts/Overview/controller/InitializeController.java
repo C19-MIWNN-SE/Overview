@@ -98,7 +98,7 @@ public class InitializeController {
             List<Participant> participants = csvToBean.parse();
             List<Cohort> cohorts = cohortRepository.findAll();
 
-            for (int i = 0; i < participants.size(); i++) {
+            for (int i = 0; i < participants.size()-1; i++) { //-1 toegevoegd om de testgebruiker toe te voegen zonder cohort
                 Participant participant = participants.get(i);
                 participant.setCohorts(cohorts.get(i % cohorts.size()));
                 participantRepository.save(participant);

@@ -36,6 +36,13 @@ public class CohortService {
     }
 
     @Transactional
+    public void saveCohort(Cohort editedCohort) {
+        editedCohort.getInstructors().forEach(instructor -> instructor.addCohort(editedCohort));
+        editedCohort.getParticipants().forEach(participant -> participant.setCohorts(editedCohort));
+        cohortRepository.save(editedCohort);
+    }
+
+    @Transactional
     public void deleteCohort(Long id){
         Cohort cohort = findById(id);
         List<Instructor> instructors = cohort.getInstructors();

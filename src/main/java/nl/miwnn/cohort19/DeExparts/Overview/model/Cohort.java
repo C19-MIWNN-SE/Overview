@@ -4,6 +4,7 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
 import org.hibernate.engine.internal.Cascade;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,18 +31,20 @@ public class Cohort {
 
     @CsvBindByName(column = "startDate")
     @CsvDate(value = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = true)
     private LocalDate startDate;
 
     @CsvBindByName(column = "endDate")
     @CsvDate(value = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = true)
     private LocalDate endDate;
 
-    @OneToMany(mappedBy = "cohorts")
+    @OneToMany(mappedBy = "cohorts", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     List<Participant> participants = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "cohorts", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "cohorts", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     List<Instructor> instructors = new ArrayList<>();
 
     public Cohort(String name, String subject, LocalDate startDate, LocalDate endDate) {
