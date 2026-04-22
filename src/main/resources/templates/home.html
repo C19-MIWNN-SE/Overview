@@ -1,53 +1,111 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head><title>Home</title></head>
+<head>
+    <title>Home</title>
+</head>
 <body>
+
 <div id="content">
-    <h1 th:text="${user.fullName}"></h1>
 
-    <!-- TODO make coupling with image from Participant/Instructor -->
+    <section class="mb-5">
+        <h1 th:text="'Welkom ' + ${user.fullName} + '!'" class="text-center mb-4"></h1>
+    </section>
 
-    <img th:if="${user.image != null}"
-         th:src="@{/images/{id}(id=${user.image.id})}"
-         th:alt="|Foto van ${user.fullName}|"
-         style="width: 175px; height: 175px;">
+    <section class="mb-5">
+        <div class="row justify-content-center g-4">
+            <div class="col-auto">
+                <div class="card h-100 text-center" style="width: 18rem;">
+                    <div class="round-image-wrapper">
+                        <img src="https://media.istockphoto.com/id/1588288383/photo/back-view-of-student-raising-his-hand-to-answer-teachers-question-during-education-training.jpg?s=612x612&w=0&k=20&c=ZSyPrLqe6WdE81WXiESD5AqIVw1a7hKv85UI5I-Vwco="
+                             class="round-image"
+                             alt="Kaart voorbeeld">
+                    </div>
+                    <div class="card-body">
+                        <h5>
+                            <a th:text="${user.cohorts.name}">
+                                Jouw klas
+                            </a>
+                        </h5>
+                        <p class="card-text">
+                            Bekijk alle deelnemers en docenten binnen jouw cohort. Ontdek wie er in jouw klas zit en werk eenvoudig samen.
+                        </p>
+                        <a th:href="@{/cohort/{id}(id=${user.cohorts.id})}" class="btn btn-primary">Ga naar jouw cohort</a>
+                    </div>
+                </div>
+            </div>
 
-    <img th:unless="${user.image != null}"
-         src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-         th:alt="|Foto van ${user.fullName}|"
-         style="width: 175px; height: 175px;">
-    
-    <div th:if="${userType == 'participant'}">
-        <br>
-        <p>Ga naar:</p>
-        <ul>
-            <li>
-                <a th:text="${user.cohorts.name}"
-                   th:href="@{/cohort/{id}(id=${user.cohorts.id})}" >Jouw klas</a>
-            </li>
-            <li>
-                <a th:href="@{/detail/participant/{id}(id=${user.id})}">Jouw profiel</a>
-            </li>
-            <!-- TODO adapt for use case with multiple instructors -->
-            <li>Jouw docent(en):
-                <span th:each="instructors, iterStat: ${user.cohorts.instructors}">
-                    <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
-                    th:text="${instructors.fullName}"></a> <!-- TODO make enumeration comma separated -->
-                </span>
-            </li>
-        </ul>
+            <div class="col-auto">
+                <div class="card h-100 text-center" style="width: 18rem;">
+                    <div class="round-image-wrapper">
+                    <img src="https://img.freepik.com/free-photo/lifestyle-beauty-fashion-people-emotions-concept-young-asian-female-office-manager-ceo-with-pleased-expression-standing-white-background-smiling-with-arms-crossed-chest_1258-59329.jpg?semt=ais_hybrid&w=740&q=80"
+                         class="round-image"
+                         alt="Kaart voorbeeld">
+                    </div>
+                    <div class="card-body">
+                        <h5>
+                            <a>Jouw profiel</a>
+                        </h5>
+                        <p class="card-text">
+                            Beheer jouw persoonlijke gegevens. Hier vind je alles wat met jouw account te maken heeft.</p>
+                        <a th:href="@{/detail/participant/{id}(id=${user.id})}" class="btn btn-primary">
+                            Ga naar jouw profiel
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-auto">
+                <div class="card h-100 text-center" style="width: 18rem;">
+                    <div class="round-image-wrapper">
+                    <img src="https://img.freepik.com/free-photo/portrait-teacher-class-pointing_23-2148665948.jpg?semt=ais_hybrid&w=740&q=80"
+                         class="round-image"
+                         alt="Kaart voorbeeld">
+                    </div>
+                    <div class="card-body">
+                        <h5>
+                            Jouw docent(en):
+                            <span th:each="instructor, iterStat : ${user.cohorts.instructors}">
+                            <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}"
+                              th:text="${instructor.fullName}"></a><span th:if="${!iterStat.last}">, </span>
+                            </span>
+                        </h5>
+                        <p class="card-text">
+                            Bekijk de docenten die gekoppeld zijn aan jouw cohort en neem eenvoudig contact met hen op voor begeleiding.                        </p>
+                        <a href="#" class="btn btn-primary">Ga naar jouw docent</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!--    <section class="mb-5 text-center">-->
+<!--        <img th:if="${user.image != null}"-->
+<!--             th:src="@{/images/{id}(id=${user.image.id})}"-->
+<!--             th:alt="|Foto van ${user.fullName}|"-->
+<!--             class="profile-image">-->
+
+<!--        <img th:unless="${user.image != null}"-->
+<!--             src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="-->
+<!--             th:alt="|Foto van ${user.fullName}|"-->
+<!--             class="profile-image">-->
+<!--    </section>-->
 
 
-    </div>
+    <section class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+        <form th:action="@{/detail/participant/add}" method="get">
+            <button type="submit" class="btn btn-outline-primary">
+                Maak nieuwe deelnemer aan
+            </button>
+        </form>
 
-    <form th:action="@{/detail/participant/add}" method="get">
-        <button type="submit">Maak Nieuwe Deelnemer Aan</button>
-    </form>
+        <form th:action="@{/detail/instructor/add}" method="get">
+            <button type="submit" class="btn btn-outline-primary">
+                Maak nieuwe docent aan
+            </button>
+        </form>
+    </section>
 
-    <form th:action="@{/detail/instructor/add}" method="get">
-        <button type="submit">Maak Nieuwe Docent Aan</button>
-    </form>
 </div>
 </body>
 </html>

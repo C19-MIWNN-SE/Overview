@@ -1,5 +1,5 @@
 firstName,lastName,emailAdress,city,phoneNumber,description,birthDate,employer
-Lola,Jansen,lola.jansen@example.com,Amsterdam,0612340001,Creatieve frontend developer,2026-08-01,Nidaros
+Deelnemer,Jansen,lola.jansen@example.com,Amsterdam,0612340001,Creatieve frontend developer,2026-08-01,Nidaros
 Tom,Bakker,tom.bakker@example.com,Utrecht,0612340002,Fullstack developer in opleiding,2026-08-01,Nidaros
 Sanne,Visser,sanne.visser@example.com,Rotterdam,0612340003,UX/UI designer met oog voor detail,2026-08-01,Nidaros
 Daan,Meijer,daan.meijer@example.com,Eindhoven,0612340004,Backend developer gespecialiseerd in Java,2026-08-01,Nidaros
