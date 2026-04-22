@@ -57,8 +57,6 @@ public class HomeController {
         }
 
         model.addAttribute("title", "Homepagina");
-        model.addAttribute("activePage", "aboutMe");
         return "home";
     }
-
 }
