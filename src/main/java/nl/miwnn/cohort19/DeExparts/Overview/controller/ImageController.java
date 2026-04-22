@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Handles requests regarding images
  */
 
 @Controller

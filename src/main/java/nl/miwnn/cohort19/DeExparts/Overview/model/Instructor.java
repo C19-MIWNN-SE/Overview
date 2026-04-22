@@ -50,6 +50,9 @@ public class Instructor {
     @OneToOne
     private User user;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
+
     public Instructor() {
     }
 
@@ -178,5 +181,13 @@ public class Instructor {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

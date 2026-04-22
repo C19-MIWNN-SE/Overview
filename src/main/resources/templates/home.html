@@ -1,35 +1,111 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head><title>Home</title></head>
+<head>
+    <title>Home</title>
+</head>
 <body>
+
 <div id="content">
-    <h1 th:text="${participant.firstName} + ${participant.lastName}"></h1>
 
-    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-         alt="Afbeelding"
-         style="width: 175px; height: 175px;">
+    <section class="mb-5">
+        <h1 th:text="'Welkom ' + ${user.fullName} + '!'" class="text-center mb-4"></h1>
+    </section>
 
-    <p th:text="${participant.cohorts.name}"></p>
+    <section class="mb-5">
+        <div class="row justify-content-center g-4">
+            <div class="col-auto">
+                <div class="card h-100 text-center" style="width: 18rem;">
+                    <div class="round-image-wrapper">
+                        <img src="https://media.istockphoto.com/id/1588288383/photo/back-view-of-student-raising-his-hand-to-answer-teachers-question-during-education-training.jpg?s=612x612&w=0&k=20&c=ZSyPrLqe6WdE81WXiESD5AqIVw1a7hKv85UI5I-Vwco="
+                             class="round-image"
+                             alt="Kaart voorbeeld">
+                    </div>
+                    <div class="card-body">
+                        <h5>
+                            <a>
+                                Jouw klas
+                            </a>
+                        </h5>
+                        <p class="card-text">
+                            Bekijk alle deelnemers en docenten binnen jouw cohort. Ontdek wie er in jouw klas zit en werk eenvoudig samen.
+                        </p>
+                        <a>Ga naar jouw cohort</a>
+                    </div>
+                </div>
+            </div>
 
-    <p>Ga naar:</p>
-    <a th:text="${participant.cohorts.name}"
-       th:href="@{/cohort/{id}(id=${participant.cohorts.id})}" >Jouw klas</a>
+            <div class="col-auto">
+                <div class="card h-100 text-center" style="width: 18rem;">
+                    <div class="round-image-wrapper">
+                    <img src="https://img.freepik.com/free-photo/lifestyle-beauty-fashion-people-emotions-concept-young-asian-female-office-manager-ceo-with-pleased-expression-standing-white-background-smiling-with-arms-crossed-chest_1258-59329.jpg?semt=ais_hybrid&w=740&q=80"
+                         class="round-image"
+                         alt="Kaart voorbeeld">
+                    </div>
+                    <div class="card-body">
+                        <h5>
+                            <a>Jouw profiel</a>
+                        </h5>
+                        <p class="card-text">
+                            Beheer jouw persoonlijke gegevens. Hier vind je alles wat met jouw account te maken heeft.</p>
+                        <a th:href="@{/detail/participant/{id}(id=${user.id})}" class="btn btn-primary">
+                            Ga naar jouw profiel
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-    <a th:href="@{/detail/participant/{id}(id=${participant.id})}">Jouw profiel</a>
+            <div class="col-auto">
+                <div class="card h-100 text-center" style="width: 18rem;">
+                    <div class="round-image-wrapper">
+                    <img src="https://img.freepik.com/free-photo/portrait-teacher-class-pointing_23-2148665948.jpg?semt=ais_hybrid&w=740&q=80"
+                         class="round-image"
+                         alt="Kaart voorbeeld">
+                    </div>
+                    <div class="card-body">
+                        <h5>
+                            Jouw docent(en):
+<!--                            <span th:each="instructor, iterStat : ${user.cohorts.instructors}">-->
+<!--                            <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}"-->
+<!--                              th:text="${instructor.fullName}"></a><span th:if="${!iterStat.last}">, </span>-->
+<!--                            </span>-->
+                        </h5>
+                        <p class="card-text">
+                            Bekijk de docenten die gekoppeld zijn aan jouw cohort en neem eenvoudig contact met hen op voor begeleiding.                        </p>
+                        <a href="#" class="btn btn-primary">Ga naar jouw docent</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <span th:each="instructors, iterStat: ${participant.cohorts.instructors}">
-                 <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
-                    th:text="${instructors.fullName}"></a>
-    </span>
+<!--    <section class="mb-5 text-center">-->
+<!--        <img th:if="${user.image != null}"-->
+<!--             th:src="@{/images/{id}(id=${user.image.id})}"-->
+<!--             th:alt="|Foto van ${user.fullName}|"-->
+<!--             class="profile-image">-->
 
-    <form th:action="@{/detail/participant/add}" method="get">
-        <button type="submit">Maak Nieuwe Deelnemer Aan</button>
-    </form>
+<!--        <img th:unless="${user.image != null}"-->
+<!--             src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="-->
+<!--             th:alt="|Foto van ${user.fullName}|"-->
+<!--             class="profile-image">-->
+<!--    </section>-->
 
-    <form th:action="@{/detail/instructor/add}" method="get">
-        <button type="submit">Maak Nieuwe Docent Aan</button>
-    </form>
+
+    <section class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+        <form th:action="@{/detail/participant/add}" method="get">
+            <button type="submit" class="btn btn-outline-primary">
+                Maak nieuwe deelnemer aan
+            </button>
+        </form>
+
+        <form th:action="@{/detail/instructor/add}" method="get">
+            <button type="submit" class="btn btn-outline-primary">
+                Maak nieuwe docent aan
+            </button>
+        </form>
+    </section>
+
 </div>
 </body>
 </html>

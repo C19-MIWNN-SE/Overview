@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org"
       th:fragment="layout(title, content)">
-<head th:replace="~{fragments/general :: baseheader(${title})}"></head>
+<head>
+    <th:block th:replace="~{fragments/general :: baseheader(${title})}"></th:block>
+</head>
 <body>
 <nav th:replace="~{fragments/general :: navbar}"></nav>
+
+<main class="container mt-4">
+    <th:block th:replace="${content}"></th:block>
+</main>
+
+<nav th:replace="~{fragments/general :: navbar}" sec:authorize="isAuthenticated()"></nav>
 <div class="container mt-4">
     <th:block th:replace="${content}"/>
 </div>
