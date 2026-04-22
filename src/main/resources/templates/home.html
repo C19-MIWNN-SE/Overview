@@ -22,15 +22,28 @@
                              alt="Kaart voorbeeld">
                     </div>
                     <div class="card-body">
-                        <h5>
-                            <a>
-                                Jouw klas
-                            </a>
-                        </h5>
-                        <p class="card-text">
-                            Bekijk alle deelnemers en docenten binnen jouw cohort. Ontdek wie er in jouw klas zit en werk eenvoudig samen.
-                        </p>
-                        <a>Ga naar jouw cohort</a>
+                        <div th:if="${userType == 'participant'}">
+                            <h5>
+                                <a>
+                                    Jouw cohort
+                                </a>
+                            </h5>
+                            <p class="card-text">
+                                Bekijk alle deelnemers en docenten binnen jouw cohort. Ontdek wie er in jouw klas zit en werk eenvoudig samen.
+                            </p>
+                            <a th:href="@{/cohort/{id}(id=${user.cohorts.id})}" class="btn btn-primary">Ga naar jouw cohort</a>
+                        </div>
+                        <div th:if="${userType == 'instructor'}">
+                            <h5>
+                                <a>
+                                    Jouw cohort(en)
+                                </a>
+                            </h5>
+                            <p class="card-text">
+                                Bekijk alle deelnemers en docenten van de cohorten waar je les aan geeft.
+                            </p>
+                            <a th:href="@{/cohort}" class="btn btn-primary">Ga naar jouw cohorten</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div th:if="${userType == 'participant'}" class="col-auto">
                 <div class="card h-100 text-center" style="width: 18rem;">
                     <div class="round-image-wrapper">
                     <img src="https://img.freepik.com/free-photo/portrait-teacher-class-pointing_23-2148665948.jpg?semt=ais_hybrid&w=740&q=80"
@@ -65,10 +78,10 @@
                     <div class="card-body">
                         <h5>
                             Jouw docent(en):
-<!--                            <span th:each="instructor, iterStat : ${user.cohorts.instructors}">-->
-<!--                            <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}"-->
-<!--                              th:text="${instructor.fullName}"></a><span th:if="${!iterStat.last}">, </span>-->
-<!--                            </span>-->
+                            <span th:each="instructor, iterStat : ${user.cohorts.instructors}">
+                            <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}"
+                              th:text="${instructor.fullName}"></a><span th:if="${!iterStat.last}">, </span>
+                            </span>
                         </h5>
                         <p class="card-text">
                             Bekijk de docenten die gekoppeld zijn aan jouw cohort en neem eenvoudig contact met hen op voor begeleiding.                        </p>
