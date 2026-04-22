@@ -47,7 +47,7 @@ public class Instructor {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -40,7 +40,7 @@ public class Participant {
     @ManyToOne(fetch = FetchType.LAZY)
     private Cohort cohorts;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private User user;
 
     @CsvDate(value = "yyyy-MM-dd")
