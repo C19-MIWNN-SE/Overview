@@ -23,9 +23,48 @@
                 </span>
     </p>
 
-    <form th:action="@{/detail/instructor/delete/{id}(id=${instructor.id})}" method="post">
-        <button type="submit">Verwijder Docent</button>
-    </form>
+    <div class="modal fade" id="deleteInstructor"
+         tabindex="-1"
+         aria-labelledby="deleteInstructorModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="deleteInstructorModalLabel">
+                         Instructor Verwijderen
+                    </h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Sluiten"></button>
+                </div>
+                <div class="modal-body">
+                    Weet je zeker of deze docent verwijderen wil?
+                </div>
+                <!-- Footer (optioneel) -->
+                <div class="modal-footer">
+
+                    <form th:action="@{/detail/instructor/delete/{id}(id=${instructor.id})}" method="post">
+                        <button type="submit" class="btn btn-warning">Ja</button>
+                    </form>
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Nee
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteInstructor">
+        Verwijder Docent
+    </button>
 
     <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get">
         <button type="submit">Bewerk Docent</button>
@@ -34,6 +73,7 @@
     <form th:action="@{/detail/instructor/add}" method="get">
         <button type="submit">Maak Nieuwe Docent Aan</button>
     </form>
+
 </div>
 </body>
 </html>

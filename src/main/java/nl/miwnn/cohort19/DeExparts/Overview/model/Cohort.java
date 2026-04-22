@@ -3,6 +3,7 @@ package nl.miwnn.cohort19.DeExparts.Overview.model;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.engine.internal.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,11 +23,11 @@ public class Cohort {
     private Long id;
 
     @CsvBindByName(column = "name")
-    @Column(nullable = false)
+    @NotBlank(message = "Cohort moet een naam hebben.")
     private String name;
 
     @CsvBindByName(column = "subject")
-    @Column(nullable = false)
+    @NotBlank(message = "Cohort moet een onderwerp hebben.")
     private String subject;
 
     @CsvBindByName(column = "startDate")
@@ -41,10 +42,10 @@ public class Cohort {
     @Column(nullable = true)
     private LocalDate endDate;
 
-    @OneToMany(mappedBy = "cohorts", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @OneToMany(mappedBy = "cohorts")
     List<Participant> participants = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "cohorts", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(mappedBy = "cohorts")
     List<Instructor> instructors = new ArrayList<>();
 
     public Cohort(String name, String subject, LocalDate startDate, LocalDate endDate) {

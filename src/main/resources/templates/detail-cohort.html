@@ -70,9 +70,54 @@
         </tr>
         </tbody>
     </table>
-    <form th:action="@{/cohort/delete/{id}(id=${cohort.id})}" method="post">
-        <button type="submit">Verwijder Cohort</button>
+    <form th:action="@{/cohort/edit/{id}(id=${cohort.id})}" method="get">
+        <button type="submit">Bewerk Cohort</button>
     </form>
+
+    <div class="modal fade" id="deleteCohort"
+         tabindex="-1"
+         aria-labelledby="deleteCohortModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="deleteCohortModalLabel">
+                        Cohort Verwijderen
+                    </h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Sluiten"></button>
+                </div>
+                <div class="modal-body">
+                    Weet je zeker of het gehele cohort verwijderen wil?
+                </div>
+                <!-- Footer (optioneel) -->
+                <div class="modal-footer">
+
+                    <form th:action="@{/cohort/delete/{id}(id=${cohort.id})}" method="post">
+                        <button type="submit" class="btn btn-warning">Ja</button>
+                    </form>
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Nee
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteCohort">
+        Verwijder Cohort
+    </button>
+
+
 </div>
 </body>
 </html>

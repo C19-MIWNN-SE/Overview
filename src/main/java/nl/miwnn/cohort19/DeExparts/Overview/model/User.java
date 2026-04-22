@@ -28,10 +28,10 @@ public class User implements UserDetails {
 
     private Boolean administrator;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) // TODO check if orphanRemoval is necessary
+    @OneToOne(mappedBy = "user") // TODO check if orphanRemoval is necessary
     private Instructor instructor;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user")
     private Participant participant;
 
     public User(String username, String password, Boolean administrator) {

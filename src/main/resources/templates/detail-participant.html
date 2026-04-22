@@ -25,9 +25,49 @@
                  th:text="${instructors.fullName}"></a>
     </span> </p>
 
-    <form th:action="@{/detail/participant/delete/{id}(id=${participant.id})}" method="post">
-        <button type="submit">Verwijder Deelnemer</button>
-    </form>
+    <div class="modal fade" id="deleteParticipant"
+         tabindex="-1"
+         aria-labelledby="deleteParticipantModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="deleteParticipantModalLabel">
+                        Instructor Verwijderen
+                    </h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Sluiten"></button>
+                </div>
+                <div class="modal-body">
+                    Weet je zeker of deze leerling verwijderen wil?
+                </div>
+                <!-- Footer (optioneel) -->
+                <div class="modal-footer">
+
+                    <form th:action="@{/detail/participant/delete/{id}(id=${participant.id})}" method="post">
+                        <button type="submit" class="btn btn-warning">Ja</button>
+                    </form>
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Nee
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteParticipant">
+        Verwijder Deelnemer
+    </button>
+
 
     <form th:action="@{/detail/participant/edit/{id}(id=${participant.id})}" method="get">
         <button type="submit">Bewerk Deelnemer</button>

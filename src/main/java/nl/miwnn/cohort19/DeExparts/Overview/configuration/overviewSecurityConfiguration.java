@@ -32,7 +32,6 @@ public class overviewSecurityConfiguration {
                                     "/login/**",
                                     "/overview/**",
                                     "/css/**",
-                                    "/webjars/**").permitAll()
                                     "/webjars/**"
                             ).permitAll()
                             .requestMatchers(

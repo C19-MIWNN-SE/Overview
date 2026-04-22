@@ -48,11 +48,20 @@
             </select>
         </div>
         <div>
-            <label for="participants">Deelnemers:</label>
-            <select id="participants" th:field="*{participants}" multiple>
-                <option th:each="participant : ${allParticipantsWithoutCohort}"
-                        th:value="${participant.id}"
-                        th:text="${participant.fullName}">
+            <label for="participantsInCohort">Deelnemers in cohort:</label>
+            <select id="participantsInCohort" th:field="*{participants}" multiple>
+                <option th:each="participantInCohort : ${allParticipantsInCohort}"
+                        th:value="${participantInCohort.id}"
+                        th:text="${participantInCohort.fullName}">
+                </option>
+            </select>
+        </div>
+        <div>
+            <label for="participantsWithout">Deelnemers zonder cohort:</label>
+            <select id="participantsWithout" th:field="*{participants}" multiple>
+                <option th:each="participantNotInCohort : ${allParticipantsWithoutCohort}"
+                        th:value="${participantNotInCohort.id}"
+                        th:text="${participantNotInCohort.fullName}">
                 </option>
             </select>
         </div>

@@ -18,15 +18,24 @@ import java.util.Optional;
 @Service
 public class CohortService {
     private final CohortRepository cohortRepository;
-    private final InstructorService instructorService;
+    private final ParticipantService participantService;
 
-    public CohortService(CohortRepository cohortRepository, InstructorService instructorService) {
+    public CohortService(CohortRepository cohortRepository, ParticipantService participantService) {
         this.cohortRepository = cohortRepository;
-        this.instructorService = instructorService;
+        this.participantService = participantService;
     }
 
     public List<Cohort> showAllCohorts(){
         return cohortRepository.findAll();
+    }
+
+    public List<Participant> showParticipantsInCohort(Long id){
+        return findById(id).getParticipants();
+    }
+
+    public List<Participant> showParticipantInCohortAndWithout(Long id){
+        List<Participant> participants = participantService.showAllParticipantsWithoutCohort();
+        return showParticipantsInCohort(id);
     }
 
     public Cohort findById(Long cohortId){

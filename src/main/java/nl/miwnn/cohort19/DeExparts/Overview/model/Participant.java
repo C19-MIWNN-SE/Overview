@@ -2,6 +2,7 @@ package nl.miwnn.cohort19.DeExparts.Overview.model;
 
 import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -19,24 +20,24 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Voornaam is verplicht")
     private String firstName;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Achternaam is verplicht")
     private String lastName;
 
-    @Column(nullable = false)
+    @NotBlank(message = "E-mailadres is verplicht")
     private String emailAdress;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Woonplaats is verplicht")
     private String city;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Telefoonnummer is verplicht")
     private String phoneNumber;
 
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cohort cohorts;
 
     @OneToOne

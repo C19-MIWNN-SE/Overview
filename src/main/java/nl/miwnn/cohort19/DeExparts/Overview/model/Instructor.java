@@ -2,6 +2,7 @@ package nl.miwnn.cohort19.DeExparts.Overview.model;
 
 import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -20,22 +21,22 @@ public class Instructor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Voornaam mag niet leeg zijn")
     private String firstName;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Achternaam mag niet leeg zijn")
     private String lastName;
 
-    @Column(nullable = false)
+    @NotBlank(message = "E-mailadres mag niet leeg zijn")
     private String emailAdress;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Woonplaats mag niet leeg zijn")
     private String city;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Telefoonnummer mag niet leeg zijn")
     private String phoneNumber;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Cohort> cohorts = new ArrayList<>();
 
     private String description;

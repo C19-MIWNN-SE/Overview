@@ -1,5 +1,6 @@
 package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
+import jakarta.validation.*;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Cohort;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.web.ProjectedPayload;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -83,9 +85,31 @@ public class CohortController {
         return "add-cohort";
     }
 
+    @GetMapping(value = {"/edit/{id}"})
+    public String editCohort(@PathVariable Long id, Model model){
+        Optional<Cohort> cohort = Optional.ofNullable(cohortService.findById(id));
+        log.debug("Bewerkingspagina voor cohort met id {} opgevraagd", id);
+        model.addAttribute("cohort", cohort.get());
+        model.addAttribute("allInstructors", instructorService.showAllInstructors());
+        model.addAttribute("allParticipantsInCohort", cohortService.showParticipantsInCohort(id));
+        model.addAttribute("allParticipantsWithoutCohort",
+                participantService.showAllParticipantsWithoutCohort());
+        return "edit-cohort";
+    }
+
     @PostMapping(value = {"/save"})
-    public String saveCohort(@ModelAttribute Cohort editedCohort,
-                             RedirectAttributes redirectAttributes){
+    public String saveCohort(@Valid @ModelAttribute Cohort editedCohort,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             Model model){
+        if (bindingResult.hasErrors()){
+            log.warn("Validatiefouten bij het opslaan: {}", bindingResult.getErrorCount());
+            model.addAttribute("cohort", editedCohort);
+            model.addAttribute("allInstructors", instructorService.showAllInstructors());
+            model.addAttribute("allParticipantsWithoutCohort",
+                    participantService.showAllParticipantsWithoutCohort());
+            return "add-cohort";
+        }
         cohortService.saveCohort(editedCohort);
         log.info("Cohort met id {} opgeslagen.", editedCohort.getId());
         redirectAttributes.addAttribute("id", editedCohort.getId());

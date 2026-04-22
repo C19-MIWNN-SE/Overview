@@ -81,7 +81,7 @@ Wensen voor later:
 
 ---
 ## Vragen
-
+- Moet het cohort zelf ook een foto hebben?
 ---
 ## Ideeën
 

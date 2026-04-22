@@ -1,5 +1,6 @@
 package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
+import jakarta.validation.Valid;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -97,10 +99,19 @@ public class IntroductionController {
     }
 
     @PostMapping(value = {"/participant/save"})
-    public String saveParticipant(@ModelAttribute Participant editedParticipant, RedirectAttributes redirectAttributes){
-        log.info("Deelnemer met id {} opgeslagen.", editedParticipant.getId());
+    public String saveParticipant(@Valid @ModelAttribute Participant editedParticipant,
+                                  BindingResult bindingResult,
+                                  RedirectAttributes redirectAttributes,
+                                  Model model){
+        if (bindingResult.hasErrors()){
+            log.warn("Validatiefouten bij het opslaan: {}", bindingResult.getErrorCount());
+            model.addAttribute("participant", editedParticipant);
+            model.addAttribute("allCohorts", cohortService.showAllCohorts());
+            return "edit-participant";
+        }
         participantService.saveParticipant(editedParticipant);
         redirectAttributes.addAttribute("id", editedParticipant.getId());
+        log.info("Deelnemer met id {} opgeslagen.", editedParticipant.getId());
         return "redirect:/detail/participant/{id}";
     }
 
@@ -114,7 +125,16 @@ public class IntroductionController {
     }
 
     @PostMapping(value = {"/instructor/save"})
-    public String saveInstructor(@ModelAttribute Instructor editedInstructor, RedirectAttributes redirectAttributes){
+    public String saveInstructor(@Valid @ModelAttribute Instructor editedInstructor,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes,
+                                 Model model){
+        if (bindingResult.hasErrors()){
+            log.warn("Validatiefouten bij het opslaan: {}", bindingResult.getErrorCount());
+            model.addAttribute("participant", editedInstructor);
+            model.addAttribute("allCohorts", cohortService.showAllCohorts());
+            return "edit-instructor";
+        }
         log.info("Docent met id {} opgeslagen.", editedInstructor.getId());
         instructorService.saveInstructor(editedInstructor);
         redirectAttributes.addAttribute("id", editedInstructor.getId());

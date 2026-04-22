@@ -26,22 +26,42 @@
         <div>
             <label for="firstName">Voornaam:</label>
             <input type="text" id="firstName" th:field="*{firstName}">
+            <span th:if="${#fields.hasErrors('firstName')}"
+                  th:errors="*{firstName}"
+                  class="error">
+            </span>
         </div>
         <div>
             <label for="lastName">Achternaam:</label>
             <input type="text" id="lastName" th:field="*{lastName}">
+            <span th:if="${#fields.hasErrors('lastName')}"
+                  th:errors="*{lastName}"
+                  class="error">
+            </span>
         </div>
         <div>
             <label for="emailAdress">E-mailadres:</label>
             <input type="text" id="emailAdress" th:field="*{emailAdress}">
+            <span th:if="${#fields.hasErrors('emailAdress')}"
+                  th:errors="*{emailAdress}"
+                  class="error">
+            </span>
         </div>
         <div>
             <label for="city">Woonplaats:</label>
             <input type="text" id="city" th:field="*{city}">
+            <span th:if="${#fields.hasErrors('city')}"
+                  th:errors="*{city}"
+                  class="error">
+            </span>
         </div>
         <div>
             <label for="phoneNumber">Telefoonnummer:</label>
             <input type="text" id="phoneNumber" th:field="*{phoneNumber}">
+            <span th:if="${#fields.hasErrors('phoneNumber')}"
+                  th:errors="*{phoneNumber}"
+                  class="error">
+            </span>
         </div>
         <div>
             <label for="description">Omschrijving:</label>

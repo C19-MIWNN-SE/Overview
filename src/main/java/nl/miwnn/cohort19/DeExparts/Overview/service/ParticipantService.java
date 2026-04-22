@@ -1,6 +1,8 @@
 package nl.miwnn.cohort19.DeExparts.Overview.service;
 
+import nl.miwnn.cohort19.DeExparts.Overview.model.Cohort;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
+import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.ParticipantRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,21 +18,23 @@ import java.util.Optional;
 @Service
 public class ParticipantService {
     private final ParticipantRepository participantRepository;
+    private final CohortRepository cohortRepository;
 
-    public ParticipantService(ParticipantRepository participantRepository) {
+    public ParticipantService(ParticipantRepository participantRepository, CohortRepository cohortRepository) {
         this.participantRepository = participantRepository;
+        this.cohortRepository = cohortRepository;
     }
 
     public List<Participant> showAllParticipants(){
         return participantRepository.findAll();
     }
 
-    public List<Participant> showAllParticipantsWithoutCohort(){
+    public List<Participant> showAllParticipantsWithoutCohort() {
         List<Participant> participants = showAllParticipants();
         List<Participant> participantsWithoutCohort = new ArrayList<>();
         for (int i = 0; i < participants.size(); i++) {
             Participant participant = participants.get(i);
-            if (participant.getCohorts()==null){
+            if (participant.getCohorts() == null) {
                 participantsWithoutCohort.add(participant);
             }
         }
