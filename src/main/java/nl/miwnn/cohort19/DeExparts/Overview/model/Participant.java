@@ -48,6 +48,9 @@ public class Participant {
 
     private String employer;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
+
     public Participant(Long id,
                        String firstName,
                        String lastName,
@@ -157,7 +160,7 @@ public class Participant {
     }
 
     public Long getAgeInYears(LocalDate birthDate){
-        return Math.abs(ChronoUnit.YEARS.between(LocalDate.now(),birthDate));
+        return Math.abs(ChronoUnit.YEARS.between(LocalDate.now(), birthDate));
     }
 
     public User getUser() {
@@ -167,5 +170,12 @@ public class Participant {
     public void setUser(User user) {
         this.user = user;
     }
-}
 
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+}

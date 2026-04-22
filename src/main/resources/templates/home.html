@@ -4,25 +4,41 @@
 <head><title>Home</title></head>
 <body>
 <div id="content">
-    <h1 th:text="${user.firstName} + ${user.lastName}"></h1>
+    <h1 th:text="${user.fullName}"></h1>
 
-    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-         alt="Afbeelding"
+    <!-- TODO make coupling with image from Participant/Instructor -->
+
+    <img th:if="${user.image != null}"
+         th:src="@{/images/{id}(id=${user.image.id})}"
+         th:alt="|Foto van ${user.fullName}|"
          style="width: 175px; height: 175px;">
 
+    <img th:unless="${user.image != null}"
+         src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
+         th:alt="|Foto van ${user.fullName}|"
+         style="width: 175px; height: 175px;">
+    
     <div th:if="${userType == 'participant'}">
-        <p th:text="${user.cohorts.name}"></p>
-
+        <br>
         <p>Ga naar:</p>
-        <a th:text="${user.cohorts.name}"
-           th:href="@{/cohort/{id}(id=${user.cohorts.id})}" >Jouw klas</a>
+        <ul>
+            <li>
+                <a th:text="${user.cohorts.name}"
+                   th:href="@{/cohort/{id}(id=${user.cohorts.id})}" >Jouw klas</a>
+            </li>
+            <li>
+                <a th:href="@{/detail/participant/{id}(id=${user.id})}">Jouw profiel</a>
+            </li>
+            <!-- TODO adapt for use case with multiple instructors -->
+            <li>Jouw docent(en):
+                <span th:each="instructors, iterStat: ${user.cohorts.instructors}">
+                    <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
+                    th:text="${instructors.fullName}"></a> <!-- TODO make enumeration comma separated -->
+                </span>
+            </li>
+        </ul>
 
-        <a th:href="@{/detail/participant/{id}(id=${user.id})}">Jouw profiel</a>
 
-        <span th:each="instructors, iterStat: ${user.cohorts.instructors}">
-                 <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
-                    th:text="${instructors.fullName}"></a>
-        </span>
     </div>
 
     <form th:action="@{/detail/participant/add}" method="get">

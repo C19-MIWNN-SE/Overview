@@ -2,11 +2,10 @@ package nl.miwnn.cohort19.DeExparts.Overview.model;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import org.springframework.stereotype.Controller;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * An Image, used as a profile picture for an Participant or Instructor
  */
 @Entity
 public class Image {
@@ -20,12 +19,6 @@ public class Image {
     private byte[] data;
 
     private String contentType;
-
-    public Image(Long id, byte[] data, String contentType) {
-        this.id = id;
-        this.data = data;
-        this.contentType = contentType;
-    }
 
     public Image(){}
 
