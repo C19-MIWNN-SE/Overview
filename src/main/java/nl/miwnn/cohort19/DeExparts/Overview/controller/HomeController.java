@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @author wat doe ik?
+ * @author wat doe ik? // TODO change authorname
+ * Handles requests regarding the users homepage
  */
 @RequestMapping("/home")
 @Controller
@@ -56,6 +57,7 @@ public class HomeController {
         }
 
         model.addAttribute("title", "Homepagina");
+        model.addAttribute("activePage", "aboutMe");
         return "home";
     }
 

@@ -45,7 +45,6 @@ public class IntroductionController {
         log.debug("Detail pagina deelnemer opgevraagd");
         model.addAttribute("title", "Detail overzicht");
         model.addAttribute("participant", participant.get());
-        model.addAttribute("activePage", "aboutMe");
         return "detail-participant";
     }
 
@@ -55,7 +54,6 @@ public class IntroductionController {
         log.debug("Detail pagina docent opgevraagd");
         model.addAttribute("title", "Detail overzicht");
         model.addAttribute("instructor", instructor.get());
-        model.addAttribute("activePage", "aboutMe");
         return "detail-instructor";
     }
 
