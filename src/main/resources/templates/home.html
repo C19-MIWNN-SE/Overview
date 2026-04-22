@@ -23,14 +23,14 @@
                     </div>
                     <div class="card-body">
                         <h5>
-                            <a th:text="${user.cohorts.name}">
+                            <a>
                                 Jouw klas
                             </a>
                         </h5>
                         <p class="card-text">
                             Bekijk alle deelnemers en docenten binnen jouw cohort. Ontdek wie er in jouw klas zit en werk eenvoudig samen.
                         </p>
-                        <a th:href="@{/cohort/{id}(id=${user.cohorts.id})}" class="btn btn-primary">Ga naar jouw cohort</a>
+                        <a>Ga naar jouw cohort</a>
                     </div>
                 </div>
             </div>
@@ -65,10 +65,10 @@
                     <div class="card-body">
                         <h5>
                             Jouw docent(en):
-                            <span th:each="instructor, iterStat : ${user.cohorts.instructors}">
-                            <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}"
-                              th:text="${instructor.fullName}"></a><span th:if="${!iterStat.last}">, </span>
-                            </span>
+<!--                            <span th:each="instructor, iterStat : ${user.cohorts.instructors}">-->
+<!--                            <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}"-->
+<!--                              th:text="${instructor.fullName}"></a><span th:if="${!iterStat.last}">, </span>-->
+<!--                            </span>-->
                         </h5>
                         <p class="card-text">
                             Bekijk de docenten die gekoppeld zijn aan jouw cohort en neem eenvoudig contact met hen op voor begeleiding.                        </p>
