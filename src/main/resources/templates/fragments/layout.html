@@ -11,6 +11,10 @@
     <th:block th:replace="${content}"></th:block>
 </main>
 
+<nav th:replace="~{fragments/general :: navbar}" sec:authorize="isAuthenticated()"></nav>
+<div class="container mt-4">
+    <th:block th:replace="${content}"/>
+</div>
 <footer th:replace="~{fragments/general :: footer}"></footer>
 <div th:replace="~{fragments/general :: scripts}"></div>
 </body>

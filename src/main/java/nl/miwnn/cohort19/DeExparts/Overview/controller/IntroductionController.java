@@ -2,12 +2,14 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
-import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
+import nl.miwnn.cohort19.DeExparts.Overview.model.User;
 import nl.miwnn.cohort19.DeExparts.Overview.service.CohortService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
+import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,14 +31,17 @@ public class IntroductionController {
     private final ParticipantService participantService;
     private final InstructorService instructorService;
     private final CohortService cohortService;
+    private final UserService userService;
 
     public IntroductionController(
             InstructorService instructorService,
             ParticipantService participantService,
-            CohortService cohortService, CohortRepository cohortRepository) {
+            CohortService cohortService,
+            UserService userService) {
         this.instructorService = instructorService;
         this.participantService = participantService;
         this.cohortService = cohortService;
+        this.userService = userService;
     }
 
     @GetMapping(value = {"/participant/{id}"})
@@ -45,7 +50,6 @@ public class IntroductionController {
         log.debug("Detail pagina deelnemer opgevraagd");
         model.addAttribute("title", "Detail overzicht");
         model.addAttribute("participant", participant.get());
-        model.addAttribute("activePage", "aboutMe");
         return "detail-participant";
     }
 
@@ -55,7 +59,6 @@ public class IntroductionController {
         log.debug("Detail pagina docent opgevraagd");
         model.addAttribute("title", "Detail overzicht");
         model.addAttribute("instructor", instructor.get());
-        model.addAttribute("activePage", "aboutMe");
         return "detail-instructor";
     }
 
@@ -135,6 +138,29 @@ public class IntroductionController {
         model.addAttribute("instructor", new Instructor());
         model.addAttribute("allCohorts", cohortService.showAllCohorts());
         return "add-instructor";
+    }
+
+    @GetMapping(value = {"/aboutme"})
+    public String showAboutMePage(@AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser, Model model) {
+
+        User currentUser = userService.findByUsername(springUser.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        log.debug("Detailpagina opgevraagd voor: {}", currentUser.getUsername());
+
+        model.addAttribute("title", "Detail overzicht");
+        model.addAttribute("activePage", "aboutMe");
+
+        if (currentUser.isParticipant()) {
+            participantService.findParticipantByUserId(currentUser.getId())
+                    .ifPresent(participant -> model.addAttribute("participant", participant));
+            return "detail-participant";
+        } else if (currentUser.isInstructor()) {
+            instructorService.findInstructorByUserId(currentUser.getId())
+                    .ifPresent(instructor -> model.addAttribute("instructor", instructor));
+            return "detail-instructor";
+        }
+        return "home";
     }
 }
 

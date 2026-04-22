@@ -27,10 +27,9 @@
            href="/cohort/">
           <i class="bi bi-book"></i> Cohort
         </a>
-        <!-- TODO aboutMe to About Me page of user -->
         <a class="nav-link"
            th:classappend="${activePage =='aboutMe'} ?'active' : ''"
-           href="/detail/">
+           th:href="@{/detail/aboutme}">
           <i class="bi bi-person"></i> Over mij
         </a>
         <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()"
