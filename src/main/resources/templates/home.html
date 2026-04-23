@@ -49,9 +49,11 @@
             <div class="col-auto">
                 <div class="card h-100 text-center" style="width: 18rem;">
                     <div class="round-image-wrapper">
-                    <img src="https://img.freepik.com/free-photo/lifestyle-beauty-fashion-people-emotions-concept-young-asian-female-office-manager-ceo-with-pleased-expression-standing-white-background-smiling-with-arms-crossed-chest_1258-59329.jpg?semt=ais_hybrid&w=740&q=80"
-                         class="round-image"
-                         alt="Kaart voorbeeld">
+                        <img
+                                th:src="${user.image != null} ? @{/images/{id}(id=${user.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                class="img-fluid"
+                                th:alt="|Foto van ${user.fullName}|"
+                        >
                     </div>
                     <div class="card-body">
                         <h5>

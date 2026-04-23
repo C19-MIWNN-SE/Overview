@@ -49,9 +49,11 @@
                              th:each="instructor : ${cohort.instructors}">
                             <div class="card-body d-flex align-items-center gap-3">
                                 <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}">
-                                    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-                                         alt="Profielfoto docent"
-                                         class="sidebar-profile-image">
+                                    <img
+                                            th:src="${instructor.image != null} ? @{/images/{id}(id=${instructor.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                            class="sidebar-profile-image"
+                                            th:alt="|Foto van ${instructor.fullName}|"
+                                    >
                                 </a>
 
                                 <div>
@@ -82,9 +84,11 @@
 
                         <div class="participant-card text-center h-100">
                             <a th:href="@{/detail/participant/{id}(id=${participant.id})}">
-                                <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-                                     class="participant-image"
-                                     alt="Deelnemer afbeelding">
+                                <img
+                                        th:src="${participant.image != null} ? @{/images/{id}(id=${participant.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                        class="participant-image"
+                                        th:alt="|Foto van ${participant.fullName}|"
+                                >
                             </a>
 
                             <div class="participant-card">
