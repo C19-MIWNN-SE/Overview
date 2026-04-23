@@ -3,41 +3,60 @@
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
 <head><title>Cohort overview</title></head>
 <body>
-
 <div id="content">
-    <h1>Cohorts</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Cohort</th>
-            <th>Onderwerp</th>
-            <th>Startdatum</th>
-            <th>Einddatum</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr th:each="cohort : ${allCohorts}">
-            <td>
-                <a th:href="@{/cohort/{id}(id=${cohort.id})}" th:text="${cohort.name}">Cohort</a>
-            </td>
+    <h1>Cohorten</h1>
 
-            <td th:text="${cohort.subject}">Onderwerp</td>
-            <td>
-                <span th:if="${cohort.startDate}" th:text="${cohort.startDate}">Startdatum</span>
-                <span th:unless="${cohort.startDate}">onbekend</span>
-            </td>
-            <td>
-                <span th:if="${cohort.endDate}" th:text="${cohort.endDate}">Einddatum</span>
-                <span th:unless="${cohort.endDate}">onbekend</span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-3 mb-lg-5">
+            <div class="overflow-hidden card table-nowrap table-card">
 
-    <form th:action="@{/cohort/add}" method="get">
-        <button type="submit">Voeg Nieuw Cohort Toe</button>
-    </form>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Cohorten</h5>
+
+                    <a th:href="@{/cohort/add}" class="btn btn-primary btn-sm">
+                        + Nieuw cohort
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead class="small text-uppercase bg-body text-muted">
+                        <tr>
+                            <th>Cohort</th>
+                            <th>Onderwerp</th>
+                            <th>Startdatum</th>
+                            <th>Einddatum</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="align-middle">
+                        <tbody>
+                        <tr th:each="cohort : ${allCohorts}">
+                            <td>
+                                <a th:href="@{/cohort/{id}(id=${cohort.id})}" th:text="${cohort.name}">Cohort</a>
+                            </td>
+
+                            <td th:text="${cohort.subject}">Onderwerp</td>
+                            <td>
+                                <span th:if="${cohort.startDate}" th:text="${cohort.startDate}">Startdatum</span>
+                                <span th:unless="${cohort.startDate}">onbekend</span>
+                            </td>
+                            <td>
+                                <span th:if="${cohort.endDate}" th:text="${cohort.endDate}">Einddatum</span>
+                                <span th:unless="${cohort.endDate}">onbekend</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </body>
 </html>

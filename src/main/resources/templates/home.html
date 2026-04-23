@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head>
-    <title>Home</title>
-</head>
+<head><title>Home</title></head>
 <body>
 
 <div id="content">
@@ -22,15 +20,28 @@
                              alt="Kaart voorbeeld">
                     </div>
                     <div class="card-body">
-                        <h5>
-                            <a>
-                                Jouw klas
-                            </a>
-                        </h5>
-                        <p class="card-text">
-                            Bekijk alle deelnemers en docenten binnen jouw cohort. Ontdek wie er in jouw klas zit en werk eenvoudig samen.
-                        </p>
-                        <a>Ga naar jouw cohort</a>
+                        <div th:if="${userType == 'participant'}">
+                            <h5>
+                                <a>
+                                    Jouw cohort
+                                </a>
+                            </h5>
+                            <p class="card-text">
+                                Bekijk alle deelnemers en docenten binnen jouw cohort. Ontdek wie er in jouw klas zit en werk eenvoudig samen.
+                            </p>
+                            <a th:href="@{/cohort/{id}(id=${user.cohorts.id})}" class="btn btn-primary">Ga naar jouw cohort</a>
+                        </div>
+                        <div th:if="${userType == 'instructor'}">
+                            <h5>
+                                <a>
+                                    Jouw cohort(en)
+                                </a>
+                            </h5>
+                            <p class="card-text">
+                                Bekijk alle deelnemers en docenten van de cohorten waar je les aan geeft.
+                            </p>
+                            <a th:href="@{/cohort/instructor-overview}" class="btn btn-primary">Ga naar jouw cohorten</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -38,9 +49,11 @@
             <div class="col-auto">
                 <div class="card h-100 text-center" style="width: 18rem;">
                     <div class="round-image-wrapper">
-                    <img src="https://img.freepik.com/free-photo/lifestyle-beauty-fashion-people-emotions-concept-young-asian-female-office-manager-ceo-with-pleased-expression-standing-white-background-smiling-with-arms-crossed-chest_1258-59329.jpg?semt=ais_hybrid&w=740&q=80"
-                         class="round-image"
-                         alt="Kaart voorbeeld">
+                        <img
+                                th:src="${user.image != null} ? @{/images/{id}(id=${user.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                class="img-fluid"
+                                th:alt="|Foto van ${user.fullName}|"
+                        >
                     </div>
                     <div class="card-body">
                         <h5>
@@ -55,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div th:if="${userType == 'participant'}" class="col-auto">
                 <div class="card h-100 text-center" style="width: 18rem;">
                     <div class="round-image-wrapper">
                     <img src="https://img.freepik.com/free-photo/portrait-teacher-class-pointing_23-2148665948.jpg?semt=ais_hybrid&w=740&q=80"
@@ -65,10 +78,10 @@
                     <div class="card-body">
                         <h5>
                             Jouw docent(en):
-<!--                            <span th:each="instructor, iterStat : ${user.cohorts.instructors}">-->
-<!--                            <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}"-->
-<!--                              th:text="${instructor.fullName}"></a><span th:if="${!iterStat.last}">, </span>-->
-<!--                            </span>-->
+                            <span th:each="instructor, iterStat : ${user.cohorts.instructors}">
+                            <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}"
+                              th:text="${instructor.fullName}"></a><span th:if="${!iterStat.last}">, </span>
+                            </span>
                         </h5>
                         <p class="card-text">
                             Bekijk de docenten die gekoppeld zijn aan jouw cohort en neem eenvoudig contact met hen op voor begeleiding.                        </p>
@@ -91,8 +104,7 @@
 <!--             class="profile-image">-->
 <!--    </section>-->
 
-
-    <section class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+    <section th:if="${userType == 'instructor'}" class="d-flex flex-column flex-md-row gap-3 justify-content-center">
         <form th:action="@{/detail/participant/add}" method="get">
             <button type="submit" class="btn btn-outline-primary">
                 Maak nieuwe deelnemer aan

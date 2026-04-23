@@ -1,78 +1,141 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head><title>Overview cohort</title></head>
+<head>
+    <title>Overview cohort</title>
+</head>
 <body>
+
 <div id="content">
-    <h1 th:text="|Overview van ${cohort.name}|"></h1>
-    <h2>Details cohort</h2>
-    <ul>
-        <li>Naam: <span th:text="${cohort.name}">Naam</span></li>
-        <li>Onderwerp: <span th:text="${cohort.subject}">Onderwerp</span></li>
-        <li>
-            Startdatum:
-            <span th:if="${cohort.startDate}" th:text="${cohort.startDate}">Startdatum</span>
-            <span th:unless="${cohort.startDate}">onbekend</span>
-        </li>
-        <li>
-            Einddatum:
-            <span th:if="${cohort.endDate}" th:text="${cohort.endDate}">Einddatum</span>
-            <span th:unless="${cohort.endDate}">onbekend</span>
-        </li>
-    </ul>
 
-    <h2>Docenten</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Voornaam</th>
-            <th>Achternaam</th>
-            <th>Profielfoto</th>
-        </tr>
-        </thead>
+    <section class="mb-5 text-center">
+        <h1 th:text="|Overview van ${cohort.name}|" class="mb-3"></h1>
+    </section>
 
-        <tbody>
-        <tr th:each="instructor : ${cohort.instructors}">
-            <td th:text="${instructor.firstName}"></td>
-            <td th:text="${instructor.lastName}"></td>
-            <td>
-                <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}">
-                    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-                         alt="Afbeelding"
-                         style="width: 175px; height: 175px;">
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="row g-5">
 
-    <h2>Deelnemers</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Voornaam</th>
-            <th>Achternaam</th>
-            <th>Profielfoto</th>
-        </tr>
-        </thead>
+        <aside class="col-lg-4">
+            <div class="sidebar p-4 bg-white rounded shadow-sm">
 
-        <tbody>
-        <tr th:each="participant : ${cohort.participants}">
-            <td th:text="${participant.firstName}"></td>
-            <td th:text="${participant.lastName}"></td>
-            <td>
-                <a th:href="@{/detail/participant/{id}(id=${participant.id})}">
-                    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-                         alt="Afbeelding"
-                         style="width: 175px; height: 175px;">
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <form th:action="@{/cohort/edit/{id}(id=${cohort.id})}" method="get">
-        <button type="submit">Bewerk Cohort</button>
-    </form>
+                <section class="mb-4">
+                    <h3 class="h5 mb-3">Cohortinformatie</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <strong>Naam:</strong>
+                            <span th:text="${cohort.name}">Naam</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Onderwerp:</strong>
+                            <span th:text="${cohort.subject}">Onderwerp</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Startdatum:</strong>
+                            <span th:if="${cohort.startDate}" th:text="${cohort.startDate}">Startdatum</span>
+                            <span th:unless="${cohort.startDate}">onbekend</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Einddatum:</strong>
+                            <span th:if="${cohort.endDate}" th:text="${cohort.endDate}">Einddatum</span>
+                            <span th:unless="${cohort.endDate}">onbekend</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3 class="h5 mb-3">Docenten</h3>
+
+                    <div class="d-flex flex-column gap-3">
+                        <div class="card border-0 bg-light"
+                             th:each="instructor : ${cohort.instructors}">
+                            <div class="card-body d-flex align-items-center gap-3">
+                                <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}">
+                                    <img
+                                            th:src="${instructor.image != null} ? @{/images/{id}(id=${instructor.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                            class="sidebar-profile-image"
+                                            th:alt="|Foto van ${instructor.fullName}|"
+                                    >
+                                </a>
+
+                                <div>
+                                    <h4 class="h6 mb-1"
+                                        th:text="|${instructor.firstName} ${instructor.lastName}|">
+                                        Naam docent
+                                    </h4>
+                                    <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}"
+                                       class="text-decoration-none">
+                                        Bekijk profiel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </aside>
+
+        <main class="col-lg-8">
+            <section class="mb-4">
+                <h2 class="text-center mb-4">Deelnemers</h2>
+
+                <div class="row g-4">
+                    <div class="col-md-6 col-xl-4"
+                         th:each="participant : ${cohort.participants}">
+
+                        <div class="participant-card text-center h-100">
+                            <a th:href="@{/detail/participant/{id}(id=${participant.id})}">
+                                <img
+                                        th:src="${participant.image != null} ? @{/images/{id}(id=${participant.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                        class="participant-image"
+                                        th:alt="|Foto van ${participant.fullName}|"
+                                >
+                            </a>
+
+                            <div class="participant-card">
+                                <h3 class="text-primary mb-1 h5"
+                                    th:text="|${participant.firstName} ${participant.lastName}|">
+                                    Naam deelnemer
+                                </h3>
+                                <span class="text-secondary">Toekomstige werkgever</span>
+                            </div>
+
+                            <div class="participant-overlay">
+                                <div class="d-table h-100 w-100">
+                                    <div class="d-table-cell align-middle">
+                                        <h3 class="h5">
+                                            <a th:href="@{/detail/participant/{id}(id=${participant.id})}"
+                                               class="text-white text-decoration-none">
+                                                Over deelnemer
+                                            </a>
+                                        </h3>
+                                        <p class="text-white mb-0">
+                                            Bekijk het profiel van deze deelnemer.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="mt-5 d-flex flex-column flex-md-row gap-3">
+                <form th:action="@{/cohort/edit/{id}(id=${cohort.id})}" method="get">
+                    <button type="submit" class="btn btn-outline-primary">
+                        Bewerk cohort
+                    </button>
+                </form>
+
+                <button type="button"
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteCohort">
+                    Verwijder cohort
+                </button>
+            </section>
+        </main>
+    </div>
 
     <div class="modal fade" id="deleteCohort"
          tabindex="-1"
@@ -80,22 +143,22 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Header -->
+
                 <div class="modal-header">
-                    <h5 class="modal-title"
-                        id="deleteCohortModalLabel">
-                        Cohort Verwijderen
+                    <h5 class="modal-title" id="deleteCohortModalLabel">
+                        Cohort verwijderen
                     </h5>
-                    <button type="button" class="btn-close"
+                    <button type="button"
+                            class="btn-close"
                             data-bs-dismiss="modal"
                             aria-label="Sluiten"></button>
                 </div>
-                <div class="modal-body">
-                    Weet je zeker of het gehele cohort verwijderen wil?
-                </div>
-                <!-- Footer (optioneel) -->
-                <div class="modal-footer">
 
+                <div class="modal-body">
+                    Weet je zeker dat je dit cohort wilt verwijderen?
+                </div>
+
+                <div class="modal-footer">
                     <form th:action="@{/cohort/delete/{id}(id=${cohort.id})}" method="post">
                         <button type="submit" class="btn btn-warning">Ja</button>
                     </form>
@@ -106,17 +169,10 @@
                         Nee
                     </button>
                 </div>
+
             </div>
         </div>
     </div>
-
-    <button type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteCohort">
-        Verwijder Cohort
-    </button>
-
 
 </div>
 </body>

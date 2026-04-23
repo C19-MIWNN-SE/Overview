@@ -87,6 +87,10 @@ public class InitializeController {
             for (int i = 0; i < participants.size()-1; i++) { //-1 toegevoegd om de testgebruiker toe te voegen zonder cohort
                 Participant participant = participants.get(i);
                 participant.setCohorts(cohorts.get(i % cohorts.size()));
+
+                String imageUrl = "/image/Profielfoto" +  ((i % 8) + 1) + ".jpg";
+                participant.setImage(loadImage(imageUrl));
+
                 participantRepository.save(participant);
             }
 
@@ -102,6 +106,7 @@ public class InitializeController {
                 userRepository.save(user);
 
                 participant.setUser(user);
+
                 participantRepository.save(participant);
             }
 
@@ -129,8 +134,14 @@ public class InitializeController {
             for (int i = 0; i < instructors.size(); i++) {
                 Instructor instructor = instructors.get(i);
                 instructor.getCohorts().add(cohorts.get(i % cohorts.size()));
+
+                String imageUrl = "/image/Profielfoto" +  ((i % 8) + 1) + ".jpg";
+                instructor.setImage(loadImage(imageUrl));
+
                 instructorRepository.save(instructor);
             }
+
+
 
             for (Instructor instructor : instructors) {
                 Role instructorRole = roleRepository.findByAuthority("ROLE_INSTRUCTOR")
@@ -192,6 +203,18 @@ public class InitializeController {
                     "Kon Roles.csv niet inlezen", e);
         }
 
+    }
+
+    private Image loadImage(String imageUrl) throws IOException {
+        String filename = "seedData" + imageUrl;
+        ClassPathResource resource = new ClassPathResource(filename);
+
+        String contentType = imageUrl.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
+
+        Image image = new Image();
+        image.setData(resource.getInputStream().readAllBytes());
+        image.setContentType(contentType);
+        return image;
     }
 
 }
