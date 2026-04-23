@@ -102,8 +102,7 @@
 <!--             class="profile-image">-->
 <!--    </section>-->
 
-
-    <section class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+    <section th:if="${userType == 'instructor'}" class="d-flex flex-column flex-md-row gap-3 justify-content-center">
         <form th:action="@{/detail/participant/add}" method="get">
             <button type="submit" class="btn btn-outline-primary">
                 Maak nieuwe deelnemer aan
