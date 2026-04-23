@@ -4,26 +4,67 @@
 <head><title>Detailpagina</title></head>
 <body>
 <div id="content">
-    <h1>Deelnemer: <span th:text="${participant.fullName}"></span></h1>
 
-    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-         alt="Afbeelding"
-         style="width: 175px; height: 175px;">
+    <div class="container">
+        <div class="row align-items-center flex-row-reverse">
+            <div class="col-lg-6">
+                <div class="about-text go-to">
+                    <h1><span th:text="${participant.fullName}"></span></h1>
+                    <h6 class="theme-color lead"><span th:text="${participant.employer}"></span></h6>
+                    <label>Over mij:</label>
+                    <p><span th:text="${participant.description}"></span></p>
 
-    <p>Rol: Deelnemer</p>
-    <p>E-mailadres: <span th:text="${participant.emailAdress}"></span></p>
-    <p>Woonplaats: <span th:text="${participant.city}"></span></p>
-    <p>Telefoonnummer: <span th:text="${participant.phoneNumber}"></span></p>
-    <p>Leeftijd: <span th:text="${participant.getAgeInYears(participant.birthDate)}"></span></p>
-    <p>Werkgever: <span th:text="${participant.employer}"></span></p>
-    <p>Over mij: <span th:text="${participant.description}"></span></p>
-    <p>Klassen: <a th:href="@{/cohort/{id}(id=${participant.cohorts.id})}"
-                   th:text="${participant.cohorts.name}"></a></p>
+                    <div class="row about-list">
+                        <div class="col-md-6">
+                            <div class="media">
+                                <label>Verjaardag</label>
+                                <p><span th:text="${participant.getBirthDate()}"></span></p>
+                            </div>
+                            <div class="media">
+                                <label>Leeftijd</label>
+                                <p><span th:text="${participant.getAgeInYears(participant.birthDate)}"></span></p>
+                            </div>
+                            <div class="media">
+                                <label>Woonplaats</label>
+                                <p><span th:text="${participant.city}"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="media">
+                                <label>E-mailadres</label>
+                                <p><span th:text="${participant.emailAdress}"></span></p>
+                            </div>
+                            <div class="media">
+                                <label>Telefoonnummer</label>
+                                <p><span th:text="${participant.phoneNumber}"></span></p>
+                            </div>
+                            <div class="media">
+                                <label>Klas</label>
+                                <p><a th:href="@{/cohort/{id}(id=${participant.cohorts.id})}"
+                                      th:text="${participant.cohorts.name}"></a></p>
+                            </div>
+                            <div class="media">
+                                <label>Docent</label>
+                                <p>
+                                    <span  th:each="instructors, iterStat: ${participant.cohorts.instructors}">
+                                        <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
+                                           th:text="${instructors.fullName}"></a>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <p>Docenten: <span th:each="instructors, iterStat: ${participant.cohorts.instructors}">
-                 <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
-                 th:text="${instructors.fullName}"></a>
-    </span> </p>
+            <div class="col-lg-6">
+                <div class="about-photo">
+                    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
+                         alt="Afbeelding">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="deleteParticipant"
          tabindex="-1"
@@ -35,14 +76,14 @@
                 <div class="modal-header">
                     <h5 class="modal-title"
                         id="deleteParticipantModalLabel">
-                        Instructor Verwijderen
+                        Deelnemer Verwijderen
                     </h5>
                     <button type="button" class="btn-close"
                             data-bs-dismiss="modal"
                             aria-label="Sluiten"></button>
                 </div>
                 <div class="modal-body">
-                    Weet je zeker of deze leerling verwijderen wil?
+                    Weet je zeker of deze deelnemer verwijderen wil?
                 </div>
                 <!-- Footer (optioneel) -->
                 <div class="modal-footer">
@@ -61,21 +102,28 @@
         </div>
     </div>
 
-    <button type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteParticipant">
-        Verwijder Deelnemer
-    </button>
+    <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-5">
 
+        <form th:action="@{/detail/participant/edit/{id}(id=${participant.id})}" method="get" class="m-0">
+            <button type="submit" class="btn btn-outline-primary px-4 py-2">
+                Bewerk deelnemer
+            </button>
+        </form>
 
-    <form th:action="@{/detail/participant/edit/{id}(id=${participant.id})}" method="get">
-        <button type="submit">Bewerk Deelnemer</button>
-    </form>
+        <form th:action="@{/detail/participant/add}" method="get" class="m-0">
+            <button type="submit" class="btn btn-primary px-4 py-2">
+                + Nieuwe deelnemer
+            </button>
+        </form>
 
-    <form th:action="@{/detail/participant/add}" method="get">
-        <button type="submit">Maak Nieuwe Deelnemer Aan</button>
-    </form>
+        <button type="button"
+                class="btn btn-outline-danger px-4 py-2"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteParticipant">
+            Verwijder deelnemer
+        </button>
+
+    </div>
 </div>
 </body>
 </html>

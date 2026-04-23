@@ -1,12 +1,12 @@
 firstName,lastName,emailAdress,city,phoneNumber,description,birthDate,employer
-Deelnemer,Jansen,lola.jansen@example.com,Amsterdam,0612340001,Creatieve frontend developer,2026-08-01,Nidaros
-Tom,Bakker,tom.bakker@example.com,Utrecht,0612340002,Fullstack developer in opleiding,2026-08-01,Nidaros
-Sanne,Visser,sanne.visser@example.com,Rotterdam,0612340003,UX/UI designer met oog voor detail,2026-08-01,Nidaros
-Daan,Meijer,daan.meijer@example.com,Eindhoven,0612340004,Backend developer gespecialiseerd in Java,2026-08-01,Nidaros
-Emma,de Jong,emma.dejong@example.com,Haarlem,0612340005,Frontend developer met focus op React,2026-08-01,Nidaros
-Noah,Willems,noah.willems@example.com,Den Haag,0612340006,Software engineer met interesse in AI,2026-08-01,Nidaros
-Mila,Smit,mila.smit@example.com,Groningen,0612340007,Data-analist in opleiding,2026-08-01,Nidaros
-Lars,Kuipers,lars.kuipers@example.com,Leeuwarden,0612340008,DevOps engineer met cloud interesse,2026-08-01,Nidaros
-Julia,van Dijk,julia.vandijk@example.com,Nijmegen,0612340009,Webdeveloper met passie voor design,2026-08-01,Nidaros
-Finn,Hendriks,finn.hendriks@example.com,Maastricht,0612340010,Junior developer met focus op backend,2026-08-01,Nidaros
-test,test,test@test.com,test,06test,test,2026-08-01,Nidaros
+Deelnemer,Jansen,lola.jansen@example.com,Amsterdam,0612340001,Creatieve en gedreven frontend developer in opleiding met een passie voor gebruiksvriendelijke interfaces. Lola werkt graag met moderne frameworks en haalt energie uit het ontwerpen en bouwen van visueel sterke webapplicaties.,1998-04-12,Nidaros
+Tom,Bakker,tom.bakker@example.com,Utrecht,0612340002,Ambitieuze fullstack developer in opleiding die zowel de frontend als backend interessant vindt. Tom werkt gestructureerd en is altijd op zoek naar manieren om zijn code efficiënter en schaalbaarder te maken.,1997-09-23,Nidaros
+Sanne,Visser,sanne.visser@example.com,Rotterdam,0612340003,Creatieve UX/UI designer met een scherp oog voor detail en gebruikservaring. Sanne vertaalt complexe ideeën naar duidelijke en aantrekkelijke designs die intuïtief aanvoelen voor de gebruiker.,1999-02-05,Nidaros
+Daan,Meijer,daan.meijer@example.com,Eindhoven,0612340004,Analytische backend developer gespecialiseerd in Java en databases. Daan houdt van het oplossen van complexe technische vraagstukken en werkt graag aan robuuste en betrouwbare systemen.,1996-11-18,Nidaros
+Emma,de Jong,emma.dejong@example.com,Haarlem,0612340005,Frontend developer met een sterke focus op React en component-based development. Emma combineert technische kennis met gevoel voor design om moderne en responsive webapplicaties te bouwen.,2000-06-30,Nidaros
+Noah,Willems,noah.willems@example.com,Den Haag,0612340006,Enthousiaste software engineer met een groeiende interesse in artificial intelligence en data. Noah leert snel en experimenteert graag met nieuwe technologieën om innovatieve oplossingen te creëren.,1995-08-14,Nidaros
+Mila,Smit,mila.smit@example.com,Groningen,0612340007,Leergierige data-analist in opleiding met interesse in datavisualisatie en inzichten uit grote datasets. Mila werkt nauwkeurig en vindt het leuk om data om te zetten in begrijpelijke informatie.,2001-01-22,Nidaros
+Lars,Kuipers,lars.kuipers@example.com,Leeuwarden,0612340008,Technisch sterke DevOps engineer met interesse in cloud-oplossingen en automatisering. Lars richt zich op het optimaliseren van ontwikkelprocessen en het verbeteren van deployment pipelines.,1994-12-03,Nidaros
+Julia,van Dijk,julia.vandijk@example.com,Nijmegen,0612340009,Allround webdeveloper met een passie voor design en front-end development. Julia combineert creativiteit met technische vaardigheden om aantrekkelijke en functionele websites te realiseren.,1998-07-09,Nidaros
+Finn,Hendriks,finn.hendriks@example.com,Maastricht,0612340010,Gemotiveerde junior developer met een focus op backend development. Finn werkt gestructureerd en is bezig met het verdiepen in Java en server-side architectuur.,2002-03-17,Nidaros
+test,test,test@test.com,test,06test,Testgebruiker voor ontwikkeldoeleinden. Wordt gebruikt om functionaliteiten te controleren en nieuwe features uit te proberen binnen de applicatie.,1990-01-01,Nidaros
