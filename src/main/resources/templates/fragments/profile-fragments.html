@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="participantProfile(participant)">
+    <!-- participant profielblok -->
+    <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <h1><span th:text="${participant.fullName}"></span></h1>
+                        <h6 class="theme-color lead"><span th:text="${participant.employer}"></span></h6>
+                        <label>Over mij:</label>
+                        <p><span th:text="${participant.description}"></span></p>
+
+                        <div class="row about-list">
+                            <div class="col-md-6">
+                                <div class="media">
+                                    <label>Verjaardag</label>
+                                    <p><span th:text="${participant.getBirthDate()}"></span></p>
+                                </div>
+                                <div class="media">
+                                    <label>Leeftijd</label>
+                                    <p><span th:text="${participant.getAgeInYears(participant.birthDate)}"></span></p>
+                                </div>
+                                <div class="media">
+                                    <label>Woonplaats</label>
+                                    <p><span th:text="${participant.city}"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="media">
+                                    <label>E-mailadres</label>
+                                    <p><span th:text="${participant.emailAdress}"></span></p>
+                                </div>
+                                <div class="media">
+                                    <label>Telefoonnummer</label>
+                                    <p><span th:text="${participant.phoneNumber}"></span></p>
+                                </div>
+                                <div class="media">
+                                    <label>Klas</label>
+                                    <p><a th:href="@{/cohort/{id}(id=${participant.cohorts.id})}"
+                                          th:text="${participant.cohorts.name}"></a></p>
+                                </div>
+                                <div class="media">
+                                    <label>Docent</label>
+                                    <p>
+                                    <span  th:each="instructors, iterStat: ${participant.cohorts.instructors}">
+                                        <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
+                                           th:text="${instructors.fullName}"></a>
+                                    </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="about-photo">
+                        <img
+                                th:src="${participant.image != null} ? @{/images/{id}(id=${participant.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                class="img-fluid"
+                                th:alt="|Foto van ${participant.fullName}|"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div th:fragment="instructorProfile(instructor)">
+    <!-- instructor profielblok -->
+    <div class="container">
+        <div class="row align-items-center flex-row-reverse">
+            <div class="col-lg-6">
+                <div class="about-text go-to">
+                    <h1><span th:text="${instructor.fullName}"></span></h1>
+                    <label>Over mij:</label>
+                    <p><span th:text="${instructor.description}"></span></p>
+
+                    <div class="row about-list">
+                        <div class="col-md-6">
+                            <div class="media">
+                                <label>Verjaardag</label>
+                                <p><span th:text="${instructor.getBirthDate()}"></span></p>
+                            </div>
+                            <div class="media">
+                                <label>Leeftijd</label>
+                                <p><span th:text="${instructor.getAgeInYears(instructor.birthDate)}"></span></p>
+                            </div>
+                            <div class="media">
+                                <label>Woonplaats</label>
+                                <p><span th:text="${instructor.city}"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="media">
+                                <label>E-mailadres</label>
+                                <p><span th:text="${instructor.emailAdress}"></span></p>
+                            </div>
+                            <div class="media">
+                                <label>Telefoonnummer</label>
+                                <p><span th:text="${instructor.phoneNumber}"></span></p>
+                            </div>
+                            <div class="media">
+                                <label>Klassen</label>
+                                <p><span th:each="cohorts, iterStat: ${instructor.cohorts}">
+                                    <a th:href="@{/cohort/{id}(id=${cohorts.id})}" th:text="${cohorts.name}"></a>
+                                    <span th:if="!${iterStat.last}"></span>
+                                    </span></p>
+                            </div>
+                            <div class="media">
+                                <label>Vak</label>
+                                <p><span th:text="${instructor.course}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="about-photo">
+                    <img
+                            th:src="${instructor.image != null} ? @{/images/{id}(id=${instructor.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                            class="img-fluid"
+                            th:alt="|Foto van ${instructor.fullName}|"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+

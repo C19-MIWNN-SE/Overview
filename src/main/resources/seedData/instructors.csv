@@ -1,3 +1,3 @@
 firstName,lastName,emailAdress,city,phoneNumber,description,course,birthDate
-Docent,Jansens,lisa@example.com,Amsterdam,0698765432,Frontend specialist,React,2026-08-01
-Henk,Pietjes,henk@mail.com,Groningen,061235335,Werkende,fietsen,2026-08-01
+Docent,Jansens,lisa@example.com,Amsterdam,0698765432,Ervaren frontend specialist met een sterke focus op React en moderne webtechnologieën. Lisa helpt studenten bij het ontwikkelen van gebruiksvriendelijke interfaces en stimuleert hen om creatieve en schaalbare oplossingen te bouwen.,React,1990-03-15
+Henk,Pietjes,henk@mail.com,Groningen,061235335,Praktisch ingestelde docent met een achtergrond in softwareontwikkeling en een passie voor het begeleiden van studenten. Henk legt complexe concepten op een begrijpelijke manier uit en combineert theorie met praktijkgerichte voorbeelden.,Backend & DevOps,1985-11-22
