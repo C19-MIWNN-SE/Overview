@@ -5,69 +5,8 @@
 <body>
 <div id="content">
 
-    <div class="container">
-        <div class="row align-items-center flex-row-reverse">
-            <div class="col-lg-6">
-                <div class="about-text go-to">
-                    <h1><span th:text="${participant.fullName}"></span></h1>
-                    <h6 class="theme-color lead"><span th:text="${participant.employer}"></span></h6>
-                    <label>Over mij:</label>
-                    <p><span th:text="${participant.description}"></span></p>
-
-                    <div class="row about-list">
-                        <div class="col-md-6">
-                            <div class="media">
-                                <label>Verjaardag</label>
-                                <p><span th:text="${participant.getBirthDate()}"></span></p>
-                            </div>
-                            <div class="media">
-                                <label>Leeftijd</label>
-                                <p><span th:text="${participant.getAgeInYears(participant.birthDate)}"></span></p>
-                            </div>
-                            <div class="media">
-                                <label>Woonplaats</label>
-                                <p><span th:text="${participant.city}"></span></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="media">
-                                <label>E-mailadres</label>
-                                <p><span th:text="${participant.emailAdress}"></span></p>
-                            </div>
-                            <div class="media">
-                                <label>Telefoonnummer</label>
-                                <p><span th:text="${participant.phoneNumber}"></span></p>
-                            </div>
-                            <div class="media">
-                                <label>Klas</label>
-                                <p><a th:href="@{/cohort/{id}(id=${participant.cohorts.id})}"
-                                      th:text="${participant.cohorts.name}"></a></p>
-                            </div>
-                            <div class="media">
-                                <label>Docent</label>
-                                <p>
-                                    <span  th:each="instructors, iterStat: ${participant.cohorts.instructors}">
-                                        <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
-                                           th:text="${instructors.fullName}"></a>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="about-photo">
-                    <img
-                            th:src="${participant.image != null} ? @{/images/{id}(id=${participant.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
-                            class="img-fluid"
-                            th:alt="|Foto van ${participant.fullName}|"
-                    >
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="~{fragments/profile-fragments :: participantProfile(${participant})}"></div>
+</div>
 
     <div class="modal fade" id="deleteParticipant"
          tabindex="-1"
@@ -75,7 +14,7 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Header -->
+
                 <div class="modal-header">
                     <h5 class="modal-title"
                         id="deleteParticipantModalLabel">
@@ -88,7 +27,7 @@
                 <div class="modal-body">
                     Weet je zeker of deze deelnemer verwijderen wil?
                 </div>
-                <!-- Footer (optioneel) -->
+
                 <div class="modal-footer">
 
                     <form th:action="@{/detail/participant/delete/{id}(id=${participant.id})}" method="post">
@@ -127,6 +66,5 @@
         </button>
 
     </div>
-</div>
 </body>
 </html>

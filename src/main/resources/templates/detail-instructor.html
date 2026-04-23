@@ -4,24 +4,7 @@
 <head><title>Detailpagina</title></head>
 <body>
 <div id="content">
-    <h1>Docent: <span th:text="${instructor.fullName}"></span></h1>
-
-    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-         alt="Afbeelding"
-         style="width: 175px; height: 175px;">
-
-    <p>E-mailadres: <span th:text="${instructor.emailAdress}"></span></p>
-    <p>Woonplaats: <span th:text="${instructor.city}"></span></p>
-    <p>Telefoonnummer: <span th:text="${instructor.phoneNumber}"></span></p>
-    <p>Over mij: <span th:text="${instructor.description}"></span></p>
-    <p>Vak: <span th:text="${instructor.course}"></span></p>
-    <p>Leeftijd: <span th:text="${instructor.getAgeInYears(instructor.birthDate)}"></span></p>
-
-    <p>Klassen: <span th:each="cohorts, iterStat: ${instructor.cohorts}">
-                <a th:href="@{/cohort/{id}(id=${cohorts.id})}" th:text="${cohorts.name}"></a>
-                <span th:if="!${iterStat.last}"></span>
-                </span>
-    </p>
+    <div th:replace="~{fragments/profile-fragments :: instructorProfile(${instructor})}"></div>
 
     <div class="modal fade" id="deleteInstructor"
          tabindex="-1"
@@ -29,11 +12,10 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Header -->
                 <div class="modal-header">
                     <h5 class="modal-title"
                         id="deleteInstructorModalLabel">
-                         Instructor Verwijderen
+                         Docent Verwijderen
                     </h5>
                     <button type="button" class="btn-close"
                             data-bs-dismiss="modal"
@@ -42,7 +24,6 @@
                 <div class="modal-body">
                     Weet je zeker of deze docent verwijderen wil?
                 </div>
-                <!-- Footer (optioneel) -->
                 <div class="modal-footer">
 
                     <form th:action="@{/detail/instructor/delete/{id}(id=${instructor.id})}" method="post">
@@ -59,20 +40,22 @@
         </div>
     </div>
 
-    <button type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteInstructor">
-        Verwijder Docent
-    </button>
+    <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-5">
 
-    <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get">
-        <button type="submit">Bewerk Docent</button>
-    </form>
+        <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get" class="m-0">
+            <button type="submit" class="btn btn-outline-primary px-4 py-2">
+                Bewerk docent
+            </button>
+        </form>
 
-    <form th:action="@{/detail/instructor/add}" method="get">
-        <button type="submit">Maak Nieuwe Docent Aan</button>
-    </form>
+        <button type="button"
+                class="btn btn-outline-danger px-4 py-2"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteInstructor">
+            Verwijder docent
+        </button>
+
+    </div>
 
 </div>
 </body>
