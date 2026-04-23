@@ -11,7 +11,8 @@ import org.springframework.ui.Model;
  * @author Coen Cuppes
  * Handles references for the navbar
  */
-@ControllerAdvice(assignableTypes = {IntroductionController.class, HomeController.class, CohortController.class})
+@ControllerAdvice(assignableTypes = {AboutMeController.class, InstructorController.class, ParticipantController.class,
+        HomeController.class, CohortController.class})
 public class OverviewCohortNavbarHandler {
     private final UserService userService;
 
