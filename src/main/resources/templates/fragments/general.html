@@ -24,7 +24,7 @@
       <div class="navbar-nav">
         <a class="nav-link"
            th:classappend="${activePage =='cohort'} ?'active' : ''"
-           href="/cohort/">
+           th:href="@{/cohort/{id}(id=${currentCohortId})}">
           <i class="bi bi-book"></i> Cohort
         </a>
         <a class="nav-link"

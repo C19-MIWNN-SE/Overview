@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Coen Cuppes
@@ -18,15 +17,15 @@ import java.util.Optional;
 @Service
 public class CohortService {
     private final CohortRepository cohortRepository;
+    private final InstructorService instructorService;
     private final ParticipantService participantService;
 
-    public CohortService(CohortRepository cohortRepository, ParticipantService participantService) {
+    public CohortService(CohortRepository cohortRepository,
+                         InstructorService instructorService,
+                         ParticipantService participantService) {
         this.cohortRepository = cohortRepository;
+        this.instructorService = instructorService;
         this.participantService = participantService;
-    }
-
-    public List<Cohort> showAllCohorts(){
-        return cohortRepository.findAll();
     }
 
     public List<Participant> showParticipantsInCohort(Long id){
@@ -36,6 +35,14 @@ public class CohortService {
     public List<Participant> showParticipantInCohortAndWithout(Long id){
         List<Participant> participants = participantService.showAllParticipantsWithoutCohort();
         return showParticipantsInCohort(id);
+    }
+
+    public List<Cohort> showAllCohorts(){
+        return cohortRepository.findAll();
+    }
+
+    public List<Cohort> showAllCohortsForInstructor(Long instructorId){
+        return cohortRepository.findCohortsByInstructorId(instructorId);
     }
 
     public Cohort findById(Long cohortId){

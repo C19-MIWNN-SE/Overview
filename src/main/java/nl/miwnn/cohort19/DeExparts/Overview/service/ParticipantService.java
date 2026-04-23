@@ -1,6 +1,5 @@
 package nl.miwnn.cohort19.DeExparts.Overview.service;
 
-import nl.miwnn.cohort19.DeExparts.Overview.model.Cohort;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.ParticipantRepository;
@@ -47,6 +46,10 @@ public class ParticipantService {
 
     public Optional<Participant> findParticipantByUserId(Long userId){
         return participantRepository.findParticipantByUser_Id(userId);
+    }
+
+    public List<Participant> showParticipantsInSpecificCohort(long cohortID) {
+        return participantRepository.findByCohorts_Id(cohortID);
     }
 
     public void deleteParticipant(Long id){

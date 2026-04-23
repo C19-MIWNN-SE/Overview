@@ -2,21 +2,20 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import jakarta.validation.*;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Cohort;
-import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
-import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
+import nl.miwnn.cohort19.DeExparts.Overview.model.User;
 import nl.miwnn.cohort19.DeExparts.Overview.service.CohortService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
+import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.web.ProjectedPayload;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,17 +27,22 @@ import java.util.Optional;
 @Controller
 public class CohortController {
 
-    private final CohortService cohortService;
-
     private static final Logger log =
             LoggerFactory.getLogger(CohortController.class);
+
+    private final CohortService cohortService;
     private final InstructorService instructorService;
     private final ParticipantService participantService;
+    private final UserService userService;
 
-    public CohortController(CohortService cohortService, InstructorService instructorService, ParticipantService participantService) {
+    public CohortController(CohortService cohortService,
+                            InstructorService instructorService,
+                            ParticipantService participantService,
+                            UserService userService) {
         this.cohortService = cohortService;
         this.instructorService = instructorService;
         this.participantService = participantService;
+        this.userService = userService;
     }
 
     @GetMapping(value = {"/", ""})
@@ -46,17 +50,48 @@ public class CohortController {
         log.debug("Overview pagina voor cohorts opgevraagd");
         model.addAttribute("title", "Overzicht cohorts");
         model.addAttribute("allCohorts", cohortService.showAllCohorts());
+        return "overview-cohorts";
+    }
+
+    // TODO improve method
+    @GetMapping("/instructor-overview")
+    public String showAllCohortsForUserInstructor(
+            @AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser,
+            Model model) {
+
+        User currentUser = userService.findByUsername(springUser.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // TODO clean up and simplify code
+        Long instructorId = instructorService.findInstructorByUserId(currentUser.getId()).get().getId();
+        List<Cohort> allCohortsForUserInstructor = cohortService.showAllCohortsForInstructor(instructorId);
+
+        log.debug("Overview pagina voor cohorts van docent opgevraagd");
+        log.debug("Instructor ID: {}", instructorService.findInstructorByUserId(currentUser.getId()));
+        model.addAttribute("title", "Overzicht cohorts van docent");
+        model.addAttribute("allCohorts", allCohortsForUserInstructor);
         model.addAttribute("activePage", "cohort");
         return "overview-cohorts";
     }
 
     @GetMapping(value ="/{cohortId}")
-    public String showCohortDetails(@PathVariable Long cohortId, Model model) {
+    public String showCohortDetails(
+            @PathVariable Long cohortId,
+            Model model,
+            @AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser) {
         log.debug("Overview pagina voor specifieke cohort opgevraagd");
 
         model.addAttribute("title", "Overzicht cohort");
         model.addAttribute("cohort", cohortService.findById(cohortId));
-        model.addAttribute("activePage", "cohort");
+
+        // TODO change architecture or simplify code for highlighting participant's own cohort
+        User currentUser = userService.findByUsername(springUser.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (currentUser.isParticipant()) {
+            model.addAttribute("activePage", "cohort");
+        }
+
         return "detail-cohort";
     }
 
