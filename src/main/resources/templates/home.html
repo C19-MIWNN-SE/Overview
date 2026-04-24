@@ -61,7 +61,12 @@
                         </h5>
                         <p class="card-text">
                             Beheer jouw persoonlijke gegevens. Hier vind je alles wat met jouw account te maken heeft.</p>
-                        <a th:href="@{/detail/participant/{id}(id=${user.id})}" class="btn btn-primary">
+                        <a th:if="${userType == 'participant'}"
+                           th:href="@{/detail/participant/{id}(id=${user.id})}" class="btn btn-primary">
+                            Ga naar jouw profiel
+                        </a>
+                        <a th:if="${userType == 'instructor'}"
+                           th:href="@{/detail/instructor/{id}(id=${user.id})}" class="btn btn-primary">
                             Ga naar jouw profiel
                         </a>
                     </div>

@@ -1,10 +1,6 @@
 package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
-import jakarta.validation.Valid;
-import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
-import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
 import nl.miwnn.cohort19.DeExparts.Overview.model.User;
-import nl.miwnn.cohort19.DeExparts.Overview.service.CohortService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
@@ -13,11 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Optional;
 
 /**
  * Author: Anouk de Vos
@@ -53,11 +45,15 @@ public class AboutMeController {
         model.addAttribute("activePage", "aboutMe");
         if (currentUser.isParticipant()) {
             participantService.findParticipantByUserId(currentUser.getId())
-                    .ifPresent(participant -> model.addAttribute("participant", participant));
+                    .ifPresent(participant ->
+                        {model.addAttribute("participant", participant);
+                        model.addAttribute("userType", "participant");});
             return "detail-participant";
         } else if (currentUser.isInstructor()) {
             instructorService.findInstructorByUserId(currentUser.getId())
-                    .ifPresent(instructor -> model.addAttribute("instructor", instructor));
+                    .ifPresent(instructor ->
+                        {model.addAttribute("instructor", instructor);
+                        model.addAttribute("userType", "instructor");});
             return "detail-instructor";
         }
         return "home";

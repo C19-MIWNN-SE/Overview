@@ -35,7 +35,8 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String showHomePage(@AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser, Model model) {
+    public String showHomePage(@AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser,
+                               Model model) {
 
         User currentUser = userService.findByUsername(springUser.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));

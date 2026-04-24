@@ -83,15 +83,17 @@ public class CohortController {
 
         model.addAttribute("title", "Overzicht cohort");
         model.addAttribute("cohort", cohortService.findById(cohortId));
+        model.addAttribute("activePage", "cohort");
 
         // TODO change architecture or simplify code for highlighting participant's own cohort
         User currentUser = userService.findByUsername(springUser.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (currentUser.isParticipant()) {
-            model.addAttribute("activePage", "cohort");
+            model.addAttribute("userType","participant");
+        } else if (currentUser.isInstructor()) {
+            model.addAttribute("userType", "instructor");
         }
-
         return "detail-cohort";
     }
 

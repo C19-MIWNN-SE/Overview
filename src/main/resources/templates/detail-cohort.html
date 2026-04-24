@@ -120,7 +120,7 @@
                 </div>
             </section>
 
-            <section class="mt-5 d-flex flex-column flex-md-row gap-3">
+            <section th:if="${userType == 'instructor'}" class="mt-5 d-flex flex-column flex-md-row gap-3">
                 <form th:action="@{/cohort/edit/{id}(id=${cohort.id})}" method="get">
                     <button type="submit" class="btn btn-outline-primary">
                         Bewerk cohort
@@ -128,6 +128,7 @@
                 </form>
 
                 <button type="button"
+                        th:if="${userType == 'instructor'}"
                         class="btn btn-primary"
                         data-bs-toggle="modal"
                         data-bs-target="#deleteCohort">

@@ -2,12 +2,14 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import jakarta.validation.Valid;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
+import nl.miwnn.cohort19.DeExparts.Overview.model.User;
 import nl.miwnn.cohort19.DeExparts.Overview.service.CohortService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,18 +29,33 @@ public class InstructorController {
 
     private final InstructorService instructorService;
     private final CohortService cohortService;
+    private final UserService userService;
 
-    public InstructorController(InstructorService instructorService, CohortService cohortService) {
+    public InstructorController(InstructorService instructorService, CohortService cohortService,
+                                UserService userService) {
         this.instructorService = instructorService;
         this.cohortService = cohortService;
+        this.userService = userService;
     }
 
     @GetMapping(value = {"/{id}"})
-    public String showInstructorDetail(@PathVariable Long id, Model model) {
+    public String showInstructorDetail(@PathVariable Long id, Model model,
+                                       @AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser) {
         Optional<Instructor> instructor = instructorService.showInstructorDetail(id);
+
+        User currentUser = userService.findByUsername(springUser.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         log.debug("Detail pagina docent opgevraagd");
+
         model.addAttribute("title", "Detail overzicht");
         model.addAttribute("instructor", instructor.get());
+
+        if (currentUser.isParticipant()) {
+            model.addAttribute("userType", "participant");
+        } else if (currentUser.isInstructor()) {
+            model.addAttribute("userType", "instructor");
+        }
         return "detail-instructor";
     }
 
