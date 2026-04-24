@@ -38,7 +38,9 @@ public class overviewSecurityConfiguration {
                                 "/cohort/",
                                 "/cohort/*",
                                 "/detail/participant/*",
-                                "/detail/instructor/*"
+                                "/detail/instructor/*",
+                                "/detail/participant/edit/*",
+                                "/detail/participant/save"
                         ).hasAnyRole("PARTICIPANT", "INSTRUCTOR")
 
                         .requestMatchers(
@@ -52,15 +54,8 @@ public class overviewSecurityConfiguration {
                                 "/detail/instructor/delete/*",
 
                                 "/detail/participant/add",
-                                "/detail/participant/edit/*",
-                                "/detail/participant/save",
                                 "/detail/participant/delete/*"
                         ).hasRole("INSTRUCTOR")
-
-                        .requestMatchers(
-                                "/detail/participant/edit/*",
-                                "/detail/participant/save"
-                        ).hasRole("PARTICIPANT")
 
                         .anyRequest().authenticated()
                 )

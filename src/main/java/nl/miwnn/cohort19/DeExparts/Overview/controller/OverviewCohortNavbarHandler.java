@@ -31,7 +31,6 @@ public class OverviewCohortNavbarHandler {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (currentUser.isParticipant()) {
             model.addAttribute("currentParticipantId", currentUser.getParticipant().getId());
-            log.debug("User heeft id: {}", currentUser.getParticipant().getId());
             model.addAttribute("currentCohortId", currentUser.getParticipant().getCohorts().getId());
         } else if (currentUser.isInstructor()) {
             model.addAttribute("currentInstructorId", currentUser.getInstructor().getId());
