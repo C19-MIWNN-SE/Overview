@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
+<head><title>Er ging iets mis</title></head>
+<body>
+
+<div id="content">
+
+<div>
+    <h1>500 — Er ging iets mis</h1>
+    <p>Er is een onverwachte fout opgetreden.
+        Probeer het later opnieuw.</p>
+    <p th:if="${bericht != null}"
+       th:text="${bericht}"
+       style="color: gray; font-size: 0.9em;">
+        Foutmelding
+    </p>
+    <p>
+        <a th:href="@{/home}">Terug naar de startpagina</a>
+    </p>
+</div>
+</div>
+</body>
+</html>
