@@ -52,6 +52,8 @@ public class overviewSecurityConfiguration {
                                 "/detail/instructor/delete/*",
 
                                 "/detail/participant/add",
+                                "/detail/participant/edit/*",
+                                "/detail/participant/save",
                                 "/detail/participant/delete/*"
                         ).hasRole("INSTRUCTOR")
 
