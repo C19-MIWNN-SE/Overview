@@ -81,9 +81,11 @@ public class ParticipantController {
         log.debug("Bewerkingspagina voor participant met id {} opgevraagd", id);
         model.addAttribute("participant", participant.get());
         model.addAttribute("allCohorts", cohortService.showAllCohorts());
+
         return "edit-participant";
     }
 
+    // TODO methode versimpelen
     @PostMapping(value = {"/save"})
     public String saveParticipant(@Valid @ModelAttribute Participant editedParticipant,
                                   BindingResult bindingResult,
@@ -106,6 +108,7 @@ public class ParticipantController {
             existingParticipant.setEmployer(editedParticipant.getEmployer());
             existingParticipant.setCity(editedParticipant.getCity());
             existingParticipant.setPhoneNumber(editedParticipant.getPhoneNumber());
+            existingParticipant.setDescription(editedParticipant.getDescription());
 
             if (!imageFile.isEmpty()) {
                 Image image = new Image();
