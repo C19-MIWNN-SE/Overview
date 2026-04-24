@@ -28,6 +28,7 @@ public class overviewSecurityConfiguration {
                                 "/images/**",
                                 "/webjars/**",
                                 "/css/**",
+                                "/assets/**",
                                 "/style.css"
                         ).permitAll()
 
