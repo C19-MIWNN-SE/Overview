@@ -76,9 +76,25 @@
             <div th:if="${userType == 'participant'}" class="col-auto">
                 <div class="card h-100 text-center" style="width: 18rem;">
                     <div class="round-image-wrapper">
-                    <img src="https://img.freepik.com/free-photo/portrait-teacher-class-pointing_23-2148665948.jpg?semt=ais_hybrid&w=740&q=80"
-                         class="round-image"
-                         alt="Kaart voorbeeld">
+                        <div id="carouselExample" class="carousel slide">
+                            <div class="carousel-inner">
+                                <div th:each="instructor, iterStat : ${user.cohorts.instructors}"
+                                     class="carousel-item"
+                                     th:classappend="${iterStat.first} ? ' active' : ''">
+                                    <img
+                                            th:src="${instructor.image != null} ? @{/images/{id}(id=${instructor.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                            class="img-fluid"
+                                            th:alt="|Foto van ${instructor.fullName}|">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
                     </div>
                     <div class="card-body">
                         <h5>
@@ -96,18 +112,6 @@
             </div>
         </div>
     </section>
-
-<!--    <section class="mb-5 text-center">-->
-<!--        <img th:if="${user.image != null}"-->
-<!--             th:src="@{/images/{id}(id=${user.image.id})}"-->
-<!--             th:alt="|Foto van ${user.fullName}|"-->
-<!--             class="profile-image">-->
-
-<!--        <img th:unless="${user.image != null}"-->
-<!--             src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="-->
-<!--             th:alt="|Foto van ${user.fullName}|"-->
-<!--             class="profile-image">-->
-<!--    </section>-->
 
     <section th:if="${userType == 'instructor'}" class="d-flex flex-column flex-md-row gap-3 justify-content-center">
         <form th:action="@{/detail/participant/add}" method="get">

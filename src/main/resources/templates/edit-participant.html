@@ -1,83 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head><title>Vervang deze titel!</title></head>
+<head>
+    <title>Bewerk deelnemer</title>
+</head>
+
 <body>
 <div id="content">
-    <h1>Bewerk Deelnemer: <span th:text="${participant.fullName}"></span></h1>
 
-    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
-         alt="Afbeelding"
-         style="width: 175px; height: 175px;">
+    <div th:replace="~{fragments/add-edit-form-participant :: form(
+        'Bewerk deelnemer: ' + ${participant.fullName},
+        @{/detail/participant/save},
+        ${participant},
+        ${allCohorts})}">
+    </div>
 
-    <form th:action="@{/detail/participant/save}" method="post" th:object="${participant}">
-        <div>
-            <input type="hidden" id="id" th:field="*{id}">
-        </div>
-        <div>
-            <label for="cohorts">Klassen:</label>
-            <select id="cohorts" th:field="*{cohorts}" multiple>
-                <option th:each="cohort : ${allCohorts}"
-                        th:value="${cohort.id}"
-                        th:text="${cohort.name}">
-                </option>
-            </select>
-        </div>
-        <div>
-            <label for="firstName">Voornaam:</label>
-            <input type="text" id="firstName" th:field="*{firstName}">
-            <span th:if="${#fields.hasErrors('firstName')}"
-                  th:errors="*{firstName}"
-                  class="error">
-</span>
-        </div>
-        <div>
-            <label for="lastName">Achternaam:</label>
-            <input type="text" id="lastName" th:field="*{lastName}">
-            <span th:if="${#fields.hasErrors('lastName')}"
-                  th:errors="*{lastName}"
-                  class="error">
-</span>
-        </div>
-        <div>
-            <label for="emailAdress">E-mailadres:</label>
-            <input type="text" id="emailAdress" th:field="*{emailAdress}">
-            <span th:if="${#fields.hasErrors('emailAdress')}"
-                  th:errors="*{emailAdress}"
-                  class="error">
-            </span>
-        </div>
-        <div>
-            <label for="city">Woonplaats:</label>
-            <input type="text" id="city" th:field="*{city}">
-            <span th:if="${#fields.hasErrors('city')}"
-                  th:errors="*{city}"
-                  class="error">
-            </span>
-        </div>
-        <div>
-            <label for="phoneNumber">Telefoonnummer:</label>
-            <input type="text" id="phoneNumber" th:field="*{phoneNumber}">
-            <span th:if="${#fields.hasErrors('phoneNumber')}"
-                  th:errors="*{phoneNumber}"
-                  class="error">
-            </span>
-        </div>
-        <div>
-            <label for="description">Omschrijving:</label>
-            <input type="text" id="description" th:field="*{description}">
-        </div>
-        <div>
-            <label for="birthDate">Geboortedatum:</label>
-            <input type="date" id="birthDate" th:field="*{birthDate}">
-        </div>
-        <div>
-            <label for="employer">Werkgever:</label>
-            <input type="text" id="employer" th:field="*{employer}">
-        </div>
-        <button type="submit">Opslaan</button>
-    </form>
 </div>
-
 </body>
 </html>
