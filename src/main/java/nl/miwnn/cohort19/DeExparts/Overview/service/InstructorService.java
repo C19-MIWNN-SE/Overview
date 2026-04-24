@@ -1,11 +1,15 @@
 package nl.miwnn.cohort19.DeExparts.Overview.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import nl.miwnn.cohort19.DeExparts.Overview.model.Cohort;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
+import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
+import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.InstructorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +20,15 @@ import java.util.Optional;
 @Service
 public class InstructorService {
     private final InstructorRepository instructorRepository;
+    private final CohortRepository cohortRepository;
 
-    public InstructorService(InstructorRepository instructorRepository) {
+    public InstructorService(InstructorRepository instructorRepository, CohortRepository cohortRepository) {
         this.instructorRepository = instructorRepository;
+        this.cohortRepository = cohortRepository;
     }
 
     public List<Instructor> showAllInstructors() {return instructorRepository.findAll();}
+
 
     public Optional<Instructor> showInstructorDetail(Long id) {
         return instructorRepository.findById(id);

@@ -88,10 +88,10 @@
                                 </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="carousel-control-prev-icon" aria-hidden="false"></span>
                             </button>
                             <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="carousel-control-next-icon" aria-hidden="false"></span>
                             </button>
                         </div>
 
@@ -105,8 +105,12 @@
                             </span>
                         </h5>
                         <p class="card-text">
-                            Bekijk de docenten die gekoppeld zijn aan jouw cohort en neem eenvoudig contact met hen op voor begeleiding.                        </p>
-                        <a href="#" class="btn btn-primary">Ga naar jouw docent</a>
+                            Bekijk de docenten die gekoppeld zijn aan jouw cohort en neem eenvoudig
+                            contact met hen op voor begeleiding.
+                        </p>
+                        <!--Kiest alleen de eerste uit de lijst van docenten-->
+                        <a th:href="@{/detail/instructor/{id}(id=${user.cohorts.instructors.get(0).id})}"
+                           class="btn btn-primary">Ga naar jouw docent</a>
                     </div>
                 </div>
             </div>

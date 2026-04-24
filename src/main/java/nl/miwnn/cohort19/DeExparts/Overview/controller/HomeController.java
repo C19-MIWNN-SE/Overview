@@ -47,6 +47,8 @@ public class HomeController {
             participantService.findParticipantByUserId(currentUser.getId())
                     .ifPresent(participant -> {
                         model.addAttribute("user", participant);
+//                        model.addAttribute("instructors", instructorService.
+//                                showAllInstructorsForCohort();
                         model.addAttribute("userType", "participant");
                     });
         } else if (currentUser.isInstructor()) {

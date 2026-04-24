@@ -32,6 +32,8 @@ public class CohortService {
         return findById(id).getParticipants();
     }
 
+    public List<Instructor> showInstructorsInCohort(Long id) {return findById(id).getInstructors();}
+
     public List<Participant> showParticipantInCohortAndWithout(Long id){
         List<Participant> participants = participantService.showAllParticipantsWithoutCohort();
         return showParticipantsInCohort(id);
