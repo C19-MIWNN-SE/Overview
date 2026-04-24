@@ -1,7 +1,7 @@
 package nl.miwnn.cohort19.DeExparts.Overview.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
-import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.InstructorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +29,11 @@ public class InstructorService {
 
     public Optional<Instructor> findInstructorByUserId(Long userId){
         return instructorRepository.findInstructorByUser_Id(userId);
+    }
+
+    public Instructor findById(long instructorId) {
+        return instructorRepository.findById(instructorId).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Docent met id %d niet gevonden", instructorId)));
     }
 
     public void deleteInstructor(Long id){

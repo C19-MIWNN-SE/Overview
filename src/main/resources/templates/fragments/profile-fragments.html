@@ -27,6 +27,13 @@
                                     <label>Woonplaats</label>
                                     <p><span th:text="${participant.city}"></span></p>
                                 </div>
+                                <div sec:authorize="hasRole('ROLE_PARTICIPANT')" th:if="${participant.id} == ${currentParticipantId}" class="media">
+                                    <form th:action="@{/detail/participant/edit/{id}(id=${participant.id})}" method="get" class="m-0">
+                                        <button type="submit" class="btn btn-outline-primary px-4 py-2">
+                                            Bewerk je eigen profiel
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="media">
@@ -53,6 +60,9 @@
                                 </div>
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
 
@@ -92,6 +102,13 @@
                             <div class="media">
                                 <label>Woonplaats</label>
                                 <p><span th:text="${instructor.city}"></span></p>
+                            </div>
+                            <div sec:authorize="hasRole('ROLE_INSTRUCTOR')" th:if="${instructor.id} == ${currentInstructorId}" class="media">
+                                <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get" class="m-0">
+                                    <button type="submit" class="btn btn-outline-primary px-4 py-2">
+                                        Bewerk je eigen profiel
+                                    </button>
+                                </form>
                             </div>
                         </div>
                         <div class="col-md-6">

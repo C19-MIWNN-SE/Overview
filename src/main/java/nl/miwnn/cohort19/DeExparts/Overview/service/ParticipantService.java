@@ -1,5 +1,6 @@
 package nl.miwnn.cohort19.DeExparts.Overview.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.ParticipantRepository;
@@ -50,6 +51,11 @@ public class ParticipantService {
 
     public List<Participant> showParticipantsInSpecificCohort(long cohortID) {
         return participantRepository.findByCohorts_Id(cohortID);
+    }
+
+    public Participant findById(long participantId) {
+        return participantRepository.findById(participantId).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Deelnemer met id %d niet gevonden", participantId)));
     }
 
     public void deleteParticipant(Long id){
