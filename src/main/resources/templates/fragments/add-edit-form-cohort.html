@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="form(title, formAction, cohort, allInstructors, allParticipantsInCohort, allParticipantsWithoutCohort)">
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="text-center mb-5">
+                            <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko="
+                                 class="rounded-circle mb-3"
+                                 style="width: 140px; height: 140px; object-fit: cover;"
+                                 alt="Cohort afbeelding">
+
+                            <h1 class="h3" th:text="${title}"></h1>
+                        </div>
+
+                        <form th:action="${formAction}"
+                              method="post"
+                              th:object="${cohort}">
+
+                            <input type="hidden" th:field="*{id}">
+
+                            <div class="mb-4">
+                                <label class="form-label">Naam cohort</label>
+                                <input type="text" class="form-control" th:field="*{name}">
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('name')}"
+                                     th:errors="*{name}"></div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Onderwerp</label>
+                                <input type="text" class="form-control" th:field="*{subject}">
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('subject')}"
+                                     th:errors="*{subject}"></div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label">Startdatum</label>
+                                    <input type="date" class="form-control" th:field="*{startDate}">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Einddatum</label>
+                                    <input type="date" class="form-control" th:field="*{endDate}">
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Docenten</label>
+                                <select class="form-select" th:field="*{instructors}" multiple>
+                                    <option th:each="instructor : ${allInstructors}"
+                                            th:value="${instructor.id}"
+                                            th:text="${instructor.fullName}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4" th:if="${allParticipantsInCohort != null}">
+                                <label class="form-label">Deelnemers in cohort</label>
+                                <select class="form-select" th:field="*{participants}" multiple>
+                                    <option th:each="participant : ${allParticipantsInCohort}"
+                                            th:value="${participant.id}"
+                                            th:text="${participant.fullName}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Deelnemers zonder cohort</label>
+                                <select class="form-select" th:field="*{participants}" multiple>
+                                    <option th:each="participant : ${allParticipantsWithoutCohort}"
+                                            th:value="${participant.id}"
+                                            th:text="${participant.fullName}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2">
+                                <a th:href="@{/}" class="btn btn-outline-secondary">Annuleren</a>
+                                <button type="submit" class="btn btn-primary">Opslaan</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
