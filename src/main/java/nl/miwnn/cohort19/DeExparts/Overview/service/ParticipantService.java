@@ -26,19 +26,26 @@ public class ParticipantService {
     }
 
     public List<Participant> showAllParticipants(){
-        return participantRepository.findAll();
+        long time = System.currentTimeMillis();
+        List<Participant> participants = participantRepository.findAll();
+        System.out.println("showAllParticipants: " + (System.currentTimeMillis() - time));
+        return participants;
     }
 
     public List<Participant> showAllParticipantsWithoutCohort() {
-        List<Participant> participants = showAllParticipants();
-        List<Participant> participantsWithoutCohort = new ArrayList<>();
-        for (int i = 0; i < participants.size(); i++) {
-            Participant participant = participants.get(i);
-            if (participant.getCohorts() == null) {
-                participantsWithoutCohort.add(participant);
-            }
-        }
-        return participantsWithoutCohort;
+        long time = System.currentTimeMillis();
+//        List<Participant> participants = showAllParticipants();
+//        System.out.println("showAllParticipants in Wihtout Cohort: " + (System.currentTimeMillis() - time));
+//        List<Participant> participantsWithoutCohort = new ArrayList<>();
+//        for (int i = 0; i < participants.size(); i++) {
+//            Participant participant = participants.get(i);
+//            if (participant.getCohorts() == null) {
+//                participantsWithoutCohort.add(participant);
+//            }
+//        }
+        List<Participant> participants = participantRepository.findByNullCohort();
+        System.out.println("showAllParticipantsWithoutCohort: " + (System.currentTimeMillis() - time));
+        return participants;
     }
 
     public Optional<Participant> showParticipantDetail(Long id){

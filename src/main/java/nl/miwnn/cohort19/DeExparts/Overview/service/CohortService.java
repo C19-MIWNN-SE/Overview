@@ -28,8 +28,11 @@ public class CohortService {
         this.participantService = participantService;
     }
 
-    public List<Participant> showParticipantsInCohort(Long id){
-        return findById(id).getParticipants();
+    public List<Participant> showParticipantsInCohort(Long id) {
+        long time = System.currentTimeMillis();
+        List<Participant> participants = findById(id).getParticipants();
+        System.out.println("showParticipantsInCohort: " + (System.currentTimeMillis() - time));
+        return participants;
     }
 
     public List<Instructor> showInstructorsInCohort(Long id) {return findById(id).getInstructors();}

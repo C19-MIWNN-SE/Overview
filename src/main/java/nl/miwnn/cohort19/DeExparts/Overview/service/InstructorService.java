@@ -27,7 +27,11 @@ public class InstructorService {
         this.cohortRepository = cohortRepository;
     }
 
-    public List<Instructor> showAllInstructors() {return instructorRepository.findAll();}
+    public List<Instructor> showAllInstructors() {
+        long time = System.currentTimeMillis();
+        List<Instructor> instructors = instructorRepository.findAll();
+        System.out.println("showAllInstructors: " + (System.currentTimeMillis() - time));
+        return instructors;}
 
 
     public Optional<Instructor> showInstructorDetail(Long id) {
