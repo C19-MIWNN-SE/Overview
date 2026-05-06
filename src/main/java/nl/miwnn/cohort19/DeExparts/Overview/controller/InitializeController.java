@@ -88,7 +88,7 @@ public class InitializeController {
                 Participant participant = participants.get(i);
                 participant.setCohorts(cohorts.get(i % cohorts.size()));
 
-                String imageUrl = "/image/Profielfoto" +  ((i % 8) + 1) + ".jpg";
+                String imageUrl = "/image/Profielfoto" +  ((i % 13) + 6) + ".jpg";
                 participant.setImage(loadImage(imageUrl));
 
                 participantRepository.save(participant);
@@ -134,8 +134,11 @@ public class InitializeController {
             for (int i = 0; i < instructors.size(); i++) {
                 Instructor instructor = instructors.get(i);
                 instructor.getCohorts().add(cohorts.get(i % cohorts.size()));
+                if (i < 2) {
+                    instructor.getCohorts().add(cohorts.get((i + 2) % cohorts.size()));
+                }
 
-                String imageUrl = "/image/Profielfoto" +  ((i % 8) + 1) + ".jpg";
+                String imageUrl = "/image/Profielfoto" +  ((i % 5) + 1) + ".jpg";
                 instructor.setImage(loadImage(imageUrl));
 
                 instructorRepository.save(instructor);
