@@ -30,7 +30,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.request.RequestAttributes;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -84,6 +86,7 @@ public class overviewSecurityConfigurationTest {
     InstructorRepository instructorRepository;
 
 
+
 //    @BeforeEach
 //    void setUp(){
 //        instructorRole = roleRepository.findByAuthority("ROLE_INSTRUCTOR").orElseThrow();
@@ -97,16 +100,19 @@ public class overviewSecurityConfigurationTest {
 
 
     @Test
-    void invalidUserThrowsAuthorizationException() throws Exception {
+    void ReturnsHomePageCorrectlyForUserInstructor() throws Exception {
         User testInstructor = new User("test","password");
+        LocalDate date = LocalDate.now();
+        Instructor instructor = new Instructor(1L,"Dirk","de Vries","mark.devries@example.com","Rotterdam","0612342222","Beschrijving van instructor","Wiskunde",date,testInstructor);
+        testInstructor.setInstructor(instructor);
         Collection<User> users = new ArrayList<>();
         Role instructorRole = new Role(1L,"ROLE_INSTRUCTOR","instructor", users);
         testInstructor.setRoles(List.of(instructorRole));
+        System.out.println("Volledige naam = " + testInstructor.getInstructor().getFullName());
 
 
-        mockMvc.perform(get("/home/").with(user(testInstructor)))
+        mockMvc.perform(get("/home/").with(user(testInstructor)).requestAttr("user", instructor).requestAttr("userType","instructor"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("home"));
-                //.andExpect(model().attributeExists("allCohorts"));
     }
 }
