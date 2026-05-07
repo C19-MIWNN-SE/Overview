@@ -1,5 +1,6 @@
-package nl.miwnn.cohort19.DeExparts.Overview.controller;
+package nl.miwnn.cohort19.DeExparts.Overview.handler;
 
+import nl.miwnn.cohort19.DeExparts.Overview.controller.*;
 import nl.miwnn.cohort19.DeExparts.Overview.model.User;
 import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ import org.springframework.ui.Model;
         HomeController.class, CohortController.class})
 public class OverviewCohortNavbarHandler {
     private static final Logger log = LoggerFactory.getLogger(OverviewCohortNavbarHandler.class);
-    
+
     private final UserService userService;
 
     public OverviewCohortNavbarHandler(UserService userService) {

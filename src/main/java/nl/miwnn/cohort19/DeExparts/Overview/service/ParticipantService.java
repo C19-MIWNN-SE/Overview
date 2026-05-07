@@ -32,6 +32,7 @@ public class ParticipantService {
         return participants;
     }
 
+    @Transactional
     public List<Participant> showAllParticipantsWithoutCohort() {
         long time = System.currentTimeMillis();
 //        List<Participant> participants = showAllParticipants();

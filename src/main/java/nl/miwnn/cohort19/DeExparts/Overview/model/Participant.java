@@ -19,12 +19,12 @@ public class Participant extends Person{
     @ManyToOne(fetch = FetchType.LAZY)
     private Cohort cohorts;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private User user;
 
     private String employer;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image image;
 
     public Participant(Long id,
