@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
+<head><title>Geen toegang</title></head>
+<body>
+<div id="content">
+
+  <main>
+    <h1>403 — Geen toegang</h1>
+    <p th:text="${bericht}">Je hebt geen toegang tot deze pagina.</p>
+    <p>
+      <a href="#" onclick="history.back()">Terug naar de vorige pagina</a>
+    </p>
+  </main>
+</div>
+</body>
+</html>
