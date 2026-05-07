@@ -19,17 +19,9 @@ import org.springframework.ui.Model;
 public class OverviewCohortNavbarHandler {
     private static final Logger log = LoggerFactory.getLogger(OverviewCohortNavbarHandler.class);
 
-    private final UserService userService;
-
-    public OverviewCohortNavbarHandler(UserService userService) {
-        this.userService = userService;
-    }
-
     // TODO think of better strategy to couple user to its cohort overview
     @ModelAttribute
-    public void addCurrentUserCohortId(@AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser, Model model) {
-        User currentUser = userService.findByUsername(springUser.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public void addCurrentUserCohortId(@AuthenticationPrincipal User currentUser, Model model) {
         if (currentUser.isParticipant()) {
             model.addAttribute("currentParticipantId", currentUser.getParticipant().getId());
             model.addAttribute("currentCohortId", currentUser.getParticipant().getCohorts().getId());

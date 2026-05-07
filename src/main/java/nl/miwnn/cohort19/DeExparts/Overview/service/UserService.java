@@ -14,7 +14,9 @@ import java.util.Optional;
 
 /**
  * @author Coen Cuppes
- * Handle all businesslogic regarding users
+ * Vertaalt de eigen User naar Spring's User zodat Spring Security kan inloggen.
+ *  * Spring's User: "Mag je inloggen en welke rol heb je?"
+ *  * Eigen User: "Dit is wie je bent in de applicatie"
  */
 @Service
 public class UserService implements UserDetailsService {
@@ -36,13 +38,9 @@ public class UserService implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
                 .toList();
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                authorities
-        );
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Gebruiker niet gevonden"));
     }
-
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

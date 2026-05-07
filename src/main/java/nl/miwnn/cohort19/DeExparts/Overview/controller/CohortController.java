@@ -33,16 +33,13 @@ public class CohortController {
     private final CohortService cohortService;
     private final InstructorService instructorService;
     private final ParticipantService participantService;
-    private final UserService userService;
 
     public CohortController(CohortService cohortService,
                             InstructorService instructorService,
-                            ParticipantService participantService,
-                            UserService userService) {
+                            ParticipantService participantService) {
         this.cohortService = cohortService;
         this.instructorService = instructorService;
         this.participantService = participantService;
-        this.userService = userService;
     }
 
     @GetMapping(value = {"/", ""})
@@ -56,11 +53,8 @@ public class CohortController {
     // TODO improve method
     @GetMapping("/instructor-overview")
     public String showAllCohortsForUserInstructor(
-            @AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser,
+            @AuthenticationPrincipal User currentUser,
             Model model) {
-
-        User currentUser = userService.findByUsername(springUser.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
         // TODO clean up and simplify code
         Long instructorId = instructorService.findInstructorByUserId(currentUser.getId()).get().getId();
@@ -78,12 +72,8 @@ public class CohortController {
     public String showCohortDetails(
             @PathVariable Long cohortId,
             Model model,
-            @AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser) {
+            @AuthenticationPrincipal User currentUser) {
         log.debug("Overview pagina voor specifieke cohort opgevraagd");
-
-        // TODO change architecture or simplify code for highlighting participant's own cohort
-        User currentUser = userService.findByUsername(springUser.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
         //TODO redirect veranderen
         if (currentUser.isParticipant()) {

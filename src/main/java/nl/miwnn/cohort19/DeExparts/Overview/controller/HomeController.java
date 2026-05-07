@@ -24,22 +24,16 @@ public class HomeController {
 
     private final ParticipantService participantService;
     private final InstructorService instructorService;
-    private final UserService userService;
 
     public HomeController(ParticipantService participantService,
-                          InstructorService instructorService,
-                          UserService userService) {
+                          InstructorService instructorService) {
         this.participantService = participantService;
         this.instructorService = instructorService;
-        this.userService = userService;
     }
 
     @GetMapping("/")
-    public String showHomePage(@AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser,
+    public String showHomePage(@AuthenticationPrincipal User currentUser,
                                Model model) {
-
-        User currentUser = userService.findByUsername(springUser.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
         log.debug("Homepagina opgevraagd voor: {}", currentUser.getUsername());
 
