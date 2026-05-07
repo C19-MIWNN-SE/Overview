@@ -36,7 +36,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item"
                    th:href="@{/cohort/{id}(id=${currentCohortId})}">Mijn cohort</a></li>
-            <li><a class="dropdown-item"
+            <li th:if="${userType == 'instructor'}"><a class="dropdown-item"
                    th:href="@{/cohort/}">Overzicht cohorten</a></li>
           </ul>
         </div>

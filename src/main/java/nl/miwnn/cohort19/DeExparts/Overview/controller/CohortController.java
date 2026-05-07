@@ -75,11 +75,10 @@ public class CohortController {
             @AuthenticationPrincipal User currentUser) {
         log.debug("Overview pagina voor specifieke cohort opgevraagd");
 
-        //TODO redirect veranderen
         if (currentUser.isParticipant()) {
             Long userCohortId = currentUser.getParticipant().getCohorts().getId();
             if (!userCohortId.equals(cohortId)){
-                return "redirect:/home/";
+                return "redirect:/JeHebtAlleenToegangTotJeEigenKlas";
             }
             model.addAttribute("userType","participant");
         } else if (currentUser.isInstructor()) {
