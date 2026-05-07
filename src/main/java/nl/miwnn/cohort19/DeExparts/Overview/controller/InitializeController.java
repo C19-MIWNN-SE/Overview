@@ -138,14 +138,12 @@ public class InitializeController {
                     instructor.getCohorts().add(cohorts.get((i + 2) % cohorts.size()));
                 }
 
-                //String imageUrl = "/image/Profielfoto" +  ((i % 5) + 1) + ".jpg";
-                //instructor.setImage(loadImage(imageUrl));
+                String imageUrl = "/image/Profielfoto" +  ((i % 5) + 1) + ".jpg";
+                instructor.setImage(loadImage(imageUrl));
 
                 instructorRepository.save(instructor);
             }
-
-
-
+            
             for (Instructor instructor : instructors) {
                 Role instructorRole = roleRepository.findByAuthority("ROLE_INSTRUCTOR")
                         .orElseThrow();
