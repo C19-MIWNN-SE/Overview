@@ -27,11 +27,20 @@
         <span sec:authorize="hasRole('ROLE_PARTICIPANT')">Ingelogd als deelnemer</span>
       </div>
       <div class="navbar-nav">
-        <a class="nav-link"
-           th:classappend="${activePage =='cohort'} ?'active' : ''"
-           th:href="@{/cohort/{id}(id=${currentCohortId})}">
-          <i class="bi bi-book"></i> Cohort
-        </a>
+
+        <div class="dropdown">
+          <button class="nav-link bi bi-book"
+                  type="button"
+                  data-bs-toggle="dropdown" aria-expanded="false"> Cohort
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item"
+                   th:href="@{/cohort/{id}(id=${currentCohortId})}">Mijn cohort</a></li>
+            <li><a class="dropdown-item"
+                   th:href="@{/cohort/}">Overzicht cohorten</a></li>
+          </ul>
+        </div>
+
         <a class="nav-link"
            th:classappend="${activePage =='aboutMe'} ?'active' : ''"
            th:href="@{/detail/aboutme}">
