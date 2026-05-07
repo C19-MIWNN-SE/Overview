@@ -81,19 +81,25 @@ public class CohortController {
             @AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser) {
         log.debug("Overview pagina voor specifieke cohort opgevraagd");
 
-        model.addAttribute("title", "Overzicht cohort");
-        model.addAttribute("cohort", cohortService.findById(cohortId));
-        model.addAttribute("activePage", "cohort");
-
         // TODO change architecture or simplify code for highlighting participant's own cohort
         User currentUser = userService.findByUsername(springUser.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        //TODO redirect veranderen
         if (currentUser.isParticipant()) {
+            Long userCohortId = currentUser.getParticipant().getCohorts().getId();
+            if (!userCohortId.equals(cohortId)){
+                return "redirect:/home/";
+            }
             model.addAttribute("userType","participant");
         } else if (currentUser.isInstructor()) {
             model.addAttribute("userType", "instructor");
         }
+
+        model.addAttribute("title", "Overzicht cohort");
+        model.addAttribute("cohort", cohortService.findById(cohortId));
+        model.addAttribute("activePage", "cohort");
+
         return "detail-cohort";
     }
 
