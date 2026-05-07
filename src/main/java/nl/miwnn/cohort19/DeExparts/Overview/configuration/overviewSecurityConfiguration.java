@@ -29,19 +29,9 @@ public class overviewSecurityConfiguration {
                                 "/webjars/**",
                                 "/css/**",
                                 "/assets/**",
-                                "/style.css"
+                                "/style.css",
+                                "/fragments/layout"
                         ).permitAll()
-
-                        .requestMatchers(HttpMethod.GET,
-                                "/home/",
-                                "/detail/aboutme",
-                                "/cohort/",
-                                "/cohort/*",
-                                "/detail/participant/*",
-                                "/detail/instructor/*",
-                                "/detail/participant/edit/*",
-                                "/detail/participant/save"
-                        ).hasAnyRole("PARTICIPANT", "INSTRUCTOR")
 
                         .requestMatchers(
                                 "/cohort/add",
@@ -56,6 +46,17 @@ public class overviewSecurityConfiguration {
                                 "/detail/participant/add",
                                 "/detail/participant/delete/*"
                         ).hasRole("INSTRUCTOR")
+
+                        .requestMatchers(HttpMethod.GET,
+                                "/home/",
+                                "/detail/aboutme",
+                                "/cohort/",
+                                "/cohort/*",
+                                "/detail/participant/*",
+                                "/detail/instructor/*",
+                                "/detail/participant/edit/*",
+                                "/detail/participant/save"
+                        ).hasAnyRole("PARTICIPANT", "INSTRUCTOR")
 
                         .anyRequest().authenticated()
                 )
