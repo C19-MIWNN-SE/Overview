@@ -55,11 +55,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-        return authorities;
+        // Zet de rollen uit de database om naar een formaat dat Spring Security begrijpt
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+                .toList();
     }
 
     @Override

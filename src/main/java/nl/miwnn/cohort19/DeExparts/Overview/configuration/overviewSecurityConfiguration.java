@@ -34,6 +34,7 @@ public class overviewSecurityConfiguration {
                         ).permitAll()
 
                         .requestMatchers(
+                                "/cohort/",
                                 "/cohort/add",
                                 "/cohort/edit/*",
                                 "/cohort/delete/*",
@@ -45,7 +46,17 @@ public class overviewSecurityConfiguration {
 
                                 "/detail/participant/add",
                                 "/detail/participant/delete/*"
-                        ).hasRole("INSTRUCTOR")
+                        ).hasAnyRole("INSTRUCTOR")
+
+                        .requestMatchers(
+                                "/home/",
+                                "/detail/aboutme",
+                                "/cohort/",
+                                "/detail/participant/*",
+                                "/detail/instructor/*",
+                                "/detail/participant/edit/*",
+                                "/detail/participant/save"
+                        ).hasAnyRole("PARTICIPANT", "INSTRUCTOR")
 
                         .requestMatchers(HttpMethod.GET,
                                 "/home/",

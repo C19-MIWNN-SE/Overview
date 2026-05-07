@@ -143,9 +143,7 @@ public class InitializeController {
 
                 instructorRepository.save(instructor);
             }
-
-
-
+            
             for (Instructor instructor : instructors) {
                 Role instructorRole = roleRepository.findByAuthority("ROLE_INSTRUCTOR")
                         .orElseThrow();

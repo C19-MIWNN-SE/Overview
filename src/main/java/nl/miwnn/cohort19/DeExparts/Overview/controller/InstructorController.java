@@ -35,7 +35,6 @@ public class InstructorController {
 
     private final InstructorService instructorService;
     private final CohortService cohortService;
-    private final UserService userService;
     private final ImageRepository imageRepository;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -44,10 +43,9 @@ public class InstructorController {
 
 
     public InstructorController(InstructorService instructorService, CohortService cohortService,
-                                UserService userService, ImageRepository imageRepository, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+                                ImageRepository imageRepository, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.instructorService = instructorService;
         this.cohortService = cohortService;
-        this.userService = userService;
         this.imageRepository = imageRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -56,11 +54,8 @@ public class InstructorController {
 
     @GetMapping(value = {"/{id}"})
     public String showInstructorDetail(@PathVariable Long id, Model model,
-                                       @AuthenticationPrincipal org.springframework.security.core.userdetails.User springUser) {
+                                       @AuthenticationPrincipal User currentUser) {
         Optional<Instructor> instructor = instructorService.showInstructorDetail(id);
-
-        User currentUser = userService.findByUsername(springUser.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
         log.debug("Detail pagina docent opgevraagd");
 
