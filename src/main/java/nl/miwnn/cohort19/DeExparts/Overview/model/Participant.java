@@ -1,16 +1,13 @@
 package nl.miwnn.cohort19.DeExparts.Overview.model;
 
-import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Represents a participant entity, extending Person with employer information,
+ * an assigned cohort, a linked user account, and a profile image.
  */
 
 @Entity
@@ -27,6 +24,7 @@ public class Participant extends Person{
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image image;
 
+    //TODO dubbele code Instructor & Participant
     public Participant(Long id,
                        String firstName,
                        String lastName,

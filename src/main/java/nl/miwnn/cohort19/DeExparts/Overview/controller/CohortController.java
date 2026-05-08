@@ -6,7 +6,6 @@ import nl.miwnn.cohort19.DeExparts.Overview.model.User;
 import nl.miwnn.cohort19.DeExparts.Overview.service.CohortService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
-import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +20,8 @@ import java.util.Optional;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Handles requests related to cohort management, including viewing, adding,
+ * editing, deleting, and role-based access to cohort detail pages.
  */
 @RequestMapping("/cohort")
 @Controller

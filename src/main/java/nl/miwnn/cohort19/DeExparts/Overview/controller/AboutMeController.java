@@ -3,7 +3,6 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 import nl.miwnn.cohort19.DeExparts.Overview.model.User;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
-import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Handles requests to the personal detail page, redirecting the current user
+ * to their own participant or instructor detail view based on their role.
  */
 @Controller
 @RequestMapping("/detail")

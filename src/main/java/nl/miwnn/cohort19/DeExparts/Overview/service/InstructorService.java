@@ -15,7 +15,8 @@ import java.util.Optional;
 
 /**
  * @author Coen Cuppes
- * !! TODO include description !!
+ * Service class for instructor-related business logic, providing methods
+ * to retrieve, save, and delete instructors, including lookup by user ID.
  */
 @Service
 public class InstructorService {

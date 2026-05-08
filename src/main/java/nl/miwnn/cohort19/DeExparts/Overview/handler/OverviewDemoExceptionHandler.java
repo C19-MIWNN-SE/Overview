@@ -7,7 +7,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Author: Anouk de Vos
- * TODO description !!
+ * Global exception handler that catches HTTP status exceptions and general
+ * exceptions, returning appropriate error views (404, 500) with relevant messages.
  */
 
 @ControllerAdvice

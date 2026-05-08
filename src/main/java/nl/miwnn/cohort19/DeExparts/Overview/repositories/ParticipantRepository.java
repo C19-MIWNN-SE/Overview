@@ -9,7 +9,9 @@ import java.util.Optional;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Repository for Participant entities, with methods to find a participant
+ * by user ID, retrieve participants without an assigned cohort,
+ * and retrieve participants belonging to a specific cohort.
  */
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
     Optional<Participant> findParticipantByUser_Id(Long userId);

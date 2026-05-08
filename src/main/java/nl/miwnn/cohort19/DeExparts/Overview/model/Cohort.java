@@ -4,7 +4,6 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.engine.internal.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author wat doe ik? TODO change author name
  * Information about a cohort (that includes participants, instructors and more)
  */
 @Entity

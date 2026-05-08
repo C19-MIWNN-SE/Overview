@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Handles requests to the login page and serves as the entry point of the application.
  */
 @Controller
 public class LoginController {

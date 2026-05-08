@@ -10,6 +10,8 @@ import java.time.temporal.ChronoUnit;
 
 /**
  * @author wat doe ik?
+ * Abstract base entity representing a person with shared personal details
+ * such as name, contact information, birth date, and description.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Repository for Role entities, with a method to find a role by its authority string.
  */
 public interface RoleRepository extends JpaRepository<Role, Long> {
     Optional<Role> findByAuthority(String authority);

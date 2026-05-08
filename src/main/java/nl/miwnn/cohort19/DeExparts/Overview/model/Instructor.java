@@ -1,18 +1,15 @@
 package nl.miwnn.cohort19.DeExparts.Overview.model;
 
-import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Represents an instructor entity, extending Person with course information,
+ * associated cohorts, a linked user account, and a profile image.
  */
 @Entity
 public class Instructor extends Person{

@@ -9,6 +9,8 @@ import java.util.List;
 
 /**
  * @author wat doe ik?
+ * Repository for Cohort entities, including a custom query
+ * to retrieve all cohorts associated with a specific instructor.
  */
 public interface CohortRepository extends JpaRepository<Cohort, Long> {
     @Query("SELECT c FROM Instructor i JOIN i.cohorts c WHERE i.id = :instructorId")

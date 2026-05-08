@@ -6,7 +6,8 @@ import java.util.Collection;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Represents a user role (e.g. ROLE_INSTRUCTOR, ROLE_PARTICIPANT)
+ * used for Spring Security authorization.
  */
 
 @Entity

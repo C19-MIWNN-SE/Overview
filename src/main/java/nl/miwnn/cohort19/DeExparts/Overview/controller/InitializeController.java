@@ -19,7 +19,8 @@ import java.util.List;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Seeds the database on application startup with initial data for roles,
+ * cohorts, participants, and instructors, loaded from CSV files.
  */
 
 @Controller

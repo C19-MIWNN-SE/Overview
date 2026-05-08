@@ -26,7 +26,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author wat doe ik?
+ * Handles requests related to participant management, including viewing,
+ * adding, editing, deleting, and saving participant details and profile images.
  */
 @Controller
 @RequestMapping("/detail/participant")

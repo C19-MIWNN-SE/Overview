@@ -11,7 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Configures Spring Security for the application, defining access rules per role,
+ * the login/logout flow, and the password encoding strategy.
  */
 @Configuration
 @EnableWebSecurity
