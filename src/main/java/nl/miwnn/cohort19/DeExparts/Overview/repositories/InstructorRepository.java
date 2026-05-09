@@ -10,7 +10,8 @@ import java.util.Optional;
 
 /**
  * Author: Anouk de Vos
- * !! Doel voor de class !!
+ * Repository for Instructor entities, with a method to look up
+ * an instructor by their linked user account ID.
  */
 public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     Optional<Instructor> findInstructorByUser_Id(Long userId);

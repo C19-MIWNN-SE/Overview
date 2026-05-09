@@ -8,7 +8,7 @@ import java.util.Optional;
 
 /**
  * @author Coen Cuppes
- * !! TODO include description !!
+ * Repository for User entities, with a method to find a user by their username.
  */
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);

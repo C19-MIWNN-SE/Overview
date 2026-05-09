@@ -13,7 +13,9 @@ import java.util.Optional;
 
 /**
  * @author Coen Cuppes
- * !! TODO include description !!
+ * Service class for participant-related business logic, providing methods
+ * to retrieve, save, and delete participants, including lookup by user ID
+ * and filtering participants without an assigned cohort.
  */
 @Service
 public class ParticipantService {

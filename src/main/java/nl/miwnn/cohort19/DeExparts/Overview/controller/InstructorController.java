@@ -7,7 +7,6 @@ import nl.miwnn.cohort19.DeExparts.Overview.repositories.RoleRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.repositories.UserRepository;
 import nl.miwnn.cohort19.DeExparts.Overview.service.CohortService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
-import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +24,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author wat doe ik?
+ * Handles requests related to instructor management, including viewing,
+ * adding, editing, deleting, and saving instructor details and profile images.
  */
 @Controller
 @RequestMapping("/detail/instructor")
