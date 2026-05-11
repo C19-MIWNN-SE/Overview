@@ -36,18 +36,7 @@ public class ParticipantService {
 
     @Transactional
     public List<Participant> showAllParticipantsWithoutCohort() {
-        long time = System.currentTimeMillis();
-//        List<Participant> participants = showAllParticipants();
-//        System.out.println("showAllParticipants in Wihtout Cohort: " + (System.currentTimeMillis() - time));
-//        List<Participant> participantsWithoutCohort = new ArrayList<>();
-//        for (int i = 0; i < participants.size(); i++) {
-//            Participant participant = participants.get(i);
-//            if (participant.getCohorts() == null) {
-//                participantsWithoutCohort.add(participant);
-//            }
-//        }
         List<Participant> participants = participantRepository.findByNullCohort();
-        System.out.println("showAllParticipantsWithoutCohort: " + (System.currentTimeMillis() - time));
         return participants;
     }
 

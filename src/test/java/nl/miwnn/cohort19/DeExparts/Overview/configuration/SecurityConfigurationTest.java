@@ -119,7 +119,8 @@ public class SecurityConfigurationTest {
             "/detail/participant/add",
             "/detail/participant/delete/*",
 
-            //"/detail/aboutme", ABOUTME GIVES THYMELEAFEXCEPTION WHEN NO THYMELEAF REQUEST IS MADE
+//ABOUTME GIVES THYMELEAFEXCEPTION WHEN NO THYMELEAF REQUEST IS MADE
+            //"/detail/aboutme",
 
             "/detail/participant/*",
             "/detail/instructor/*",
