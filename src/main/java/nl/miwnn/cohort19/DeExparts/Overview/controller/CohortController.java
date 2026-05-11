@@ -147,4 +147,11 @@ public class CohortController {
         redirectAttributes.addAttribute("id", editedCohort.getId());
         return "redirect:/cohort/";
     }
+
+    @PostMapping("/{id}/search")
+    public String searchParticipant(@PathVariable Long id, @RequestParam String name, Model model) {
+        model.addAttribute("cohort", cohortService.findById(id));
+        model.addAttribute("searchResults", participantService.findByName(name));
+        return "detail-cohort";
+    }
 }

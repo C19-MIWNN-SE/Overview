@@ -20,4 +20,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     List<Participant> findByNullCohort();
 
     List<Participant> findByCohorts_Id(Long cohortsId);
+
+    List<Participant> findByFirstNameContainingIgnoreCase(String name);
 }

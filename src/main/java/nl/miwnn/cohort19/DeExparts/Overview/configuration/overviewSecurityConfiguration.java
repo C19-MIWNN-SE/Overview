@@ -53,6 +53,7 @@ public class overviewSecurityConfiguration {
                                 "/home/",
                                 "/detail/aboutme",
                                 "/cohort/",
+                                "/cohort/{id}/search",
                                 "/detail/participant/*",
                                 "/detail/instructor/*",
                                 "/detail/participant/edit/*",

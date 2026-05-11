@@ -76,4 +76,8 @@ public class ParticipantService {
     public void saveParticipant(Participant editedParticipant){
         participantRepository.save(editedParticipant);
     }
+
+    public List<Participant> findByName(String name) {
+        return participantRepository.findByFirstNameContainingIgnoreCase(name);
+    }
 }

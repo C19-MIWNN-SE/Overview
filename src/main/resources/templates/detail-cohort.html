@@ -42,7 +42,8 @@
 
                     <div class="btn-group">
                         <section sec:authorize="hasRole('INSTRUCTOR')" class="mb-4">
-                            <a th:href="@{/cohort/edit/{id}(id=${cohort.id})}" class="btn btn-primary" role="button">Bewerk</a>
+                            <a th:href="@{/cohort/edit/{id}(id=${cohort.id})}" class="btn btn-primary"
+                               role="button">Bewerk</a>
                             <button type="button"
                                     class="btn btn-danger"
                                     data-bs-toggle="modal"
@@ -62,7 +63,9 @@
                             <div class="card-body d-flex align-items-center gap-3">
                                 <a th:href="@{/detail/instructor/{id}(id=${instructor.id})}">
                                     <img
-                                            th:src="${instructor.image != null} ? @{/images/{id}(id=${instructor.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                            th:src="${instructor.image != null}
+                                            ? @{/images/{id}(id=${instructor.image.id})}
+                                            : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
                                             class="sidebar-profile-image"
                                             th:alt="|Foto van ${instructor.fullName}|"
                                     >
@@ -90,14 +93,46 @@
             <section class="mb-4">
                 <h2 class="text-center mb-4">Deelnemers</h2>
 
-                <div class="row g-4">
+                <form th:action="@{/cohort/{id}/search(id=${cohort.id})}" method="post">
+                    <div class="input-group">
+                        <input type="text" name="name" class="form-control" placeholder="Zoek op naam...">
+                        <button type="submit" class="btn btn-primary">Zoeken</button>
+                    </div>
+                </form>
+
+                <div th:if="${searchResults}" class="row g-4 mt-2">
+                    <h3 class="text-center">Zoekresultaten</h3>
+                    <div class="col-md-6 col-xl-4"
+                         th:each="participant : ${searchResults}">
+                        <div class="participant-card text-center h-100">
+                            <a th:href="@{/detail/participant/{id}(id=${participant.id})}">
+                                <img th:src="${participant.image != null} ? @{/images/{id}(id=${participant.image.id})}
+                                : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg'"
+                                     class="participant-image"
+                                     th:alt="|Foto van ${participant.fullName}|">
+                            </a>
+                            <div class="participant-card">
+                                <h3 class="text-primary mb-1 h5"
+                                    th:text="|${participant.firstName} ${participant.lastName}|">
+                                    Naam deelnemer
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr th:if="${searchResults}" class="my-4">
+
+                <div class="row g-4 mt-1">
                     <div class="col-md-6 col-xl-4"
                          th:each="participant : ${cohort.participants}">
 
                         <div class="participant-card text-center h-100">
                             <a th:href="@{/detail/participant/{id}(id=${participant.id})}">
                                 <img
-                                        th:src="${participant.image != null} ? @{/images/{id}(id=${participant.image.id})} : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
+                                        th:src="${participant.image != null}
+                                        ? @{/images/{id}(id=${participant.image.id})}
+                                        : 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='"
                                         class="participant-image"
                                         th:alt="|Foto van ${participant.fullName}|"
                                 >
@@ -108,14 +143,16 @@
                                     th:text="|${participant.firstName} ${participant.lastName}|">
                                     Naam deelnemer
                                 </h3>
-                                <span class="text-secondary" th:text="${participant.getEmployer()}">Toekomstige werkgever</span>
+                                <span class="text-secondary"
+                                      th:text="${participant.getEmployer()}">Toekomstige werkgever</span>
                             </div>
 
                             <div class="participant-overlay">
                                 <div class="d-table h-100 w-100">
                                     <div class="d-table-cell align-middle">
                                         <h3 class="h5">
-                                            <a th:text="|${participant.firstName} ${participant.lastName}|" th:href="@{/detail/participant/{id}(id=${participant.id})}"
+                                            <a th:text="|${participant.firstName} ${participant.lastName}|"
+                                               th:href="@{/detail/participant/{id}(id=${participant.id})}"
                                                class="text-white text-decoration-none">
                                                 Over deelnemer
                                             </a>
