@@ -22,7 +22,6 @@
                                 </button>
                             </form>
 
-
                             <form th:action="@{/detail/instructor/add}" method="get">
                                 <button type="submit" class="p-2 m-2 btn btn-primary btn-sm">
                                     + Nieuwe docent
@@ -72,7 +71,8 @@
                                     <button type="button"
                                             class="btn btn-sm btn-outline-danger"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#deleteCohort">
+                                            data-bs-target="#deleteCohort"
+                                            th:data-cohort-id="${cohort.id}">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </td>
@@ -85,42 +85,53 @@
         </div>
     </div>
 
-<!--    <div class="modal fade" id="deleteCohort"-->
-<!--         tabindex="-1"-->
-<!--         aria-labelledby="deleteCohortModalLabel"-->
-<!--         aria-hidden="true">-->
-<!--        <div class="modal-dialog">-->
-<!--            <div class="modal-content">-->
+    <div class="modal fade" id="deleteCohort"
+         tabindex="-1"
+         aria-labelledby="deleteCohortModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title" id="deleteCohortModalLabel">-->
-<!--                        Cohort verwijderen-->
-<!--                    </h5>-->
-<!--                    <button type="button"-->
-<!--                            class="btn-close"-->
-<!--                            data-bs-dismiss="modal"-->
-<!--                            aria-label="Sluiten"></button>-->
-<!--                </div>-->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCohortModalLabel">
+                        Cohort verwijderen
+                    </h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Sluiten"></button>
+                </div>
 
-<!--                <div class="modal-body">-->
-<!--                    Weet je zeker dat je dit cohort wilt verwijderen?-->
-<!--                </div>-->
+                <div class="modal-body">
+                    Weet je zeker dat je dit cohort wilt verwijderen?
+                </div>
 
-<!--                <div class="modal-footer">-->
-<!--                    <form th:action="@{/cohort/delete/{id}(id=${cohort.id})}" method="post">-->
-<!--                        <button type="submit" class="btn btn-warning">Ja</button>-->
-<!--                    </form>-->
+                <div class="modal-footer">
+                    <form method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn btn-warning">Ja</button>
+                    </form>
 
-<!--                    <button type="button"-->
-<!--                            class="btn btn-secondary"-->
-<!--                            data-bs-dismiss="modal">-->
-<!--                        Nee-->
-<!--                    </button>-->
-<!--                </div>-->
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Nee
+                    </button>
+                </div>
 
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const deleteCohortModal = document.getElementById('deleteCohort');
+        deleteCohortModal.addEventListener('show.bs.modal', (event) => {
+            const button = event.relatedTarget;
+            const cohortId = button.getAttribute('data-cohort-id');
+            const form = deleteCohortModal.querySelector('form');
+            form.action = `/cohort/delete/${cohortId}`;
+        });
+    </script>
 
 </div>
 </body>

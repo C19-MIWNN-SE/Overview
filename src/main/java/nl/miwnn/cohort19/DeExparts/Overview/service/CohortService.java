@@ -8,6 +8,7 @@ import nl.miwnn.cohort19.DeExparts.Overview.repositories.CohortRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,22 +59,38 @@ public class CohortService {
 
     @Transactional
     public void saveCohort(Cohort editedCohort) {
-        editedCohort.getInstructors().forEach(instructor -> instructor.addCohort(editedCohort));
-        editedCohort.getParticipants().forEach(participant -> participant.setCohorts(editedCohort));
-        cohortRepository.save(editedCohort);
+        Cohort savedCohort = cohortRepository.save(editedCohort);
+
+        savedCohort.getInstructors().forEach(instructor -> {
+            if (!instructor.getCohorts().contains(savedCohort)) {
+                instructor.addCohort(savedCohort);
+                instructorService.saveInstructor(instructor);
+            }
+        });
+
+        savedCohort.getParticipants().forEach(participant -> {
+            participant.setCohorts(savedCohort);
+            participantService.saveParticipant(participant);
+        });
     }
 
     @Transactional
     public void deleteCohort(Long id){
         Cohort cohort = findById(id);
-        List<Instructor> instructors = cohort.getInstructors();
-        List<Participant> participants = cohort.getParticipants();
-        for (int i = 0; i < instructors.size(); i++) {
-            instructors.get(i).removeCohort(cohort);
+
+        List<Instructor> instructorsCopy = new ArrayList<>(cohort.getInstructors());
+
+        for (Instructor instructor : instructorsCopy) {
+            instructor.removeCohort(cohort);
+            instructorService.saveInstructor(instructor);
         }
-        for (int i = 0; i < participants.size(); i++) {
-            participants.get(i).setCohorts(null);
+
+        List<Participant> participantsCopy = new ArrayList<>(cohort.getParticipants());
+        for (Participant participant : participantsCopy) {
+            participant.setCohorts(null);
+            participantService.saveParticipant(participant);
         }
+
         cohortRepository.deleteById(id);
     }
 }
