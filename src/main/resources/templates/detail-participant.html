@@ -42,29 +42,6 @@
             </div>
         </div>
     </div>
-
-    <div sec:authorize="hasRole('ROLE_INSTRUCTOR')" class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-5">
-
-        <form th:action="@{/detail/participant/edit/{id}(id=${participant.id})}" method="get" class="m-0">
-            <button type="submit" class="btn btn-outline-primary px-4 py-2">
-                Bewerk deelnemer
-            </button>
-        </form>
-
-        <form th:action="@{/detail/participant/add}" method="get" class="m-0">
-            <button type="submit" class="btn btn-primary px-4 py-2">
-                + Nieuwe deelnemer
-            </button>
-        </form>
-
-        <button type="button"
-                class="btn btn-outline-danger px-4 py-2"
-                data-bs-toggle="modal"
-                data-bs-target="#deleteParticipant">
-            Verwijder deelnemer
-        </button>
-    </div>
-
 </div>
 
 </body>

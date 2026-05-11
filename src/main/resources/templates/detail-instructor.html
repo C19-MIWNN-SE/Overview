@@ -40,23 +40,6 @@
         </div>
     </div>
 
-    <div th:if="${userType=='instructor'}" class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-5">
-
-        <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get" class="m-0">
-            <button type="submit" class="btn btn-outline-primary px-4 py-2">
-                Bewerk docent
-            </button>
-        </form>
-
-        <button type="button"
-                class="btn btn-outline-danger px-4 py-2"
-                data-bs-toggle="modal"
-                data-bs-target="#deleteInstructor">
-            Verwijder docent
-        </button>
-
-    </div>
-
 </div>
 </body>
 </html>

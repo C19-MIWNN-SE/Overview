@@ -6,7 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 
 /**
  * @author wat doe ik?
@@ -113,12 +116,26 @@ public abstract class Person {
         return birthDate;
     }
 
-    public Long getAgeInYears(LocalDate birthDate){
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Long getAgeInYears(LocalDate birthDate) {
         return Math.abs(ChronoUnit.YEARS.between(LocalDate.now(),birthDate));
     }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public String getBirthday() {
+        LocalDate today = LocalDate.now();
+        LocalDate birthdayThisYear = this.birthDate.withYear(today.getYear());
+
+        LocalDate nextBirthday = birthdayThisYear.isBefore(today) ?
+                birthdayThisYear.plusYears(1) :
+                birthdayThisYear;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+                .withLocale(new Locale("nl", "NL"));
+
+        return nextBirthday.format(formatter);
     }
 
     public String getDescription() {

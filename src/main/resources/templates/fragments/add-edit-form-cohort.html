@@ -66,12 +66,17 @@
 
                             <div class="mb-4" th:if="${allParticipantsInCohort != null}">
                                 <label class="form-label">Deelnemers in cohort</label>
-                                <select class="form-select" th:field="*{participants}" multiple>
-                                    <option th:each="participant : ${allParticipantsInCohort}"
-                                            th:value="${participant.id}"
-                                            th:text="${participant.fullName}">
-                                    </option>
-                                </select>
+                                <div th:each="participant : ${allParticipantsInCohort}" class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           th:field="*{allParticipantsInCohort}"
+                                           th:value="${participant.id}"
+                                           th:text="${participant.fullName}">
+                                    <label class="form-check-label"
+                                           th:for="'participant-' + ${participant.id}"
+                                           th:text="${participant.fullName}">
+                                    </label>
+                                </div>
                             </div>
 
                             <div class="mb-4">

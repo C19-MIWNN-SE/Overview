@@ -21,24 +21,26 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="/home/">Overview</a>
-      <!-- TODO remove this section when finishing up -->
-      <div class="navbar-brand">
-        <span sec:authorize="hasRole('ROLE_INSTRUCTOR')">Ingelogd als docent</span>
-        <span sec:authorize="hasRole('ROLE_PARTICIPANT')">Ingelogd als deelnemer</span>
-      </div>
       <div class="navbar-nav">
-
-        <div class="dropdown">
-          <button class="nav-link bi bi-book"
-                  type="button"
-                  data-bs-toggle="dropdown" aria-expanded="false"> Cohort
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item"
-                   th:href="@{/cohort/{id}(id=${currentCohortId})}">Mijn cohort</a></li>
-            <li th:if="${userType == 'instructor'}"><a class="dropdown-item"
-                   th:href="@{/cohort/}">Overzicht cohorten</a></li>
-          </ul>
+        <div sec:authorize="hasRole('INSTRUCTOR')">
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle bi bi-book"
+                    type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false"> Cohort
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item"
+                     th:href="@{/cohort/{id}(id=${currentCohortId})}">Mijn cohort(en)</a></li>
+              <li><a class="dropdown-item" th:href="@{/cohort/}">Overzicht cohorten</a></li>
+            </ul>
+          </div>
+        </div>
+        <div sec:authorize="hasRole('PARTICIPANT')">
+          <a class="nav-link"
+             th:classappend="${activePage =='cohort'} ?'active' : ''"
+             th:href="@{/cohort/{id}(id=${currentCohortId})}">
+            <i class="bi bi-book"></i> Cohort
+          </a>
         </div>
 
         <a class="nav-link"
@@ -48,7 +50,7 @@
         </a>
         <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()"
               style="display: inline;">
-          <button class="btn btn-outline-light btn-sm" type="submit">Uitloggen</button>
+          <button class="btn btn-outline-light btn-sm logout-btn ms-4" type="submit">Uitloggen</button>
         </form>
       </div>
     </div>

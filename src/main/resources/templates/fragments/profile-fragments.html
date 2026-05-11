@@ -7,62 +7,76 @@
     <div class="container">
             <div class="row align-items-center flex-row-reverse">
                 <div class="col-lg-6">
-                    <div class="about-text go-to">
-                        <h1><span th:text="${participant.fullName}"></span></h1>
-                        <h6 class="theme-color lead"><span th:text="${participant.employer}"></span></h6>
-                        <label>Over mij:</label>
-                        <p><span th:text="${participant.description}"></span></p>
+                    <div class="about-text go-to d-flex flex-column h-100">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <h1 th:text="${participant.fullName}">Naam leerling</h1>
+                            <div sec:authorize="hasRole('INSTRUCTOR')">
+                                <form th:action="@{/detail/participant/edit/{id}(id=${participant.id})}" method="get" style="display: inline;">
+                                    <button type="submit" class="bi bi-pencil" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                    </button>
+                                </form>
+                                <button type="button"
+                                        class="bi bi-trash"
+                                        style="background: none; border: none; padding: 0; cursor: pointer;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteParticipant">
+                                </button>
+                            </div>
+                        </div>
 
-                        <div class="row about-list">
-                            <div class="col-md-6">
+                        <h6 th:text="${participant.employer}" class="theme-color lead">Naam werkgever</h6>
+                        <strong>Over mij:</strong>
+                        <p th:text="${participant.description}">Beschrijving leerling</p>
+
+                        <div class="row about-list d-flex flex-grow-1">
+
+                            <div class="col-md-6 d-flex flex-column">
                                 <div class="media">
-                                    <label>Verjaardag</label>
-                                    <p><span th:text="${participant.getBirthDate()}"></span></p>
+                                    <strong>E-mailadres</strong>
+                                    <p><span th:text="${participant.emailAdress}"></span></p>
                                 </div>
                                 <div class="media">
-                                    <label>Leeftijd</label>
+                                    <strong>Telefoonnummer</strong>
+                                    <p><span th:text="${participant.phoneNumber}"></span></p>
+                                </div>
+                                <div class="media">
+                                    <strong>Klas</strong>
+                                    <p><a th:href="@{/cohort/{id}(id=${participant.cohorts.id})}"
+                                          th:text="${participant.cohorts.name}"></a></p>
+                                </div>
+                                <div class="media">
+                                    <strong>Docent</strong>
+                                    <p>
+                                        <span  th:each="instructors, iterStat: ${participant.cohorts.instructors}">
+                                            <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
+                                               th:text="${instructors.fullName}"></a>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-flex flex-column">
+                                <div class="media">
+                                    <strong>Verjaardag</strong>
+                                    <p><span th:text="${participant.getBirthday()}"></span></p>
+                                </div>
+                                <div class="media">
+                                    <strong>Leeftijd</strong>
                                     <p><span th:text="${participant.getAgeInYears(participant.birthDate)}"></span></p>
                                 </div>
                                 <div class="media">
-                                    <label>Woonplaats</label>
+                                    <strong>Woonplaats</strong>
                                     <p><span th:text="${participant.city}"></span></p>
                                 </div>
-                                <div sec:authorize="hasRole('ROLE_PARTICIPANT')" th:if="${participant.id} == ${currentParticipantId}" class="media">
-                                    <form th:action="@{/detail/participant/edit/{id}(id=${participant.id})}" method="get" class="m-0">
-                                        <button type="submit" class="btn btn-outline-primary px-4 py-2">
+                                <div sec:authorize="hasRole('ROLE_PARTICIPANT')" th:if="${participant.id} == ${currentParticipantId}" class="media mt-auto mb-3">
+                                    <form th:action="@{/detail/participant/edit/{id}(id=${participant.id})}" method="get">
+                                        <button type="submit" class="btn btn-primary">
                                             Bewerk je eigen profiel
                                         </button>
                                     </form>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="media">
-                                    <label>E-mailadres</label>
-                                    <p><span th:text="${participant.emailAdress}"></span></p>
-                                </div>
-                                <div class="media">
-                                    <label>Telefoonnummer</label>
-                                    <p><span th:text="${participant.phoneNumber}"></span></p>
-                                </div>
-                                <div class="media">
-                                    <label>Klas</label>
-                                    <p><a th:href="@{/cohort/{id}(id=${participant.cohorts.id})}"
-                                          th:text="${participant.cohorts.name}"></a></p>
-                                </div>
-                                <div class="media">
-                                    <label>Docent</label>
-                                    <p>
-                                    <span  th:each="instructors, iterStat: ${participant.cohorts.instructors}">
-                                        <a th:href="@{/detail/instructor/{id}(id=${instructors.id})}"
-                                           th:text="${instructors.fullName}"></a>
-                                    </span>
-                                    </p>
-                                </div>
-                            </div>
                         </div>
-
-
-
                     </div>
                 </div>
 
@@ -84,54 +98,72 @@
     <div class="container">
         <div class="row align-items-center flex-row-reverse">
             <div class="col-lg-6">
-                <div class="about-text go-to">
-                    <h1><span th:text="${instructor.fullName}"></span></h1>
-                    <label>Over mij:</label>
-                    <p><span th:text="${instructor.description}"></span></p>
+                <div class="about-text go-to d-flex flex-column h-100">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <h1 th:text="${instructor.fullName}">Naam docent</h1>
+                        <div sec:authorize="hasRole('INSTRUCTOR')">
+                            <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get" style="display: inline;">
+                                <button type="submit" class="bi bi-pencil" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                </button>
+                            </form>
+                            <button type="button"
+                                    class="bi bi-trash"
+                                    style="background: none; border: none; padding: 0; cursor: pointer;"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteInstructor">
+                            </button>
+                        </div>
+                    </div>
+                    <strong>Over mij:</strong>
+                    <p th:text="${instructor.description}">Beschrijving docent</p>
 
-                    <div class="row about-list">
-                        <div class="col-md-6">
+                    <div class="row about-list d-flex flex-grow-1">
+
+                        <div class="col-md-6 d-flex flex-column">
                             <div class="media">
-                                <label>Verjaardag</label>
-                                <p><span th:text="${instructor.getBirthDate()}"></span></p>
+                                <strong>E-mailadres</strong>
+                                <p><span th:text="${instructor.emailAdress}"></span></p>
                             </div>
                             <div class="media">
-                                <label>Leeftijd</label>
+                                <strong>Telefoonnummer</strong>
+                                <p><span th:text="${instructor.phoneNumber}"></span></p>
+                            </div>
+                            <div class="media">
+                                <strong>Klassen</strong>
+                                <p>
+                                    <span th:each="cohorts, iterStat: ${instructor.cohorts}">
+                                    <a th:href="@{/cohort/{id}(id=${cohorts.id})}" th:text="${cohorts.name}"></a><span th:if="!${iterStat.last}">, </span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="media">
+                                <strong>Vak</strong>
+                                <p><span th:text="${instructor.course}"></span></p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 d-flex flex-column">
+                            <div class="media">
+                                <strong>Verjaardag</strong>
+                                <p><span th:text="${instructor.getBirthday()}"></span></p>
+                            </div>
+                            <div class="media">
+                                <strong>Leeftijd</strong>
                                 <p><span th:text="${instructor.getAgeInYears(instructor.birthDate)}"></span></p>
                             </div>
                             <div class="media">
-                                <label>Woonplaats</label>
+                                <strong>Woonplaats</strong>
                                 <p><span th:text="${instructor.city}"></span></p>
                             </div>
-                            <div sec:authorize="hasRole('ROLE_INSTRUCTOR')" th:if="${instructor.id} == ${currentInstructorId}" class="media">
-                                <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get" class="m-0">
-                                    <button type="submit" class="btn btn-outline-primary px-4 py-2">
+                            <div sec:authorize="hasRole('ROLE_INSTRUCTOR')" th:if="${instructor.id} == ${currentInstructorId}" class="media mt-auto mb-3">
+                                <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get">
+                                    <button type="submit" class="btn btn-primary">
                                         Bewerk je eigen profiel
                                     </button>
                                 </form>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="media">
-                                <label>E-mailadres</label>
-                                <p><span th:text="${instructor.emailAdress}"></span></p>
-                            </div>
-                            <div class="media">
-                                <label>Telefoonnummer</label>
-                                <p><span th:text="${instructor.phoneNumber}"></span></p>
-                            </div>
-                            <div class="media">
-                                <label>Klassen</label>
-                                <p><span th:each="cohorts, iterStat: ${instructor.cohorts}">
-                                    <a th:href="@{/cohort/{id}(id=${cohorts.id})}" th:text="${cohorts.name}"></a>
-                                    <span th:if="!${iterStat.last}"></span>
-                                    </span></p>
-                            </div>
-                            <div class="media">
-                                <label>Vak</label>
-                                <p><span th:text="${instructor.course}"></span></p>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>

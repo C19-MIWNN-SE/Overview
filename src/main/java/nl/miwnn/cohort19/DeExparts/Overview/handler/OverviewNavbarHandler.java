@@ -2,7 +2,6 @@ package nl.miwnn.cohort19.DeExparts.Overview.handler;
 
 import nl.miwnn.cohort19.DeExparts.Overview.controller.*;
 import nl.miwnn.cohort19.DeExparts.Overview.model.User;
-import nl.miwnn.cohort19.DeExparts.Overview.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,10 +15,8 @@ import org.springframework.ui.Model;
  */
 @ControllerAdvice(assignableTypes = {AboutMeController.class, InstructorController.class, ParticipantController.class,
         HomeController.class, CohortController.class})
-public class OverviewCohortNavbarHandler {
-    private static final Logger log = LoggerFactory.getLogger(OverviewCohortNavbarHandler.class);
+public class OverviewNavbarHandler {
 
-    // TODO think of better strategy to couple user to its cohort overview
     @ModelAttribute
     public void addCurrentUserCohortId(@AuthenticationPrincipal User currentUser, Model model) {
         if (currentUser.isParticipant()) {

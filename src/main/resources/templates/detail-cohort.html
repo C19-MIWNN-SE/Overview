@@ -8,9 +8,7 @@
 
 <div id="content">
 
-    <section class="mb-5 text-center">
-        <h1 th:text="|Overview van ${cohort.name}|" class="mb-3"></h1>
-    </section>
+    <h1 th:text="|Overview van ${cohort.name}|" class="mb-5 text-center"></h1>
 
     <div class="row g-5">
 
@@ -39,9 +37,23 @@
                             <span th:unless="${cohort.endDate}">onbekend</span>
                         </li>
                     </ul>
+
+                    <br>
+
+                    <div class="btn-group">
+                        <section sec:authorize="hasRole('INSTRUCTOR')" class="mb-4">
+                            <a th:href="@{/cohort/edit/{id}(id=${cohort.id})}" class="btn btn-primary" role="button">Bewerk</a>
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteCohort">
+                                Verwijder
+                            </button>
+                        </section>
+                    </div>
                 </section>
 
-                <section>
+                <section class="mb-4">
                     <h3 class="h5 mb-3">Docenten</h3>
 
                     <div class="d-flex flex-column gap-3">
@@ -96,14 +108,14 @@
                                     th:text="|${participant.firstName} ${participant.lastName}|">
                                     Naam deelnemer
                                 </h3>
-                                <span class="text-secondary">Toekomstige werkgever</span>
+                                <span class="text-secondary" th:text="${participant.getEmployer()}">Toekomstige werkgever</span>
                             </div>
 
                             <div class="participant-overlay">
                                 <div class="d-table h-100 w-100">
                                     <div class="d-table-cell align-middle">
                                         <h3 class="h5">
-                                            <a th:href="@{/detail/participant/{id}(id=${participant.id})}"
+                                            <a th:text="|${participant.firstName} ${participant.lastName}|" th:href="@{/detail/participant/{id}(id=${participant.id})}"
                                                class="text-white text-decoration-none">
                                                 Over deelnemer
                                             </a>
@@ -118,22 +130,6 @@
 
                     </div>
                 </div>
-            </section>
-
-            <section th:if="${userType == 'instructor'}" class="mt-5 d-flex flex-column flex-md-row gap-3">
-                <form th:action="@{/cohort/edit/{id}(id=${cohort.id})}" method="get">
-                    <button type="submit" class="btn btn-outline-primary">
-                        Bewerk cohort
-                    </button>
-                </form>
-
-                <button type="button"
-                        th:if="${userType == 'instructor'}"
-                        class="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deleteCohort">
-                    Verwijder cohort
-                </button>
             </section>
         </main>
     </div>
