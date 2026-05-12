@@ -85,15 +85,19 @@ public class InitializeController {
             List<Participant> participants = csvToBean.parse();
             List<Cohort> cohorts = cohortRepository.findAll();
 
-            for (int i = 0; i < participants.size()-10; i++) {
+            for (int i = 0; i < participants.size(); i++) {
                 Participant participant = participants.get(i);
-                participant.setCohorts(cohorts.get(i % cohorts.size()));
 
+                if (i < participants.size() - 10) {
+                    participant.setCohorts(cohorts.get(i % cohorts.size()));
+                }
+                
                 String imageUrl = "/image/Profielfoto" +  ((i % 13) + 6) + ".jpg";
                 participant.setImage(loadImage(imageUrl));
 
                 participantRepository.save(participant);
             }
+
 
             for (Participant participant : participants) {
                 Role participantRole = roleRepository.findByAuthority("ROLE_PARTICIPANT")

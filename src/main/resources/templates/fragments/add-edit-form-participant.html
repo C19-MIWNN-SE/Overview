@@ -51,18 +51,18 @@
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label class="form-label">Woonplaats</label>
-                                    <input type="text" class="form-control" th:field="*{city}" th:disabled="${isInstructor}">
+                                    <input type="text" class="form-control" th:field="*{city}" th:disabled="${isInstructor and participant.id != null}">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label">Telefoonnummer</label>
-                                    <input type="text" class="form-control" th:field="*{phoneNumber}" th:disabled="${isInstructor}">
+                                    <input type="text" class="form-control" th:field="*{phoneNumber}" th:disabled="${isInstructor and participant.id != null}">
                                 </div>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">Omschrijving</label>
-                                <textarea class="form-control" rows="3" th:field="*{description}" th:disabled="${isInstructor}"></textarea>
+                                <textarea class="form-control" rows="3" th:field="*{description}" th:disabled="${isInstructor and participant.id != null}"></textarea>
                             </div>
 
                             <div class="mb-4">
@@ -72,7 +72,7 @@
 
                             <div class="mb-4">
                                 <label class="form-label">Werkgever</label>
-                                <input type="text" class="form-control" th:field="*{employer}" th:disabled="${isInstructor}">
+                                <input type="text" class="form-control" th:field="*{employer}" th:disabled="${isInstructor and participant.id != null}">
                             </div>
 
                             <div class="mb-4" sec:authorize="hasRole('ROLE_INSTRUCTOR')">

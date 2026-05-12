@@ -176,7 +176,7 @@ public class ParticipantController {
                 .orElseThrow();
 
         String username = editedParticipant.getFirstName();
-        String password = "pw";
+        String password = "password";
 
         User user = new User(username, passwordEncoder.encode(password));
         user.setRoles(List.of(participantRole));
@@ -199,10 +199,11 @@ public class ParticipantController {
     }
 
     @GetMapping(value = {"/add"})
-    public String addParticipant(Model model) {
+    public String addParticipant(Model model, @AuthenticationPrincipal User currentUser) {
         log.debug("Toevoegingspagina voor participant met opgevraagd");
         model.addAttribute("participant", new Participant());
         model.addAttribute("allCohorts", cohortService.showAllCohorts());
+        model.addAttribute("isInstructor", currentUser.isInstructor());
         return "add-participant";
     }
 }
