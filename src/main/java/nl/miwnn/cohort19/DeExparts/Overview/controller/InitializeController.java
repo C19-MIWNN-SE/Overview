@@ -85,7 +85,7 @@ public class InitializeController {
             List<Participant> participants = csvToBean.parse();
             List<Cohort> cohorts = cohortRepository.findAll();
 
-            for (int i = 0; i < participants.size()-1; i++) { //-1 toegevoegd om de testgebruiker toe te voegen zonder cohort
+            for (int i = 0; i < participants.size()-10; i++) {
                 Participant participant = participants.get(i);
                 participant.setCohorts(cohorts.get(i % cohorts.size()));
 
@@ -99,8 +99,8 @@ public class InitializeController {
                 Role participantRole = roleRepository.findByAuthority("ROLE_PARTICIPANT")
                         .orElseThrow();
 
-                String username = participant.getFirstName();
-                String password = "pw";
+                String username = participant.getEmailAdress();
+                String password = "password";
 
                 User user = new User(username, passwordEncoder.encode(password));
                 user.setRoles(List.of(participantRole));
@@ -149,8 +149,8 @@ public class InitializeController {
                 Role instructorRole = roleRepository.findByAuthority("ROLE_INSTRUCTOR")
                         .orElseThrow();
 
-                String username = instructor.getFirstName();
-                String password = "pw";
+                String username = instructor.getEmailAdress();
+                String password = "password";
 
                 User user = new User(username, passwordEncoder.encode(password));
                 user.setRoles(List.of(instructorRole));
