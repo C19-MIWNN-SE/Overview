@@ -2,6 +2,7 @@ package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
 import jakarta.validation.*;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Cohort;
+import nl.miwnn.cohort19.DeExparts.Overview.model.Instructor;
 import nl.miwnn.cohort19.DeExparts.Overview.model.User;
 import nl.miwnn.cohort19.DeExparts.Overview.service.CohortService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.InstructorService;
@@ -42,33 +43,42 @@ public class CohortController {
         this.participantService = participantService;
     }
 
-    @GetMapping(value = {"/", ""})
+    @GetMapping("/all")
     public String showAllCohorts(Model model) {
         log.debug("Overview pagina voor cohorts opgevraagd");
-        model.addAttribute("title", "Overzicht cohorts");
+        model.addAttribute("title", "Overzicht alle cohorten");
         model.addAttribute("allCohorts", cohortService.showAllCohorts());
         return "overview-cohorts";
     }
 
-    // TODO improve method
     @GetMapping("/instructor-overview")
-    public String showAllCohortsForUserInstructor(
+    public String showAllCohortsForInstructor(
             @AuthenticationPrincipal User currentUser,
             Model model) {
 
-        // TODO clean up and simplify code
-        Long instructorId = instructorService.findInstructorByUserId(currentUser.getId()).get().getId();
+        Optional<Instructor> instructor = instructorService.findInstructorByUserId(currentUser.getId());
+
+        if (instructor.isEmpty()) {
+            log.warn("Instructor not found for user ID: {}", currentUser.getId());
+            model.addAttribute("bericht",
+                    "Je hebt geen toegang tot deze pagina. Alleen docenten kunnen dit overzicht zien.");
+            return "error/403";
+        }
+
+        Long instructorId = instructor.get().getId();
         List<Cohort> allCohortsForUserInstructor = cohortService.showAllCohortsForInstructor(instructorId);
 
         log.debug("Overview pagina voor cohorts van docent opgevraagd");
-        log.debug("Instructor ID: {}", instructorService.findInstructorByUserId(currentUser.getId()));
-        model.addAttribute("title", "Overzicht cohorts van docent");
+        log.debug("Instructor ID: {}", instructorId);
+
+        model.addAttribute("title", "Overzicht eigen cohorten");
         model.addAttribute("allCohorts", allCohortsForUserInstructor);
         model.addAttribute("activePage", "cohort");
+
         return "overview-cohorts";
     }
 
-    @GetMapping(value ="/{cohortId}")
+    @GetMapping("/{cohortId}")
     public String showCohortDetails(
             @PathVariable Long cohortId,
             Model model,
@@ -78,11 +88,10 @@ public class CohortController {
         if (currentUser.isParticipant()) {
             Long userCohortId = currentUser.getParticipant().getCohorts().getId();
             if (!userCohortId.equals(cohortId)){
-                return "redirect:/JeHebtAlleenToegangTotJeEigenKlas";
+                model.addAttribute("bericht",
+                        "Je hebt geen toegang tot deze cohort.");
+                return "error/403";
             }
-            model.addAttribute("userType","participant");
-        } else if (currentUser.isInstructor()) {
-            model.addAttribute("userType", "instructor");
         }
 
         model.addAttribute("title", "Overzicht cohort");
@@ -92,22 +101,17 @@ public class CohortController {
         return "detail-cohort";
     }
 
-    @PostMapping(value = {"/delete/{id}"})
-    public String deleteParticipant(@PathVariable Long id, RedirectAttributes redirectAttributes){
-        Optional<Cohort> cohort = Optional.ofNullable(cohortService.findById(id));
+    @PostMapping("/delete/{id}")
+    public String deleteCohort(@PathVariable Long id){
         log.info("Verwijderaanvraag voor cohort met id: {} aangevraagd",id);
-        if (cohort.isEmpty()){
-            log.warn("participant met id {} niet gevonden",id);
-            redirectAttributes.addAttribute("id", id);
-            return "redirect:/cohort/{id}";
-        } else {
-            cohortService.deleteCohort(id);
-            log.info("Cohort met id {} succesvol verwijderd.",id);
-            return "redirect:/cohort/";
-        }
+        cohortService.findById(id);
+
+        cohortService.deleteCohort(id);
+        log.info("Cohort met id {} succesvol verwijderd.",id);
+        return "redirect:/cohort/all";
     }
 
-    @GetMapping(value = {"/add"})
+    @GetMapping("/add")
     public String addCohort(Model model) {
         log.debug("Toevoegingspagina voor cohort opgevraagd");
         model.addAttribute("cohort", new Cohort());
@@ -117,11 +121,11 @@ public class CohortController {
         return "add-cohort";
     }
 
-    @GetMapping(value = {"/edit/{id}"})
+    @GetMapping("/edit/{id}")
     public String editCohort(@PathVariable Long id, Model model){
-        Optional<Cohort> cohort = Optional.ofNullable(cohortService.findById(id));
+        Cohort cohort = cohortService.findById(id);
         log.debug("Bewerkingspagina voor cohort met id {} opgevraagd", id);
-        model.addAttribute("cohort", cohort.get());
+        model.addAttribute("cohort", cohort);
         model.addAttribute("allInstructors", instructorService.showAllInstructors());
         model.addAttribute("allParticipantsInCohort", cohortService.showParticipantsInCohort(id));
         model.addAttribute("allParticipantsWithoutCohort",
@@ -129,7 +133,7 @@ public class CohortController {
         return "edit-cohort";
     }
 
-    @PostMapping(value = {"/save"})
+    @PostMapping("/save")
     public String saveCohort(@Valid @ModelAttribute Cohort editedCohort,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes,
