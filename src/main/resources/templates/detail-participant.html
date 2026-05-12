@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head><title>Detailpagina</title></head>
-<body>
+      th:replace="~{fragments/layout :: layout(${title}, ~{::#content})}">
 <div id="content">
 
     <div th:replace="~{fragments/profile-fragments :: participantProfile(${participant})}"></div>
@@ -43,6 +41,4 @@
         </div>
     </div>
 </div>
-
-</body>
 </html>

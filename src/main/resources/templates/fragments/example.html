@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head><title>Vervang deze titel!</title></head>
-<body>
+      th:replace="~{fragments/layout :: layout(${title}, ~{::#content})}">
 <div id="content">
 
 </div>
-</body>
 </html>

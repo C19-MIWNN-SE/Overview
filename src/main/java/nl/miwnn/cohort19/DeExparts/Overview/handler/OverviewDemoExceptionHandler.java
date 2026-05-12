@@ -20,8 +20,14 @@ public class OverviewDemoExceptionHandler {
         model.addAttribute("statusCode",
                 exception.getStatusCode().value());
         model.addAttribute("bericht", exception.getReason());
+
+        if (exception.getStatusCode().value() == 403) {
+            return "error/403";
+        }
+        
         return "error/404";
     }
+
     @ExceptionHandler(Exception.class)
     public String handleAlgemeneUitzondering(
             Exception exception,
