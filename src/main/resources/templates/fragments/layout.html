@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org"
       th:fragment="layout(title, content)" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <th:block th:replace="~{fragments/general :: baseheader(${title})}"></th:block>
-</head>
+<head th:replace="~{fragments/general :: baseheader(${title})}"></head>
 <body>
 <nav th:replace="~{fragments/general :: navbar}" sec:authorize="isAuthenticated()"></nav>
 <div class="container mt-4">

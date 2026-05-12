@@ -35,7 +35,7 @@ public class overviewSecurityConfiguration {
                         ).permitAll()
 
                         .requestMatchers(
-                                "/cohort/",
+                                "/cohort/all",
                                 "/cohort/add",
                                 "/cohort/edit/*",
                                 "/cohort/delete/*",

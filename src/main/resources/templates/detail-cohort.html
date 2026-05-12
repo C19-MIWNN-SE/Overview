@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head>
-    <title>Overview cohort</title>
-</head>
-<body>
-
+      th:replace="~{fragments/layout :: layout(${title}, ~{::#content})}">
 <div id="content">
 
     <h1 th:text="|Overview van ${cohort.name}|" class="mb-5 text-center"></h1>
@@ -209,5 +204,4 @@
     </div>
 
 </div>
-</body>
 </html>

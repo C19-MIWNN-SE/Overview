@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head><title>Login</title></head>
-<body>
+      th:replace="~{fragments/layout :: layout(${title}, ~{::#content})}">
 
 <div id="content" class="container">
     <div class="covered-img" style="background-image: url('/assets/images/ClassroomBlurredStock.jpeg')"></div>
@@ -48,5 +46,5 @@
             </div>
         </div>
     </div>
-</body>
+
 </html>

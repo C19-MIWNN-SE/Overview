@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::#content})}">
-<head>
-    <title>Nieuwe docent</title>
-</head>
-
-<body>
+      th:replace="~{fragments/layout :: layout(${title}, ~{::#content})}">
 <div id="content">
 
     <div th:replace="~{fragments/add-edit-form-instructor :: form(
@@ -16,6 +11,4 @@
     </div>
 
 </div>
-
-</body>
 </html>
