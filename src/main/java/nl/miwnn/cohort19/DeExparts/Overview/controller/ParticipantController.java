@@ -103,7 +103,6 @@ public class ParticipantController {
             return "edit-participant";
         }
 
-
         if (editedParticipant.getId() != null) {
             Participant existingParticipant = participantService.findById(editedParticipant.getId());
             existingParticipant.setEmployer(editedParticipant.getEmployer());
@@ -120,6 +119,13 @@ public class ParticipantController {
             } else if (deleteImage) {
                 existingParticipant.setImage(null);
             }
+
+//            if (bindingResult.hasErrors()){
+//                log.warn("Validatiefouten bij het opslaan: {}", bindingResult.getErrorCount());
+//                model.addAttribute("participant", existingParticipant);
+//                model.addAttribute("allCohorts", cohortService.showAllCohorts());
+//                return "edit-participant";
+//            }
 
             participantService.saveParticipant(existingParticipant);
             log.info("Deelnemer bijgewerkt: {}", existingParticipant.getFullName());

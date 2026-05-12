@@ -23,7 +23,8 @@
                             <h1 class="h3" th:text="${title}"></h1>
                         </div>
 
-                        <form th:action="${formAction}"
+                        <form th:onsubmit="this.querySelectorAll('input').forEach(i => i.disabled = false)"
+                              th:action="${formAction}"
                               method="post"
                               th:object="${participant}"
                               enctype="multipart/form-data">

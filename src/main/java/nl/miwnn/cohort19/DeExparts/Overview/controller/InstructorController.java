@@ -126,7 +126,7 @@ public class InstructorController {
             instructorService.saveInstructor(existingInstructor);
             log.info("Deelnemer bijgewerkt: {}", existingInstructor.getFullName());
             String redirectUrl = UriComponentsBuilder.fromPath("/detail/instructor/{id}")
-                    .buildAndExpand(existingInstructor.getId()).toUriString();
+            .buildAndExpand(existingInstructor.getId()).toUriString();
             return "redirect:" + redirectUrl;
         }
 
