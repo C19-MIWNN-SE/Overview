@@ -25,6 +25,7 @@
         <div sec:authorize="hasRole('INSTRUCTOR')">
           <div class="dropdown">
             <button class="nav-link dropdown-toggle bi bi-book"
+                    th:classappend="${activePage == 'cohort'} ? 'active' : ''"
                     type="button"
                     data-bs-toggle="dropdown" aria-expanded="false"> Cohort
             </button>

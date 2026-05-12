@@ -34,18 +34,18 @@
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label class="form-label">Voornaam</label>
-                                    <input type="text" class="form-control" th:field="*{firstName}" disabled>
+                                    <input type="text" class="form-control" th:field="*{firstName}" th:disabled="${!isInstructor}">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label">Achternaam</label>
-                                    <input type="text" class="form-control" th:field="*{lastName}" disabled>
+                                    <input type="text" class="form-control" th:field="*{lastName}" th:disabled="${!isInstructor}">
                                 </div>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">E-mailadres</label>
-                                <input type="email" class="form-control" th:field="*{emailAdress}" disabled>
+                                <input type="email" class="form-control" th:field="*{emailAdress}" th:disabled="${!isInstructor}">
                             </div>
 
                             <div class="row mb-4">
@@ -67,7 +67,7 @@
 
                             <div class="mb-4">
                                 <label class="form-label">Geboortedatum</label>
-                                <input type="date" class="form-control" th:field="*{birthDate}" disabled>
+                                <input type="date" class="form-control" th:field="*{birthDate}" th:disabled="${!isInstructor}">
                             </div>
 
                             <div class="mb-4">

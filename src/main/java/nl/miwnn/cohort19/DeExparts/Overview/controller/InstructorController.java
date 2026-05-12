@@ -67,6 +67,11 @@ public class InstructorController {
         } else if (currentUser.isInstructor()) {
             model.addAttribute("userType", "instructor");
         }
+
+        if (!currentUser.isParticipant() && currentUser.getInstructor().getId().equals(id)) {
+            model.addAttribute("activePage", "aboutMe");
+        }
+
         return "detail-instructor";
     }
 

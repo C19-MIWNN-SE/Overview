@@ -48,6 +48,7 @@ public class CohortController {
         log.debug("Overview pagina voor cohorts opgevraagd");
         model.addAttribute("title", "Overzicht alle cohorten");
         model.addAttribute("allCohorts", cohortService.showAllCohorts());
+        model.addAttribute("activePage", "cohort");
         return "overview-cohorts";
     }
 

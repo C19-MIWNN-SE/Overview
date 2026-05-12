@@ -72,6 +72,10 @@ public class ParticipantController {
             }
         }
 
+        if (currentUser.isParticipant() && currentUser.getParticipant().getId().equals(id)) {
+            model.addAttribute("activePage", "aboutMe");
+        }
+
         model.addAttribute("title", "Detail overzicht");
         model.addAttribute("participant", participant.get());
         return "detail-participant";
@@ -109,6 +113,7 @@ public class ParticipantController {
 
         model.addAttribute("participant", participant.get());
         model.addAttribute("allCohorts", cohortService.showAllCohorts());
+        model.addAttribute("isInstructor", currentUser.isInstructor());
 
         return "edit-participant";
     }
@@ -119,6 +124,7 @@ public class ParticipantController {
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes,
                                   Model model,
+                                  @AuthenticationPrincipal User currentUser,
                                   @RequestParam("imageFile") MultipartFile imageFile,
                                   @RequestParam(value = "deleteImage", defaultValue = "false") boolean deleteImage)
             throws IOException {
@@ -132,19 +138,30 @@ public class ParticipantController {
 
         if (editedParticipant.getId() != null) {
             Participant existingParticipant = participantService.findById(editedParticipant.getId());
-            existingParticipant.setEmployer(editedParticipant.getEmployer());
-            existingParticipant.setCity(editedParticipant.getCity());
-            existingParticipant.setPhoneNumber(editedParticipant.getPhoneNumber());
-            existingParticipant.setDescription(editedParticipant.getDescription());
 
-            if (!imageFile.isEmpty()) {
-                Image image = new Image();
-                image.setData(imageFile.getBytes());
-                image.setContentType(imageFile.getContentType());
-                imageRepository.save(image);
-                existingParticipant.setImage(image);
-            } else if (deleteImage) {
-                existingParticipant.setImage(null);
+            if (!currentUser.isInstructor()) {
+                existingParticipant.setEmployer(editedParticipant.getEmployer());
+                existingParticipant.setCity(editedParticipant.getCity());
+                existingParticipant.setPhoneNumber(editedParticipant.getPhoneNumber());
+                existingParticipant.setDescription(editedParticipant.getDescription());
+
+                if (!imageFile.isEmpty()) {
+                    Image image = new Image();
+                    image.setData(imageFile.getBytes());
+                    image.setContentType(imageFile.getContentType());
+                    imageRepository.save(image);
+                    existingParticipant.setImage(image);
+                } else if (deleteImage) {
+                    existingParticipant.setImage(null);
+                }
+            }
+
+            if (currentUser.isInstructor()) {
+                existingParticipant.setFirstName(editedParticipant.getFirstName());
+                existingParticipant.setLastName(editedParticipant.getLastName());
+                existingParticipant.setEmailAdress(editedParticipant.getEmailAdress());
+                existingParticipant.setBirthDate(editedParticipant.getBirthDate());
+                existingParticipant.setCohorts(editedParticipant.getCohorts());
             }
 
 //            if (bindingResult.hasErrors()){
