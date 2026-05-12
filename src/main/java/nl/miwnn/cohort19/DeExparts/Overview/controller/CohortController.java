@@ -150,7 +150,7 @@ public class CohortController {
         cohortService.saveCohort(editedCohort);
         log.info("Cohort met id {} opgeslagen.", editedCohort.getId());
         redirectAttributes.addAttribute("id", editedCohort.getId());
-        return "redirect:/cohort/";
+        return "redirect:/cohort/{id}";
     }
 
     @PostMapping("/{id}/search")

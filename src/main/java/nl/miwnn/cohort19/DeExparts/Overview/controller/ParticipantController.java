@@ -91,7 +91,7 @@ public class ParticipantController {
         } else {
             participantService.deleteParticipant(id);
             log.info("Participant met id {} succesvol verwijderd.",id);
-            return "redirect:/cohort/";
+            return "redirect:/home/";
         }
     }
 
@@ -129,12 +129,6 @@ public class ParticipantController {
                                   @RequestParam(value = "deleteImage", defaultValue = "false") boolean deleteImage)
             throws IOException {
 
-        if (bindingResult.hasErrors()){
-            log.warn("Validatiefouten bij het opslaan: {}", bindingResult.getErrorCount());
-            model.addAttribute("participant", editedParticipant);
-            model.addAttribute("allCohorts", cohortService.showAllCohorts());
-            return "edit-participant";
-        }
 
         if (editedParticipant.getId() != null) {
             Participant existingParticipant = participantService.findById(editedParticipant.getId());
@@ -164,12 +158,12 @@ public class ParticipantController {
                 existingParticipant.setCohorts(editedParticipant.getCohorts());
             }
 
-//            if (bindingResult.hasErrors()){
-//                log.warn("Validatiefouten bij het opslaan: {}", bindingResult.getErrorCount());
-//                model.addAttribute("participant", existingParticipant);
-//                model.addAttribute("allCohorts", cohortService.showAllCohorts());
-//                return "edit-participant";
-//            }
+            if (bindingResult.hasErrors()){
+                log.warn("Validatiefouten bij het opslaan: {}", bindingResult.getErrorCount());
+                model.addAttribute("participant", existingParticipant);
+                model.addAttribute("allCohorts", cohortService.showAllCohorts());
+                return "edit-participant";
+            }
 
             participantService.saveParticipant(existingParticipant);
             log.info("Deelnemer bijgewerkt: {}", existingParticipant.getFullName());
