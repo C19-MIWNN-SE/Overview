@@ -1,5 +1,6 @@
 package nl.miwnn.cohort19.DeExparts.Overview.controller;
 
+import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Image;
 import nl.miwnn.cohort19.DeExparts.Overview.model.Participant;
@@ -12,6 +13,7 @@ import nl.miwnn.cohort19.DeExparts.Overview.service.CohortService;
 import nl.miwnn.cohort19.DeExparts.Overview.service.ParticipantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,9 +79,21 @@ public class ParticipantController {
     }
 
     @GetMapping(value = {"/edit/{id}"})
-    public String editParticipant(@PathVariable Long id, Model model){
+    public String editParticipant(@PathVariable Long id,
+                                  Model model,
+                                  @AuthenticationPrincipal User currentUser){
         Optional<Participant> participant = participantService.showParticipantDetail(id);
         log.debug("Bewerkingspagina voor participant met id {} opgevraagd", id);
+
+        if (currentUser.isParticipant()){
+            Long userId = currentUser.getParticipant().getId();
+            if (!userId.equals(id)){
+                model.addAttribute("bericht",
+                        "Je kan alleen je eigen pagina wijzigen");
+                return "error/403";
+            }
+        }
+
         model.addAttribute("participant", participant.get());
         model.addAttribute("allCohorts", cohortService.showAllCohorts());
 
