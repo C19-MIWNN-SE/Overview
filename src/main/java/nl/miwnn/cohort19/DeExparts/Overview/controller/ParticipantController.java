@@ -82,16 +82,16 @@ public class ParticipantController {
     }
 
     @PostMapping(value = {"/delete/{id}"})
-    public String deleteParticipant(@PathVariable Long id){
+    public String deleteParticipant(@PathVariable Long id, @RequestParam Long cohortId){
         Optional<Participant> participant = participantService.showParticipantDetail(id);
         log.info("Verwijderaanvraag voor deelnemer met id: {} aangevraagd",id);
         if (participant.isEmpty()){
             log.warn("participant met id {} niet gevonden",id);
-            return "redirect:/participant/{id}";
+            return "redirect:/cohort";
         } else {
             participantService.deleteParticipant(id);
             log.info("Participant met id {} succesvol verwijderd.",id);
-            return "redirect:/cohort/";
+            return "redirect:/cohort/" + cohortId;
         }
     }
 

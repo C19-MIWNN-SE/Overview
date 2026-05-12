@@ -85,7 +85,7 @@ public class InstructorController {
         } else {
             instructorService.deleteInstructor(id);
             log.info("Instructor met id {} succesvol verwijderd.",id);
-            return "redirect:/cohort/";
+            return "redirect:/cohort/all";
         }
     }
 

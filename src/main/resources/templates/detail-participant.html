@@ -29,6 +29,7 @@
 
                     <form th:action="@{/detail/participant/delete/{id}(id=${participant.id})}" method="post">
                         <button type="submit" class="btn btn-warning">Ja</button>
+                        <input type="hidden" name="cohortId" th:value="${participant.cohorts.id}"/>
                     </form>
 
                     <button type="button"
