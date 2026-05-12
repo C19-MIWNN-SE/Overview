@@ -38,8 +38,7 @@ public class UserService implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
                 .toList();
 
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Gebruiker niet gevonden"));
+        return user;
     }
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
