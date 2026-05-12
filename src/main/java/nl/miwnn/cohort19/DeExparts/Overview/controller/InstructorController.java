@@ -117,6 +117,13 @@ public class InstructorController {
             Instructor existingInstructor = instructorService.findById(editedInstructor.getId());
             existingInstructor.setCity(editedInstructor.getCity());
             existingInstructor.setPhoneNumber(editedInstructor.getPhoneNumber());
+            existingInstructor.setFirstName(editedInstructor.getFirstName());
+            existingInstructor.setLastName(editedInstructor.getLastName());
+            existingInstructor.setEmailAdress(editedInstructor.getEmailAdress());
+            existingInstructor.setBirthDate(editedInstructor.getBirthDate());
+            existingInstructor.setCourse(editedInstructor.getCourse());
+            existingInstructor.setCohorts(editedInstructor.getCohorts());
+            existingInstructor.setDescription(editedInstructor.getDescription());
 
             if (!imageFile.isEmpty()) {
                 Image image = new Image();
@@ -139,7 +146,7 @@ public class InstructorController {
                 .orElseThrow();
 
         String username = editedInstructor.getFirstName();
-        String password = "pw";
+        String password = "password";
 
         User user = new User(username, passwordEncoder.encode(password));
         user.setRoles(List.of(instructorRole));

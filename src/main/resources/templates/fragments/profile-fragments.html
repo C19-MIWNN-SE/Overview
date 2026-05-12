@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
 
 <div th:fragment="participantProfile(participant)">
@@ -101,7 +101,7 @@
                 <div class="about-text go-to d-flex flex-column h-100">
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <h1 th:text="${instructor.fullName}">Naam docent</h1>
-                        <div sec:authorize="hasRole('INSTRUCTOR')">
+                        <div sec:authorize="hasRole('INSTRUCTOR')" th:if="${instructor.id} != ${currentInstructorId}">
                             <form th:action="@{/detail/instructor/edit/{id}(id=${instructor.id})}" method="get" style="display: inline;">
                                 <button type="submit" class="bi bi-pencil" style="background: none; border: none; padding: 0; cursor: pointer;">
                                 </button>
