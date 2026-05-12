@@ -56,9 +56,22 @@ public class ParticipantController {
     }
 
     @GetMapping(value = {"/{id}"})
-    public String showParticipantDetail(@PathVariable Long id, Model model) {
+    public String showParticipantDetail(@PathVariable Long id,
+                                        Model model,
+                                        @AuthenticationPrincipal User currentUser) {
         Optional<Participant> participant = participantService.showParticipantDetail(id);
         log.debug("Detail pagina deelnemer opgevraagd");
+
+        if (currentUser.isParticipant()){
+            Long CurrentCohortId = currentUser.getParticipant().getCohorts().getId();
+            Long OtherCohortId = participant.get().getCohorts().getId();
+            if (!CurrentCohortId.equals(OtherCohortId)){
+                model.addAttribute("bericht",
+                        "Je kan alleen de pagina van een klasgenoot zien.");
+                return "error/403";
+            }
+        }
+
         model.addAttribute("title", "Detail overzicht");
         model.addAttribute("participant", participant.get());
         return "detail-participant";
