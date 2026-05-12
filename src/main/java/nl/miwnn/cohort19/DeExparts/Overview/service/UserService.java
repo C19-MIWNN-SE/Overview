@@ -34,14 +34,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Gebruiker niet gevonden"));
 
-        List<SimpleGrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
-                .toList();
-
         return user;
-    }
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
     }
 
 }
